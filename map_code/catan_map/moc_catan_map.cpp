@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'catan_map.h'
 **
-** Created: Sun Apr 15 15:29:59 2012
+** Created: Sun Apr 22 12:03:13 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,18 +23,21 @@ static const uint qt_meta_data_catan_map[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       0,    0, // methods
+       1,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        0,       // signalCount
 
+ // slots: signature, parameters, type, tag, flags
+      11,   10,   10,   10, 0x08,
+
        0        // eod
 };
 
 static const char qt_meta_stringdata_catan_map[] = {
-    "catan_map\0"
+    "catan_map\0\0signalSorter(QString)\0"
 };
 
 const QMetaObject catan_map::staticMetaObject = {
@@ -64,6 +67,13 @@ int catan_map::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     _id = QMainWindow::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        switch (_id) {
+        case 0: signalSorter((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        default: ;
+        }
+        _id -= 1;
+    }
     return _id;
 }
 QT_END_MOC_NAMESPACE
