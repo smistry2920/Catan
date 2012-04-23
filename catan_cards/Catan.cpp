@@ -439,7 +439,7 @@ int Player::findBestTrade(char color){
 
 }
 
-/*This function removes 50% +1 (if odd) of a players card count.
+/*This public function removes 50% +1 (if odd) of a players card count.
 It should be called for every player and removes the cards at
 random. */
 void Player::removeCardsOn7(){
