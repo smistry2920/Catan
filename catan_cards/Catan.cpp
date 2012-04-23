@@ -12,7 +12,8 @@ Player::Player(){
     this->victoryPoints_= 0;
     this->roadLength_   = 0;
     this->armySize_     = 0;
-    this->playerColor_  = "G";
+    char color = 'g';
+    this->playerColor_  = color;
     this->yellow_       = 0;
     this->lightGreen_   = 0;
     this->darkGreen_    = 0;
@@ -95,11 +96,11 @@ void Player::buyItem(){
     cout<<"2) Settlement  (1 Red, 1 Dark Green, 1 Light Green, 1 Yellow)"<<endl;
     cout<<"3) City        (3 Blue, 2 Yellow)"<<endl;
     cout<<"4) Development Card (1 Blue, 1 Yellow, 1 Light Green)"<<endl;
-    cout<<"0 to cancel"<<endl;
+    cout<<"0) to cancel"<<endl;
     int number;
     cin>>number;
     cout<<endl;
-    if(input==1 || input==2 || input==3 || input==4){
+    if(number==1 || number==2 || number==3 || number==4){
         if(number==1)
             this->buyRoad();
         else if (number ==2)
@@ -110,8 +111,86 @@ void Player::buyItem(){
             this->buyDevelopmentCard(); 
         this->seeResources();
     }
+    cout<<"exit"<<endl;
 
 }
+
+/*This public function has to be called for each opponent (everyone but the player you are on).
+It checks to see if a settlement is being placed in a spot that would
+block 2 consecutive roads of an opponent. If it returns false, there is no match. If it returns 
+for any opponent, then the settlement can not be placed there. */
+bool Player::areRoadsBlockingSettlement(int & location){
+    list<roads>::iterator current = pavement.begin();
+    int size = pavement.size();
+    int matches = 0;
+    for(int i = 0; i<size; ++i){
+        if(current->top == location || current->bottom == location)
+            matches++;
+        current++;
+    }
+
+    if(matches<2)
+        return false;
+    else
+        return true;
+}
+
+
+/*This public function has to be called for each opponent (everyone but the player you are on).
+It checks to see if they have a city or settlement at the location input. If it returns true FOR
+ANYOE, thereis a match and the current player can now place a road down. If it returns false for
+everyone, then the player can place the road. */
+bool Player::isSettlementBlockingRoad(int & location){
+    list<settlement>::iterator current = pieces.begin();
+    int size = pieces.size();
+
+    for(int i = 0; i<size; ++i){
+        if(current->cityNumber == location)
+            return true;
+        current++;
+    }
+    return false;
+}
+
+/* This private function checks to see if you have  city/settlement already in a location
+thereby allowing you to place a road.*/
+bool Player::roadOffOwnCity(int &top, int &bottom){
+
+    list<settlement>::iterator current = pieces.begin();
+    int size = pieces.size();
+    for(int i = 0; i<size; ++i){
+        if(current->cityNumber == top || current->cityNumber== bottom)
+            return true;
+        current++;
+    }
+    return false;
+}
+
+/*private function that determines if a road can be placed. Returns -1 if absolutly true, 0 if false. An integer>0 will be returned
+if it finds a match to a road in which case we need to check to see if other players have a city/settlement
+in that corresponding integer location. */
+int Player::checkRoad(){
+    int top, bottom;//these are somehow the known values of the road that will be placesd
+    
+    bool offCity = roadOffOwnCity(top, bottom);
+    if (offCity==true)
+        return -1;
+
+    list<roads>::iterator current = pavement.begin();
+    int size =pavement.size();
+    for(int i = 0; i<size; ++i){
+        if(current->top == top || current->bottom == top)
+            return top;
+        else if (current->top == bottom || current->bottom ==bottom)
+            return bottom;
+        current++;
+    }
+
+    //by this point, it exists off no roads, and no other cities/settlements
+    return 0;
+
+}
+
 
 //this private function allows a player to purchase a road
 void Player::buyRoad(){
@@ -119,6 +198,14 @@ void Player::buyRoad(){
         //do action to place road
         this->red_--;
         this->darkGreen_--;
+
+        struct roads ro;
+        //filling in the .top and .bottom @suneil
+        ro.top = 0;
+        ro.bottom = 0;
+        //end @suneil
+        pavement.push_front(ro);
+
     } else
         cout<<"You do not have the resources to purchase a road!"<<endl<<endl;
 
@@ -126,7 +213,7 @@ void Player::buyRoad(){
 
 //This private fuction allows a player to purchase a settlement.
 void Player::buySettlement(){
-    if(this->red >0 && this->darkGreen>0 && this->lightGreen>0 && this->yellow>0){
+    if(this->red_ >0 && this->darkGreen_ >0 && this->lightGreen_ >0 && this->yellow_>0){
         //do action to place settlement
         this->red_--;
         this->darkGreen_--;
@@ -135,16 +222,21 @@ void Player::buySettlement(){
         this->victoryPoints_++;
 
         struct settlement set;
-        set.City = 1;
+        set.city = 1;
 
-        //filling in the rest until we figure out how it connects to the board
-        set.left = 1;
-        set.right = 1;
-        set.top =1;
+        //filling in the rest until we figure out how it connects to the board @ suneil
+        set.left.number = 1;
+        set.left.color = 'l';
+        set.right.number = 1;
+        set.right.color = 'l';
+        set.top.number =1;
+        set.top.color = 'l';
+
         set.port = 'a';
-        //end random fill
+        set.cityNumber = 1;
+        //end @suneil
         
-        pieces.push_back(set);//add city to list.
+        pieces.push_front(set);//add city to list.
 
     }else
         cout<<"You do not have the resources to purchase a settlement!"<<endl<<endl;
@@ -205,7 +297,7 @@ void Player::changeColor(char &color){
 /*This public function searches through all the settlements/cities
 a player has to give them the respective resources gained on
 a roll. */
-void Player::gainResources(int roll){
+void Player::gainResources(int &roll){
     list<settlement>::iterator current = pieces.begin();
 
     int size = pieces.size();
@@ -234,13 +326,13 @@ void Player::addProperColor(char& color, int& city){
     if(color=='y'){
         this->yellow_ += city;
     }else if(color=='l'){
-        this->lightGreen +=city;
+        this->lightGreen_ +=city;
     }else if(color=='d'){
-        this->darkGreen +=city;
+        this->darkGreen_ +=city;
     }else if(color=='b'){
-        this->blue += city;
+        this->blue_ += city;
     }else { //color = red
-        this->red += city;
+        this->red_ += city;
     }
 
 }
@@ -287,6 +379,7 @@ is 4, it has to check ports to see if you can get a better deal though. */
 
 void Player::whichCardsToTrade(){
     //maybe show the conversion too rather than just assuming the person knows
+
     int yellow = findBestTrade('y');
     int lightGreen = findBestTrade('l');
     int darkGreen = findBestTrade('d');
@@ -317,7 +410,7 @@ void Player::whichCardsToTrade(){
         } else{
             cout<<"Not enough resources for conversion!"<<endl<<endl;        
         }
-        this->showResources();
+        seeResources();
 
     }else
         cout<<"Cancelled"<<endl;
@@ -327,7 +420,7 @@ void Player::whichCardsToTrade(){
 It takes a given color and determines if you have a port that matches it.
 Otherwise, it searches for a 3:1 port, and if that doesn't exist returns 4
 (the default).*/
-int findBestTrade(char & color){
+int Player::findBestTrade(char color){
     list<settlement>::iterator current = pieces.begin();
 
     int tradeDefault = 4;
@@ -344,4 +437,72 @@ int findBestTrade(char & color){
 
     return tradeDefault;
 
+}
+
+/*This function removes 50% +1 (if odd) of a players card count.
+It should be called for every player and removes the cards at
+random. */
+void Player::removeCardsOn7(){
+    int num = numberOfResources();
+
+    if(num>7){
+        num = num/2 + num%2; //number of cards that will be removed
+        for(int i = 0; i<num; ++i){
+            removeRandomCard(); //removes card at random in this function we dont care what is returned.
+        }
+    }
+}
+
+/* This private function can be called by either the knight function,
+or the removeCardsOn7 function where it removes a random card from a players hand. 
+returns y on yellow, l on lightblue, etc. It returns '0' on if a player has no
+cards to give!*/
+
+char Player::removeRandomCard(){
+    int i = rand() %5;
+    if(numberOfResources() <=7)
+        return '0';
+
+    if(i ==0){
+        if(yellow_ >0){
+            yellow_--;
+            return 'y';
+        }
+        else
+            removeRandomCard();
+    }
+    if(i ==1){
+        if(lightGreen_ >0){
+            lightGreen_--;
+            return 'l';
+        }
+        else
+            removeRandomCard();
+    }
+    if(i ==2){
+        if(darkGreen_ >0){
+            darkGreen_--;
+            return 'd';
+        }
+        else
+            removeRandomCard();
+    }
+    if(i ==3){
+        if(blue_ >0){
+            blue_--;
+            return 'b';
+        }
+        else
+            removeRandomCard();
+    }
+    if(i ==4){
+        if(red_ >0){
+            red_--;
+            return 'r';
+        }
+        else
+            removeRandomCard();
+    }
+
+    return '0';
 }
