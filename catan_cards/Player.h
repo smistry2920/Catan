@@ -75,6 +75,10 @@ class Player{
 
     //removing card on 7
     char removeRandomCard();
+    
+    //playing dev card
+    void playVictoryPoint();
+    void playYearOfPlenty();
 
     public:
     int roll();
@@ -93,6 +97,12 @@ class Player{
     bool areRoadsBlockingSettlement(int &);
     bool isSettlementBlockingRoad(int &);
 
+    //For Dev Cards
+    int playDevCar();
+    //For monopoly cards:
+    char playMonoply();
+    int removeCardFromPlayer(char &);
+    void gainCardsFromMonopoly(int&, char&);
 
     //constructor
     Player();
