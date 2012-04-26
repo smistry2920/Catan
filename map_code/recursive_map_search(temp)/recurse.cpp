@@ -1,9 +1,17 @@
 #include <QtCore>
-
+#include "map_tracker.h"
 void get_digits(int x);
 
 int main(int argc, char *argv[]){
-	if (argc == 2){
+        map_tracker map;
+        map.valid_settlement_check("settle_01");
+        map.valid_settlement_check("settle_101");
+        map.valid_settlement_check("settle_02");
+        map.valid_settlement_check("settle_402");
+        map.valid_settlement_check("settle_60");
+        map.valid_settlement_check("settle_01");
+    /*
+        if (argc == 2){
             QString word = argv[1];
             bool ok = true;
             int value = word.toInt(&ok,10);
@@ -12,6 +20,7 @@ int main(int argc, char *argv[]){
         else{
             qDebug() << "You didn't enter the right amount of letters!";
         }
+        */
     return 0;
 }
 
