@@ -50,8 +50,9 @@ void catan_map::activate_settlements(){
     /////////////////////////////////////////////
     //START SETTLEMENT BUTTON MAPPING!!
     ///////////////////
+    //Format is |left Color|left number|right color|right number|top color|top number|port
     connect(ui->pushSettle_01, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_01, "settle_01");
+    signalMapper->setMapping(ui->pushSettle_01, "0|0|");
 
     connect(ui->pushSettle_02, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushSettle_02, "settle_02");
