@@ -14,8 +14,41 @@ catan_map::catan_map(QWidget *parent) :
 
     //connect buttons to signal mapper
 
+    activate_settlements();
+
+    activate_roads();
+
+    activate_other();
+
+    //final signal mapping connection (calls signalSorter to sort signals!)
+    connect(signalMapper, SIGNAL(mapped(const QString &)), this, SLOT(signalSorter(const QString &)));
+    //checkPlayers();
+    checkPlayer();
+}
+
+catan_map::~catan_map()
+{
+    delete ui;
+}
+
+void catan_map::signalSorter(const QString & button)
+{
+    qDebug() << "made it here: " << button;
+}
+
+void catan_map::checkPlayer(){
+/*    if (player.player_amount == 1){
+        ui->handButton_4->setDisabled(false);
+        ui->player3_label->setText(player.name(1));
+
+    }
+*/
+}
+
+void catan_map::activate_settlements(){
+
     /////////////////////////////////////////////
-    //START CITY BUTTON MAPPING!!
+    //START SETTLEMENT BUTTON MAPPING!!
     ///////////////////
     connect(ui->pushSettle_01, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushSettle_01, "settle_01");
@@ -180,12 +213,11 @@ catan_map::catan_map(QWidget *parent) :
     signalMapper->setMapping(ui->pushSettle_54, "settle_54");
 
     //////////////////
-    //END CITY BUTTON MAPPING
+    //END SETTLEMENT BUTTON MAPPING
     ////////////////////////////////////////////
+}
 
-    /*---------------------------------------------------------------*/
-    /*===============================================================*/
-    /*--------------------------------------------------------------*/
+void catan_map::activate_roads(){
 
     ////////////////////////////////////////////
     //START ROAD MAPPING
@@ -411,9 +443,9 @@ catan_map::catan_map(QWidget *parent) :
     //END ROAD MAPPING
     ///////////////////////////////////////////
 
-    /*---------------------------------------------------------------*/
-    /*===============================================================*/
-    /*--------------------------------------------------------------*/
+}
+
+void catan_map::activate_other(){
 
     ////////////////////////////////////////////
     //START MISCELLANEOS MAPPING
@@ -441,27 +473,4 @@ catan_map::catan_map(QWidget *parent) :
     //END MISCELLANEOS MAPPING
     ////////////////////////////////////////////
 
-    //final signal mapping connection (calls signalSorter to sort signals!)
-    connect(signalMapper, SIGNAL(mapped(const QString &)), this, SLOT(signalSorter(const QString &)));
-    //checkPlayers();
-    checkPlayer();
-}
-
-catan_map::~catan_map()
-{
-    delete ui;
-}
-
-void catan_map::signalSorter(const QString & button)
-{
-    qDebug() << "made it here: " << button;
-}
-
-void catan_map::checkPlayer(){
-/*    if (player.player_amount == 1){
-        ui->handButton_4->setDisabled(false);
-        ui->player3_label->setText(player.name(1));
-
-    }
-*/
 }

@@ -8,4 +8,8 @@ DEPENDPATH += .
 INCLUDEPATH += .
 
 # Input
-SOURCES += recurse.cpp
+SOURCES += recurse.cpp \
+    map_tracker.cpp
+
+HEADERS += \
+    map_tracker.h
