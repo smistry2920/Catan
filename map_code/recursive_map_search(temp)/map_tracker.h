@@ -11,6 +11,8 @@ public:
     //for adding the settlement!
     bool clicked_settlement(QString);
     bool clicked_road(QString);
+    bool set_settlement(QString);
+    bool set_road(QString);
 
 private:
     //check if valid settlement or road
