@@ -23,6 +23,9 @@ private slots:
 private:
     Ui::catan_map *ui;
     QSignalMapper *signalMapper;
+    void activate_settlements();
+    void activate_roads();
+    void activate_other();
 
 };
 
