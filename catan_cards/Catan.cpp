@@ -28,7 +28,7 @@ Player::Player(){
 }
 
 Player::~Player(){
-
+//destroy the lists
 }
 
 //public function for rolling dice
@@ -39,52 +39,52 @@ int Player::roll(){
 //This function shows the basic numbers for a given player.
 void Player::checkStats(){
     cout<<"Player Name: "<<this->name_<<endl;
-    cout<<"Victory Points: "<<this->victoryPoints_<<endl;
-    cout<<"Army Size: "<<this->armySize_<<endl;
-    cout<<"Road Length: "<<this->roadLength_<<endl;
-    cout<<"Num of Resources: " <<this->numberOfResources()<<endl;
-    cout<<"Num of Development: "<<this->numberOfDevelopments()<<endl<<endl;
+    cout<<"Victory Points: "<<victoryPoints_<<endl;
+    cout<<"Army Size: "<<armySize_<<endl;
+    cout<<"Road Length: "<<roadLength_<<endl;
+    cout<<"Num of Resources: " <<numberOfResources()<<endl;
+    cout<<"Num of Development: "<<numberOfDevelopments()<<endl<<endl;
 }
 
 //this private function calculates the total number of resources a player has
 int Player::numberOfResources(){
-    int total = this->yellow_;
-    total = total + this->lightGreen_;
-    total = total + this->darkGreen_;
-    total = total + this->blue_;
-    total = total + this->red_;
+    int total = yellow_;
+    total = total + lightGreen_;
+    total = total + darkGreen_;
+    total = total + blue_;
+    total = total + red_;
     return total;
 }
 
 //this private function calculates the
 //totalnumber of development cards a player has
 int Player::numberOfDevelopments(){
-    int total = this->knight_;
-    total +=this->victoryPointCard_;
-    total +=this->roadBuilder_;
-    total +=this->monopoly_;
-    total +=this->yearOfPlenty_;
+    int total = knight_;
+    total +=victoryPointCard_;
+    total +=roadBuilder_;
+    total +=monopoly_;
+    total +=yearOfPlenty_;
     return total;
 }
 
 //This public functionallows a player to see
 //which resources he or she has
 void Player::seeResources(){
-    cout<<"Yellow: "<<this->yellow_<<endl;
-    cout<<"Light Green: "<<this->lightGreen_<<endl;
-    cout<<"Dark Green: "<<this->darkGreen_<<endl;
-    cout<<"Blue: "<<this->blue_<<endl;
-    cout<<"Red: "<<this->red_<<endl<<endl;
+    cout<<"Yellow: "<<yellow_<<endl;
+    cout<<"Light Green: "<<lightGreen_<<endl;
+    cout<<"Dark Green: "<<darkGreen_<<endl;
+    cout<<"Blue: "<<blue_<<endl;
+    cout<<"Red: "<<red_<<endl<<endl;
 }
 
 //This public functionallows a player to see
 //which development cards he or she has
 void Player::seeDevelopments(){
-    cout<<"Knights: "<<this->knight_<<endl;
-    cout<<"Victory Point Card(s): "<<this->victoryPointCard_<<endl;
-    cout<<"Road Builder: "<<this->roadBuilder_<<endl;
-    cout<<"Monoply: "<<this->monopoly_<<endl;
-    cout<<"Year Of Plenth: "<<this->yearOfPlenty_<<endl<<endl;
+    cout<<"Knights: "<<knight_<<endl;
+    cout<<"Victory Point Card(s): "<<victoryPointCard_<<endl;
+    cout<<"Road Builder: "<<roadBuilder_<<endl;
+    cout<<"Monoply: "<<monopoly_<<endl;
+    cout<<"Year Of Plenth: "<<yearOfPlenty_<<endl<<endl;
 }
 
 /*This public function brings up the buy menu. It calls the
@@ -102,14 +102,14 @@ void Player::buyItem(){
     cout<<endl;
     if(number==1 || number==2 || number==3 || number==4){
         if(number==1)
-            this->buyRoad();
+            buyRoad();
         else if (number ==2)
-            this->buySettlement();
+            buySettlement();
         else if (number==3)
-            this->buyCity();
+            buyCity();
         else if (number==4)
-            this->buyDevelopmentCard(); 
-        this->seeResources();
+            buyDevelopmentCard(); 
+        seeResources();
     }
     cout<<"exit"<<endl;
 
@@ -167,7 +167,7 @@ bool Player::roadOffOwnCity(int &top, int &bottom){
 }
 
 /*private function that determines if a road can be placed. Returns -1 if absolutly true, 0 if false. An integer>0 will be returned
-if it finds a match to a road in which case we need to check to see if other players have a city/settlement
+if it finds a match to a the players own road in which case we need to check to see if other players have a city/settlement
 in that corresponding integer location. */
 int Player::checkRoad(){
     int top, bottom;//these are somehow the known values of the road that will be placesd
@@ -194,10 +194,10 @@ int Player::checkRoad(){
 
 //this private function allows a player to purchase a road
 void Player::buyRoad(){
-    if(this->red_>0 && this->darkGreen_>0){
+    if(red_>0 && darkGreen_>0){
         //do action to place road
-        this->red_--;
-        this->darkGreen_--;
+        red_--;
+        darkGreen_--;
 
         struct roads ro;
         //filling in the .top and .bottom @suneil
@@ -213,13 +213,13 @@ void Player::buyRoad(){
 
 //This private fuction allows a player to purchase a settlement.
 void Player::buySettlement(){
-    if(this->red_ >0 && this->darkGreen_ >0 && this->lightGreen_ >0 && this->yellow_>0){
+    if(red_ >0 && darkGreen_ >0 && lightGreen_ >0 && yellow_>0){
         //do action to place settlement
-        this->red_--;
-        this->darkGreen_--;
-        this->yellow_--;
-        this->lightGreen_--;
-        this->victoryPoints_++;
+        red_--;
+        darkGreen_--;
+        yellow_--;
+        lightGreen_--;
+        victoryPoints_++;
 
         struct settlement set;
         set.city = 1;
@@ -245,7 +245,7 @@ void Player::buySettlement(){
 /*This private function does the action of changing a settlement into a city and
 charging the respective resources.*/
 void Player::buyCity(){
-    if(this->blue_>=3 && this->yellow_>=2){
+    if(blue_>=3 && yellow_>=2){
         //do action to place settlement, but also we have to make sure a settlement is already in that space.
         
         //cycle through list of settlements to make sure there is a settlement to begin with
@@ -258,9 +258,9 @@ void Player::buyCity(){
             current++;
         }
         if(numOfCities!=size){ //it's possible to build a city (aka not every building is a city)
-            this->blue_ -= 3;
-            this->yellow_ -= 2;
-            this->victoryPoints_++;
+            blue_ -= 3;
+            yellow_ -= 2;
+            victoryPoints_++;
             //then we have to do some sort of cycle to change the proper settlement into a city.
         }
         else{   //we can't build a city because there are no settlements (Everything already is a city)
@@ -277,21 +277,21 @@ It will have to call the private function UNKOWNRIGHTNOW
 to figure out which card you get
 */
 void Player::buyDevelopmentCard(){
-    if(this->blue_>0 && this->yellow_>0 && this->lightGreen_>0){
+    if(blue_>0 && yellow_>0 && lightGreen_>0){
         //do action to fetch developmentCard
-        this->blue_--;
-        this->yellow_--;
-        this->lightGreen_--;
+        blue_--;
+        yellow_--;
+        lightGreen_--;
     } else
         cout<<"You do not have the resources to purchase a developmentCard!"<<endl<<endl;
 }
 
 void Player::changeName(string & name){
-    this->name_ = name;
+    name_ = name;
 }
 
 void Player::changeColor(char &color){
-    this->playerColor_ = color;
+    playerColor_ = color;
 }
 
 /*This public function searches through all the settlements/cities
@@ -305,13 +305,13 @@ void Player::gainResources(int &roll){
     
     for(int i = 0; i<size; i++){
         if(current->top.number == roll){
-            this->addProperColor(current->top.color, current->city);
+            addProperColor(current->top.color, current->city);
         }
         if(current->left.number == roll){
-            this->addProperColor(current->left.color, current->city);
+            addProperColor(current->left.color, current->city);
         }
         if(current->right.number == roll){
-            this->addProperColor(current->right.color, current->city);
+            addProperColor(current->right.color, current->city);
         }
         
         current++;
@@ -324,15 +324,15 @@ of the players resources to add to given that he his settlement/city
 has a part matching a number*/
 void Player::addProperColor(char& color, int& city){
     if(color=='y'){
-        this->yellow_ += city;
+        yellow_ += city;
     }else if(color=='l'){
-        this->lightGreen_ +=city;
+        lightGreen_ +=city;
     }else if(color=='d'){
-        this->darkGreen_ +=city;
+        darkGreen_ +=city;
     }else if(color=='b'){
-        this->blue_ += city;
+        blue_ += city;
     }else { //color = red
-        this->red_ += city;
+        red_ += city;
     }
 
 }
@@ -343,7 +343,7 @@ The private function whichCardsToTrade decides which cards you will give up to a
 card you decide on here */
 
 void Player::convertResources(){
-    this->seeResources();
+    seeResources();
     
     cout<<"1) Trade for yellow"<<endl;
     cout<<"2) Trade for light green"<<endl;
@@ -439,7 +439,7 @@ int Player::findBestTrade(char color){
 
 }
 
-/*This function removes 50% +1 (if odd) of a players card count.
+/*This public function removes 50% +1 (if odd) of a players card count.
 It should be called for every player and removes the cards at
 random. */
 void Player::removeCardsOn7(){
@@ -460,8 +460,8 @@ cards to give!*/
 
 char Player::removeRandomCard(){
     int i = rand() %5;
-    if(numberOfResources() <=7)
-        return '0';
+    //if(numberOfResources() <=7) shouldn't need this because of the caller function. It should also be re-used for when the robber is used.
+    //   return '0';
 
     if(i ==0){
         if(yellow_ >0){
@@ -506,3 +506,173 @@ char Player::removeRandomCard(){
 
     return '0';
 }
+
+/*This public function decides which development card
+the player wants to play. The main function then uses if
+statements to decide what to do next. */
+int Player::playDevCard(){
+    cout<<"Which Development Card would you like to play?"<<endl;
+    cout<<"1) Knight Card"<<endl;
+    cout<<"2) Victory Point"<<endl;
+    cout<<"3) Road Builder"<<endl;
+    cout<<"4) Monopoly"<<endl;
+    cout<<"5) Year Of Plenty"<<endl;
+    cout<<"6) Cancel"<<endl;
+    int input;
+    cin>>input;
+
+    if(input==1 ){
+        if(knight_ >0){
+            return 1;
+        }
+        cout<<"You have no Knight Cards!"<<endl;
+    }
+    else if (input==2){
+        if(victoryPointCard_>0){
+            playVictoryPoint();
+            return 2;
+        }
+        cout<<"You have no Victor Point Cards!"<<endl;
+    }
+    else if (input ==3){
+        if(roadBuilder>0){
+            //buildRoadSomehow, we'd need to call same functions
+            //as buy road twice without actually buying (spending resources).
+            //roadBuilder--;
+            return 3;
+        }
+        cout<<"You have no Road Builder Cards!"<<endl;
+    }
+    else if (input ==4){
+        if(monopoly_>0){
+            monopoly_--;
+            return 4;
+        }
+        cout<<"You have no Monopoly Cards!"<<endl;
+    }
+    else if (input ==5){
+        if(yearOfPlenty>0){
+            yearOfPlenty--;
+            return 5;
+        }
+        cout<<"You have no Year Of Plenty Cards!"<<endl;
+    }
+    
+    return 0;
+}
+
+/* This public function playMonoply decides which card the player will take from the other players. A subsequent function should be called for each remainign player to take all of those cards and give it to the one player. */
+char Player::playMonoply(){
+
+    cout<<"Which card do you want to remove from the other players?"<<endl;
+    cout<<"1) Yellow"<<endl;
+    cout<<"2) Light Green"<<endl;
+    cout<<"3) Dark Green"<<endl;
+    cout<<"4) Blue"<<endl;
+    cout<<"5) Red"<<endl;
+    cout<<"6) Cancel"<<endl;
+    int input;
+    cin>>input;
+
+    if(input == 1)
+        return 'y';
+    else if(input ==2)
+        return 'l';
+    else if(input ==3)
+        return 'd';
+    else if(input ==4)
+        return 'b';
+    else if(input ==5)
+        return 'r';
+
+    return '0';
+
+}
+
+/* This public function removes all of a certain card from
+a player and returns that number. This function is relevant for when a player is playing the Monopoly card, and should be called for all players. All of the integers should be returns and will be later rewarded to the player playing the card. */
+int Player::removeCardFromPlayer(char & color){
+
+    int num = 0;
+    if(color =='y'){
+        num = yellow_;
+        yellow_ = 0;
+    } else if (color =='l'){
+        num = lightGreen_;
+        lightGreen_ = 0;
+    } else if (color =='d'){
+        num =darkGreen_;
+        darkGreen_ = 0;
+    } else if (color =='b'){
+        num = blue_;
+        blue_ = 0;
+    }else{
+        num = red_;
+        red_ = 0;
+    }
+        return num;
+        
+}
+
+/*This public function is the last call for after a player plays the monopoly card. It takes the number of cards to add, and the color to add to for inputs and then does the simple math to add it. */
+void Player::gainCardsFromMonopoly(int & num, char & color){
+    knight--;
+    if(color =='y'){
+        yellow_ += num;
+    } else if (color =='l'){
+        lightGreen_ += num;
+    } else if (color =='d'){
+        darkGreen_ += num;
+    } else if (color =='b'){
+        blue_ += num;
+    }else{
+        red_ += num;
+    }
+}
+
+/*This is a private function called to give the player a victoryPint */
+void Player::playVictoryPoint(){
+    victoryPointCard_--;
+    victoryPints_++;
+}
+
+void Player::playYearOfPlenty(){
+    cout<<"You gain two resources from the bank"<<endl;
+    cout<<"1) Yellow"<<endl;
+    cout<<"2) Light Green"<<endl;
+    cout<<"3) Dark Green"<<endl;
+    cout<<"4) Blue"<<endl;
+    cout<<"5) Red"<<endl;
+    yearOfPlenty_--;
+
+    int input;
+    for(int i = 0; i<2; i++){
+        cin>>input;
+        if(input ==1 || input ==2 || input ==3 ||
+            input ==4 || input ==5){
+            if(input == 1){
+                yellow_++;
+                cout<<"Yellow";
+            } else if(input == 2){
+                lightGreen_++;
+                cout<<"Light Green";
+            } else if(input == 3){
+                darkGreen_++;
+                cout<<"Dark Green";
+            } else if(input ==4){
+                blue_++;
+                cout<<"Blue";
+            } else if(input ==5){
+                red_++;
+                cout<<"Red";        
+            }
+            cout<<" added";
+            if(i = 0)
+                cout<<"Chose next Card."<<endl;
+        }
+        else
+           --i;
+    }
+}
+
+
