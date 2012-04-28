@@ -50,29 +50,6 @@ void catan_map::activate_settlements(){
     /////////////////////////////////////////////
     //START SETTLEMENT BUTTON MAPPING!!
     ///////////////////
-<<<<<<< HEAD
-    //Format is city ID|left Color|left node|right node|right node|top color|top node|port
-    connect(ui->pushSettle_221, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_221, "221|0|0|d|1|0|0|3");
-
-    connect(ui->pushSettle_223, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_223, "223|0|0|0|0|d|1|3");
-
-    connect(ui->pushSettle_230, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_230, "230|d|1|l|2|0|0|0");
-
-    connect(ui->pushSettle_281, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_281, "281|0|0|0|0|l|2|l");
-
-    connect(ui->pushSettle_330, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_330, "330|l|2|y|3|0|0|l");
-
-    connect(ui->pushSettle_331, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_331, "331|0|0|0|0|y|3|0");
-
-    connect(ui->pushSettle_334, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_334, "334|y|3|0|0|0|0|0");
-=======
     connect(ui->pushSettle_01, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushSettle_01, "settle_01");
 
@@ -93,36 +70,10 @@ void catan_map::activate_settlements(){
 
     connect(ui->pushSettle_07, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushSettle_07, "settle_07");
->>>>>>> a9155c57dcae44069ee4c9ba6e40f4676688461d
 
     connect(ui->pushSettle_08, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushSettle_08, "settle_08");
 
-<<<<<<< HEAD
-    connect(ui->pushSettle_220, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_220, "220|0|0|d|1|r|4|0");
-
-    connect(ui->pushSettle_22, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_22, "22|r|4|b|5|d|1|0");
-
-    connect(ui->pushSettle_23, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_23, "23|d|1|l|2|b|5|0");
-
-    connect(ui->pushSettle_30, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_30, "30|b|5|r|6|l|2|0");
-
-    connect(ui->pushSettle_33, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_33, "33|l|2|y|3|r|6|0");
-
-    connect(ui->pushSettle_34, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_34, "34|r|6|l|7|y|3|0");
-
-    connect(ui->pushSettle_340, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_340, "340|y|3|0|0|l|7|3");
-
-    connect(ui->pushSettle_391, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_391, "391|l|7|0|0|0|0|3");
-=======
     connect(ui->pushSettle_09, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushSettle_09, "settle_09");
 
@@ -146,7 +97,6 @@ void catan_map::activate_settlements(){
 
     connect(ui->pushSettle_16, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushSettle_16, "settle_16");
->>>>>>> a9155c57dcae44069ee4c9ba6e40f4676688461d
 
     connect(ui->pushSettle_17, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushSettle_17, "settle_17");
@@ -154,34 +104,6 @@ void catan_map::activate_settlements(){
     connect(ui->pushSettle_18, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushSettle_18, "settle_18");
 
-<<<<<<< HEAD
-    connect(ui->pushSettle_12, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_12, "12|0|0|d|8|r|4|0");
-
-    connect(ui->pushSettle_20, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_20, "20|r|4|d|5|d|8|0");
-
-    connect(ui->pushSettle_2, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_2, "2|d|8|y|9|b|5|0");
-
-    connect(ui->pushSettle_3, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_3, "3|b|5|r|6|y|9|0");
-
-    connect(ui->pushSettle_4, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_4, "4|y|9|d|10|r|6|0");
-
-    connect(ui->pushSettle_40, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_40, "40|r|6|l|7|d|10|0");
-
-    connect(ui->pushSettle_44, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_44, "44|d|10|y|11|l|7|0");
-
-    connect(ui->pushSettle_440, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_440, "440|l|7|0|0|y|11|0");
-
-    connect(ui->pushSettle_441, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_441, "441|y|11|0|0|0|0|3");
-=======
     connect(ui->pushSettle_19, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushSettle_19, "settle_19");
 
@@ -208,36 +130,10 @@ void catan_map::activate_settlements(){
 
     connect(ui->pushSettle_27, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushSettle_27, "settle_27");
->>>>>>> a9155c57dcae44069ee4c9ba6e40f4676688461d
 
     connect(ui->pushSettle_28, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushSettle_28, "settle_28");
 
-<<<<<<< HEAD
-    connect(ui->pushSettle_110, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_110, "110|0|0|r|12|0|0|y");
-
-    connect(ui->pushSettle_11, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_11, "11|0|0|d|8|r|12|0");
-
-    connect(ui->pushSettle_10, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_10, "10|r|12|l|13|d|8|0");
-
-    connect(ui->pushSettle_1, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_1, "1|d|8|y|9|l|13|0");
-
-    connect(ui->pushSettle_6, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_6, "6|l|13|l|14|y|9|0");
-
-    connect(ui->pushSettle_5, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_5, "5|l|9|d|10|l|14|0");
-
-    connect(ui->pushSettle_50, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_50, "50|l|14|b|15|d|10|0");
-
-    connect(ui->pushSettle_45, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_45, "45|d|10|y|8|b|3|0");
-=======
     connect(ui->pushSettle_29, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushSettle_29, "settle_29");
 
@@ -261,7 +157,6 @@ void catan_map::activate_settlements(){
 
     connect(ui->pushSettle_36, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushSettle_36, "settle_36");
->>>>>>> a9155c57dcae44069ee4c9ba6e40f4676688461d
 
     connect(ui->pushSettle_37, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushSettle_37, "settle_37");
