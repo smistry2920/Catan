@@ -33,7 +33,7 @@ class Player{
     };
 
     struct component{
-        int number;
+        int node;
         char color; //y, l, d, b, or r 
     };
  
@@ -98,7 +98,7 @@ class Player{
     bool isSettlementBlockingRoad(int &);
 
     //For Dev Cards
-    int playDevCar();
+    int playDevCard();
     //For monopoly cards:
     char playMonoply();
     int removeCardFromPlayer(char &);

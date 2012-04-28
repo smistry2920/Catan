@@ -226,11 +226,11 @@ void Player::buySettlement(){
 
         //filling in the rest until we figure out how it connects to the board @ suneil
         set.cityNumber = 1;
-        set.left.number = 1;
+        set.left.node = 1;
         set.left.color = 'l';
-        set.right.number = 1;
+        set.right.node = 1;
         set.right.color = 'l';
-        set.top.number =1;
+        set.top.node =1;
         set.top.color = 'l';
 
         set.port = 'a';
@@ -306,13 +306,13 @@ void Player::gainResources(int &roll){
     //need to know how the city will be attached to a the color;
     
     for(int i = 0; i<size; i++){
-        if(current->top.number == roll){
+        if(current->top.node == roll){
             addProperColor(current->top.color, current->city);
         }
-        if(current->left.number == roll){
+        if(current->left.node == roll){
             addProperColor(current->left.color, current->city);
         }
-        if(current->right.number == roll){
+        if(current->right.node == roll){
             addProperColor(current->right.color, current->city);
         }
         
@@ -537,7 +537,7 @@ int Player::playDevCard(){
         cout<<"You have no Victor Point Cards!"<<endl;
     }
     else if (input ==3){
-        if(roadBuilder>0){
+        if(roadBuilder_>0){
             //buildRoadSomehow, we'd need to call same functions
             //as buy road twice without actually buying (spending resources).
             //roadBuilder--;
@@ -553,8 +553,8 @@ int Player::playDevCard(){
         cout<<"You have no Monopoly Cards!"<<endl;
     }
     else if (input ==5){
-        if(yearOfPlenty>0){
-            yearOfPlenty--;
+        if(yearOfPlenty_>0){
+            yearOfPlenty_--;
             return 5;
         }
         cout<<"You have no Year Of Plenty Cards!"<<endl;
@@ -617,7 +617,7 @@ int Player::removeCardFromPlayer(char & color){
 
 /*This public function is the last call for after a player plays the monopoly card. It takes the number of cards to add, and the color to add to for inputs and then does the simple math to add it. */
 void Player::gainCardsFromMonopoly(int & num, char & color){
-    knight--;
+    knight_--;
     if(color =='y'){
         yellow_ += num;
     } else if (color =='l'){
@@ -634,7 +634,7 @@ void Player::gainCardsFromMonopoly(int & num, char & color){
 /*This is a private function called to give the player a victoryPint */
 void Player::playVictoryPoint(){
     victoryPointCard_--;
-    victoryPints_++;
+    victoryPoints_++;
 }
 
 void Player::playYearOfPlenty(){
@@ -668,7 +668,7 @@ void Player::playYearOfPlenty(){
                 cout<<"Red";        
             }
             cout<<" added";
-            if(i = 0)
+            if(i == 0)
                 cout<<"Chose next Card."<<endl;
         }
         else
