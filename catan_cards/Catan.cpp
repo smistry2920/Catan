@@ -119,7 +119,7 @@ void Player::buyItem(){
 It checks to see if a settlement is being placed in a spot that would
 block 2 consecutive roads of an opponent. If it returns false, there is no match. If it returns 
 for any opponent, then the settlement can not be placed there. */
-bool Player::areRoadsBlockingSettlement(int & location){
+bool Player::areRoadsBlockingSettlement(int location){
     list<roads>::iterator current = pavement.begin();
     int size = pavement.size();
     int matches = 0;
@@ -140,7 +140,7 @@ bool Player::areRoadsBlockingSettlement(int & location){
 It checks to see if they have a city or settlement at the location input. If it returns true FOR
 ANYOE, thereis a match and the current player can now place a road down. If it returns false FOR
 EVERYONE, then the player can place the road. */
-bool Player::isSettlementBlockingRoad(int & location){
+bool Player::isSettlementBlockingRoad(int location){
     list<settlement>::iterator current = pieces.begin();
     int size = pieces.size();
 
@@ -154,7 +154,7 @@ bool Player::isSettlementBlockingRoad(int & location){
 
 /* This private function checks to see if you have  city/settlement already in a location
 thereby allowing you to place a road.*/
-bool Player::roadOffOwnCity(int &top, int &bottom){
+bool Player::roadOffOwnCity(int top, int bottom){
 
     list<settlement>::iterator current = pieces.begin();
     int size = pieces.size();
@@ -324,7 +324,7 @@ void Player::gainResources(int &roll){
 /*This is a private function called by gainResources. It finds which 
 of the players resources to add to given that he his settlement/city
 has a part matching a number*/
-void Player::addProperColor(char& color, int& city){
+void Player::addProperColor(char color, int city){
     if(color=='y'){
         yellow_ += city;
     }else if(color=='l'){
@@ -592,7 +592,7 @@ char Player::playMonoply(){
 
 /* This public function removes all of a certain card from
 a player and returns that number. This function is relevant for when a player is playing the Monopoly card, and should be called for all players. All of the integers should be returns and will be later rewarded to the player playing the card. */
-int Player::removeCardFromPlayer(char & color){
+int Player::removeCardFromPlayer(char color){
 
     int num = 0;
     if(color =='y'){
@@ -616,7 +616,7 @@ int Player::removeCardFromPlayer(char & color){
 }
 
 /*This public function is the last call for after a player plays the monopoly card. It takes the number of cards to add, and the color to add to for inputs and then does the simple math to add it. */
-void Player::gainCardsFromMonopoly(int & num, char & color){
+void Player::gainCardsFromMonopoly(int num, char color){
     knight_--;
     if(color =='y'){
         yellow_ += num;

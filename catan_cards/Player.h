@@ -67,8 +67,9 @@ class Player{
     void tradeResources(Player &);  //trade with another player
     int findBestTrade(char);
 
-    //gaining resources
-    void addProperColor(char&, int&);
+    //gaining resource
+    void addProperColor(char, int);
+
     //checking to see if things can be planted
     bool roadOffOwnCity(int &, int &);
     int checkRoad();
@@ -94,15 +95,15 @@ class Player{
     void gainResources(int& );
     void removeCardsOn7();
 
-    bool areRoadsBlockingSettlement(int &);
-    bool isSettlementBlockingRoad(int &);
+    bool areRoadsBlockingSettlement(int);
+    bool isSettlementBlockingRoad(int);
 
     //For Dev Cards
     int playDevCard();
     //For monopoly cards:
     char playMonoply();
-    int removeCardFromPlayer(char &);
-    void gainCardsFromMonopoly(int&, char&);
+    int removeCardFromPlayer(char);
+    void gainCardsFromMonopoly(int, char);
 
     //constructor
     Player();
