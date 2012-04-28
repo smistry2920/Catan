@@ -38,7 +38,7 @@ int Player::roll(){
 
 //This function shows the basic numbers for a given player.
 void Player::checkStats(){
-    cout<<"Player Name: "<<this->name_<<endl;
+    cout<<"Player Name: "<<name_<<endl;
     cout<<"Victory Points: "<<victoryPoints_<<endl;
     cout<<"Army Size: "<<armySize_<<endl;
     cout<<"Road Length: "<<roadLength_<<endl;
@@ -138,8 +138,8 @@ bool Player::areRoadsBlockingSettlement(int & location){
 
 /*This public function has to be called for each opponent (everyone but the player you are on).
 It checks to see if they have a city or settlement at the location input. If it returns true FOR
-ANYOE, thereis a match and the current player can now place a road down. If it returns false for
-everyone, then the player can place the road. */
+ANYOE, thereis a match and the current player can now place a road down. If it returns false FOR
+EVERYONE, then the player can place the road. */
 bool Player::isSettlementBlockingRoad(int & location){
     list<settlement>::iterator current = pieces.begin();
     int size = pieces.size();
@@ -225,6 +225,7 @@ void Player::buySettlement(){
         set.city = 1;
 
         //filling in the rest until we figure out how it connects to the board @ suneil
+        set.cityNumber = 1;
         set.left.number = 1;
         set.left.color = 'l';
         set.right.number = 1;
@@ -233,7 +234,7 @@ void Player::buySettlement(){
         set.top.color = 'l';
 
         set.port = 'a';
-        set.cityNumber = 1;
+
         //end @suneil
         
         pieces.push_front(set);//add city to list.
@@ -257,6 +258,7 @@ void Player::buyCity(){
                 numOfCities++;
             current++;
         }
+
         if(numOfCities!=size){ //it's possible to build a city (aka not every building is a city)
             blue_ -= 3;
             yellow_ -= 2;
@@ -586,7 +588,6 @@ char Player::playMonoply(){
         return 'r';
 
     return '0';
-
 }
 
 /* This public function removes all of a certain card from
