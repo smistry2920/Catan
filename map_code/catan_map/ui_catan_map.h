@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'catan_map.ui'
 **
-** Created: Sun Apr 29 16:23:23 2012
+** Created: Sun Apr 29 17:13:07 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

@@ -4,6 +4,11 @@ void get_digits(int x);
 
 int main(int argc, char *argv[]){
     map_tracker map;
+
+    map.valid_settlement_check("223|0|0|0|0|d|1|3", "P1");
+    map.valid_city_check("223|0|0|0|0|d|1|3", "P1");
+
+    /*
     QStringList settlements,players,players2;
     settlements << "settle_01" << "settle_101" << "settle_02" << "settle_402"
                 << "settle_60" << "settle_01";
@@ -19,7 +24,7 @@ int main(int argc, char *argv[]){
     }
     map.valid_road_check("road|203|204", "P1");
 
-        /*
+
         if (argc == 2){
             QString word = argv[1];
             bool ok = true;

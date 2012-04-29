@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QtCore>
+#include "map_tracker/map_tracker.h"
+#include "player/Player.h"
 
 namespace Ui {
     class catan_map;
@@ -23,6 +25,8 @@ private slots:
 private:
     Ui::catan_map *ui;
     QSignalMapper *signalMapper;
+    map_tracker mapper;
+    Player players[4];
     void activate_settlements();
     void activate_roads();
     void activate_other();
