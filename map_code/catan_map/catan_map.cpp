@@ -33,7 +33,49 @@ catan_map::~catan_map()
 
 void catan_map::signalSorter(const QString & button)
 {
+
     qDebug() << "made it here: " << button;
+
+    //road button pushed
+    if (button.startsWith("road")){
+        qDebug() << "road button: " << button;
+    }
+
+    //view a hand!
+    else if (button.startsWith("v")){
+        qDebug() << "view hand: " << button;
+    }
+
+    //buy a development card
+    else if (button.startsWith("buy")){
+        qDebug() << "buy development card: " << button;
+    }
+
+    //roll
+    else if (button.startsWith("roll")){
+        qDebug() << "roll code: " << button;
+    }
+
+    else{
+        qDebug() << "=========================";
+        qDebug() << "*************************";
+        if (mapper.valid_city_check(button, "P1")){
+            qDebug() << "City: valid city implemented for: " << button;
+            qDebug() << "-------------------------";
+        }
+        else{
+            qDebug() << "City: settlment failed";
+            qDebug() << "----------------------";
+        }
+        if (mapper.valid_settlement_check(button, "P1")){
+            qDebug() << "valid settlement input for: " << button;
+            qDebug() << "-------------------------";
+        }
+        else{
+            qDebug() << "Settlement: settle failed";
+            qDebug() << "-------------------------";
+        }
+    }
 }
 
 void catan_map::checkPlayer(){
