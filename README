@@ -1,4 +1,9 @@
 Settlers of Catan (the board game!). It will be programmed in Python and utilize the GUI. Because of parts of the games complexity, we'll change the ammount of points needed to win to 7. We'll also get rid of Longest Road and change the shape of board pieces (for now). They will be changed from hexagon's to squares for simplicity.
+What needs to be finished:
+	-proper road selection (ie another player cannot selet your road, etc)
+	-fully working integration between code and gui
+	-proper instructional readme
+
 /////////////################
 ////UPDATES:
 // 	-may change longest road card to robber
@@ -10,11 +15,10 @@ Settlers of Catan (the board game!). It will be programmed in Python and utilize
 		player to the current one.
 //////////////**********************
 -Ideas/goals:
-	Goal: To create the multiplayer board game: Settlers of Catan
+	Goal(updated with more realistic goals): To create the multiplayer board game: Settlers of Catan
 	Ideas:
-		-multiplayer support
-		-server/client system
-		-save system
-		-if finished early, impliment other multiplayer-oriented games 
-			(yahtzee, life, etc).
+		-just get the game fully working!
+		-helpful instructions at the bottom of the menu!
+		-save system!! (may be cut)
+		-ports and robbers (unfortunately, this may be cut)
 
