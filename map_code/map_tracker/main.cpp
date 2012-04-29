@@ -20,6 +20,7 @@ int main(int argc, char *argv[]){
             map.set_city(settlements[i], players2[i]);
         }
     }
+    map.valid_road_check("road|203|204", "P1");
 
         /*
         if (argc == 2){

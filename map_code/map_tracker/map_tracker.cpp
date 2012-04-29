@@ -57,8 +57,39 @@ bool map_tracker::valid_city_check(QString settlement, QString player){
     return true;
 }
 
-bool map_tracker::valid_road_check(QString road){
-    road = "null";
+bool map_tracker::valid_road_check(QString road, QString player){
+    if (roads.indexOf(road) != -1){
+        return false;
+    }
+    QString city1_temp = road.section("|",1,1);
+    QString city2_temp = road.section("|",2,2);
+    bool ok = true;
+    int c1 = city1_temp.toInt(&ok,10);
+    int c2 = city2_temp.toInt(&ok,10);
+    QString city1 = QString::number(c1);
+    QString city2 = QString::number(c2);
+    int c1_index = settlements.indexOf(city1);
+    int c2_index = settlements.indexOf(city2);
+    QStringList roads_city1,roads_city2;
+    if (c1_index != -1){
+        if (p_settle_ownership[c1_index] == player){
+            roads << road;
+            return true;
+        }
+    }
+    if (c2_index != -1){
+        if (p_settle_ownership[c2_index] == player){
+            roads << road;
+            return true;
+        }
+
+    }
+    roads_city1 = roads.filter(city1_temp);
+    roads_city1.removeOne(road);
+    roads_city2 = roads.filter(city2_temp);
+    roads_city2.removeOne(road);
+    qDebug() << road << city1_temp << city2_temp;
+
     return false;
 }
 

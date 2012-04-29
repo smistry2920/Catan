@@ -11,7 +11,7 @@ public:
     //for adding the settlement!
     bool valid_settlement_check(QString);
     bool valid_city_check(QString, QString);
-    bool valid_road_check(QString);
+    bool valid_road_check(QString, QString);
 
     void set_settlement(QString, QString);
     void set_city(QString, QString);
