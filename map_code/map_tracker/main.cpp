@@ -3,14 +3,25 @@
 void get_digits(int x);
 
 int main(int argc, char *argv[]){
-        map_tracker map;
-        map.valid_settlement_check("settle_01");
-        map.valid_settlement_check("settle_101");
-        map.valid_settlement_check("settle_02");
-        map.valid_settlement_check("settle_402");
-        map.valid_settlement_check("settle_60");
-        map.valid_settlement_check("settle_01");
-    /*
+    map_tracker map;
+    QStringList settlements,players,players2;
+    settlements << "settle_01" << "settle_101" << "settle_02" << "settle_402"
+                << "settle_60" << "settle_01";
+    players << "P1" << "P2" << "P3" << "P4" << "P1" << "P2";
+    players2 << "P1" << "P3" << "P3" << "P4" << "P1" << "P2";
+
+    for(int i = 0; i < settlements.size(); ++i){
+        if (map.valid_settlement_check(settlements[i]))
+            map.set_settlement(settlements[i], players[i]);
+    }
+
+    for (int i = 0; i<settlements.size(); ++i){
+        if (map.valid_city_check(settlements[i], players2[i])){
+            map.set_city(settlements[i], players2[i]);
+        }
+    }
+
+        /*
         if (argc == 2){
             QString word = argv[1];
             bool ok = true;

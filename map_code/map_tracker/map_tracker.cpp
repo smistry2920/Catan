@@ -3,7 +3,7 @@
 map_tracker::map_tracker()
 {
 }
-
+//checks if a settlement is valid, if so, it adds it to the
 bool map_tracker::valid_settlement_check(QString settlement){
     settlement.remove(0,7);
     qDebug() << settlement;
@@ -28,13 +28,33 @@ bool map_tracker::valid_settlement_check(QString settlement){
     check4 = settle_check(settlement);
 
     if (check1 == true && check2 == true && check3 == true && check4 == true){
-        add_settlement(settlement_location);
+        //add_settlement(settlement_location);
         main_check = true;
     }
 
-    qDebug() << settlements;
-
     return main_check;
+}
+
+bool map_tracker::valid_city_check(QString settlement, QString player){
+    QString settle = settlement.remove(0,7);
+    bool ok = true;
+    int settle_int = settle.toInt(&ok, 10);
+    settle = QString::number(settle_int);
+    int settle_loc = settlements.indexOf(settle);
+    if (settle_loc == -1){
+        qDebug() << "settlement not found";
+        return false;
+    }
+    QString player_check = p_settle_ownership[settle_loc];
+    if (player_check.endsWith("c")){
+        qDebug() << "already a city";
+        return false;
+    }
+    if (player_check != (player+"s")){
+        qDebug() << "player ownership is different";
+        return false;
+    }
+    return true;
 }
 
 bool map_tracker::valid_road_check(QString road){
@@ -42,9 +62,29 @@ bool map_tracker::valid_road_check(QString road){
     return false;
 }
 
+void map_tracker::set_settlement(QString settlement, QString player){
+    QString settle = settlement.remove(0,7);
+    bool ok = true;
+    p_settle_ownership << player + "s";
+    add_settlement(settle.toInt(&ok,10));
+}
+
 void map_tracker::add_settlement(int settle){
     QString add_settle = QString::number(settle);
     settlements << add_settle;
+    qDebug() << settlements;
+    qDebug() << p_settle_ownership;
+}
+
+void map_tracker::set_city(QString settlement, QString player){
+    QString settle = settlement.remove(0,7);
+    bool ok = true;
+    int x = settle.toInt(&ok, 10);
+    QString check_s = QString::number(x);
+    int p_convert = settlements.indexOf(check_s);
+    p_settle_ownership[p_convert] = p_settle_ownership[p_convert] + "c";
+    qDebug() << settlements;
+    qDebug() << p_settle_ownership;
 }
 
 void map_tracker::add_road(QString road){
