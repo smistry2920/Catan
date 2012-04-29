@@ -3,8 +3,11 @@
 map_tracker::map_tracker()
 {
 }
+
+/////////////////////////////////
+////start settlement creation
 //checks if a settlement is valid, if so, it adds it to the
-bool map_tracker::valid_settlement_check(QString settlement){
+bool map_tracker::valid_settlement_check(QString settlement, QString player){
     settlement.remove(0,7);
     qDebug() << settlement;
     bool ok = true;
@@ -28,13 +31,36 @@ bool map_tracker::valid_settlement_check(QString settlement){
     check4 = settle_check(settlement);
 
     if (check1 == true && check2 == true && check3 == true && check4 == true){
-        //add_settlement(settlement_location);
+        add_settlement(settlement, player);
         main_check = true;
     }
 
     return main_check;
 }
 
+void map_tracker::add_settlement(QString settle, QString player){
+    p_settle_ownership << player + "s";
+    settlements << settle;
+    qDebug() << settlements;
+    qDebug() << p_settle_ownership;
+}
+
+bool map_tracker::settle_check(QString neighbor){
+    bool status = false;
+    int x = settlements.indexOf(neighbor);
+    qDebug() << neighbor << " x: " << x;
+    if (x == -1){
+        status = true;
+    }
+    return status;
+}
+////////end settlement creation!
+///////////////////////////////
+
+
+//////////////////////////////
+////start city creation!
+//valid city checker! Checks if a city is a valid placement and then places a city there!
 bool map_tracker::valid_city_check(QString settlement, QString player){
     QString settle = settlement.remove(0,7);
     bool ok = true;
@@ -54,52 +80,59 @@ bool map_tracker::valid_city_check(QString settlement, QString player){
         qDebug() << "player ownership is different";
         return false;
     }
+
+    set_city(settle_loc);
     return true;
 }
 
-bool map_tracker::valid_road_check(QString road){
-    road = "null";
+void map_tracker::set_city(int city_convert){
+    p_settle_ownership[city_convert] = p_settle_ownership[city_convert] + "c";
+    qDebug() << settlements;
+    qDebug() << p_settle_ownership;
+}
+//////////end city creation!!
+////////////////////////////////////
+//checks if the road is a legel placement for the player!
+bool map_tracker::valid_road_check(QString road, QString player){
+    if (roads.indexOf(road) != -1){
+        return false;
+    }
+    QString city1_temp = road.section("|",1,1);
+    QString city2_temp = road.section("|",2,2);
+    bool ok = true;
+    int c1 = city1_temp.toInt(&ok,10);
+    int c2 = city2_temp.toInt(&ok,10);
+    QString city1 = QString::number(c1);
+    QString city2 = QString::number(c2);
+    int c1_index = settlements.indexOf(city1);
+    int c2_index = settlements.indexOf(city2);
+    QStringList roads_city1,roads_city2;
+    if (c1_index != -1){
+        if (p_settle_ownership[c1_index] == player){
+            roads << road;
+            return true;
+        }
+    }
+    if (c2_index != -1){
+        if (p_settle_ownership[c2_index] == player){
+            roads << road;
+            return true;
+        }
+
+    }
+    roads_city1 = roads.filter(city1_temp);
+    roads_city1.removeOne(road);
+    roads_city2 = roads.filter(city2_temp);
+    roads_city2.removeOne(road);
+    qDebug() << road << city1_temp << city2_temp;
+
     return false;
-}
-
-void map_tracker::set_settlement(QString settlement, QString player){
-    QString settle = settlement.remove(0,7);
-    bool ok = true;
-    p_settle_ownership << player + "s";
-    add_settlement(settle.toInt(&ok,10));
-}
-
-void map_tracker::add_settlement(int settle){
-    QString add_settle = QString::number(settle);
-    settlements << add_settle;
-    qDebug() << settlements;
-    qDebug() << p_settle_ownership;
-}
-
-void map_tracker::set_city(QString settlement, QString player){
-    QString settle = settlement.remove(0,7);
-    bool ok = true;
-    int x = settle.toInt(&ok, 10);
-    QString check_s = QString::number(x);
-    int p_convert = settlements.indexOf(check_s);
-    p_settle_ownership[p_convert] = p_settle_ownership[p_convert] + "c";
-    qDebug() << settlements;
-    qDebug() << p_settle_ownership;
 }
 
 void map_tracker::add_road(QString road){
     road = "null";
 }
 
-bool map_tracker::settle_check(QString neighbor){
-    bool status = false;
-    int x = settlements.indexOf(neighbor);
-    qDebug() << neighbor << " x: " << x;
-    if (x == -1){
-        status = true;
-    }
-    return status;
-}
 
 QStringList map_tracker::settlement_neighbors(int x){
     qDebug() << "search neighbors of: " << x;

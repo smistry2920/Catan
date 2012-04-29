@@ -11,15 +11,13 @@ int main(int argc, char *argv[]){
     players2 << "P1" << "P3" << "P3" << "P4" << "P1" << "P2";
 
     for(int i = 0; i < settlements.size(); ++i){
-        if (map.valid_settlement_check(settlements[i]))
-            map.set_settlement(settlements[i], players[i]);
+        map.valid_settlement_check(settlements[i],players[i]);
     }
 
     for (int i = 0; i<settlements.size(); ++i){
-        if (map.valid_city_check(settlements[i], players2[i])){
-            map.set_city(settlements[i], players2[i]);
-        }
+        map.valid_city_check(settlements[i], players2[i]);
     }
+    map.valid_road_check("road|203|204", "P1");
 
         /*
         if (argc == 2){
