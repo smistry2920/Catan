@@ -103,7 +103,7 @@ void catan_map::activate_settlements(){
     signalMapper->setMapping(ui->pushSettle_112, "112|0|0|0|0|0|0|0");
 
     connect(ui->pushSettle_120, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_120, "10|0|0|r|4|0|0|b");
+    signalMapper->setMapping(ui->pushSettle_120, "120|0|0|r|4|0|0|b");
 
     connect(ui->pushSettle_12, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushSettle_12, "12|0|0|d|8|r|4|0");
@@ -465,10 +465,10 @@ void catan_map::activate_other(){
     signalMapper->setMapping(ui->vhandButton_04, "vhand_04");
 
     connect(ui->buyDevButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->vhandButton_01, "buyDevCard");
+    signalMapper->setMapping(ui->buyDevButton, "buyDevCard");
 
     connect(ui->rollButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->vhandButton_01, "roll");
+    signalMapper->setMapping(ui->rollButton, "roll");
 
     ///////////////
     //END MISCELLANEOS MAPPING
