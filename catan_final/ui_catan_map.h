@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'catan_map.ui'
 **
-** Created: Sun Apr 29 18:04:38 2012
+** Created: Mon Apr 30 18:37:38 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -223,6 +223,7 @@ public:
     QLabel *nstar_17;
     QPushButton *node_18;
     QLabel *nstar_18;
+    QPushButton *node_19;
     QMenuBar *menuBar;
     QMenu *menuSample;
     QToolBar *mainToolBar;
@@ -842,6 +843,9 @@ public:
         nstar_18->setObjectName(QString::fromUtf8("nstar_18"));
         nstar_18->setGeometry(QRect(436, 496, 61, 16));
         nstar_18->setAlignment(Qt::AlignCenter);
+        node_19 = new QPushButton(centralWidget);
+        node_19->setObjectName(QString::fromUtf8("node_19"));
+        node_19->setGeometry(QRect(105, 275, 41, 41));
         catan_map->setCentralWidget(centralWidget);
         image_label->raise();
         pushSettle_223->raise();
@@ -1014,6 +1018,7 @@ public:
         nstar_17->raise();
         node_18->raise();
         nstar_18->raise();
+        node_19->raise();
         menuBar = new QMenuBar(catan_map);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 1000, 26));
@@ -1226,6 +1231,7 @@ public:
         nstar_17->setText(QApplication::translate("catan_map", "*", 0, QApplication::UnicodeUTF8));
         node_18->setText(QApplication::translate("catan_map", "6", 0, QApplication::UnicodeUTF8));
         nstar_18->setText(QApplication::translate("catan_map", "*****", 0, QApplication::UnicodeUTF8));
+        node_19->setText(QString());
         menuSample->setTitle(QApplication::translate("catan_map", "Sample", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 

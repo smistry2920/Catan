@@ -5,6 +5,7 @@
 #include <QtCore>
 #include "map_tracker/map_tracker.h"
 #include "player/Player.h"
+#include "player/Node.h"
 
 namespace Ui {
     class catan_map;
@@ -30,9 +31,13 @@ private:
     void activate_settlements();
     void activate_roads();
     void activate_other();
+//<<<<<<< HEAD
     void button_output(QString,QString);
     void settlement_output(QString,QString);
     void city_output(QString,QString);
+//=======
+    void activate_nodes();
+//>>>>>>> upstream/master
 
 };
 

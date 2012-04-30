@@ -299,20 +299,22 @@ void Player::changeColor(char &color){
 /*This public function searches through all the settlements/cities
 a player has to give them the respective resources gained on
 a roll. */
-void Player::gainResources(int &roll){
+
+/*
+void Player::gainResources(int roll, Node onlyNode){
     list<settlement>::iterator current = pieces.begin();
 
     int size = pieces.size();
     //need to know how the city will be attached to a the color;
-    
+
     for(int i = 0; i<size; i++){
-        if(current->top.node == roll){
+        if(onlyNode.findNode(current->top.node) == roll){
             addProperColor(current->top.color, current->city);
         }
-        if(current->left.node == roll){
+        if(onlyNode.findNode(current->left.node) == roll){
             addProperColor(current->left.color, current->city);
         }
-        if(current->right.node == roll){
+        if(onlyNode.findNode(current->right.node) == roll){
             addProperColor(current->right.color, current->city);
         }
         
@@ -320,7 +322,7 @@ void Player::gainResources(int &roll){
     }
    
 }
-
+*/
 /*This is a private function called by gainResources. It finds which 
 of the players resources to add to given that he his settlement/city
 has a part matching a number*/
