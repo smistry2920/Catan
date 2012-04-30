@@ -22,16 +22,28 @@ Player::Player(){
 
     this->knight_       = 0;
     this->victoryPointCard_ = 0;
-    this->roadBuilder_  = 0;
+    this->roadBuilder_  
     this->monopoly_     = 0;
     this->yearOfPlenty_ = 0;
 }
+
+
+class Hand : public Player
+{
+  public:
+    this->yellow_       = 0;
+    this->lightGreen_   = 0;
+    this->darkGreen_    = 0;
+    this->blue_         = 0;
+    this->red_          = 0;
+}
+
 
 Player::~Player(){
 //destroy the lists
 }
 
-//public function for rolling dice
+//public function for rolling dicegit 
 int Player::roll(){
     return rand() %6 +1;
 }
@@ -300,7 +312,7 @@ void Player::changeColor(char &color){
 a player has to give them the respective resources gained on
 a roll. */
 
-
+/*
 void Player::gainResources(int roll, Node onlyNode){
     list<settlement>::iterator current = pieces.begin();
 
@@ -322,7 +334,7 @@ void Player::gainResources(int roll, Node onlyNode){
     }
    
 }
-
+*/
 /*This is a private function called by gainResources. It finds which 
 of the players resources to add to given that he his settlement/city
 has a part matching a number*/
@@ -678,4 +690,58 @@ void Player::playYearOfPlenty(){
     }
 }
 
+QString Player::OutName()
+{
+	QString name = name_;
+	return name;
+}
 
+QString player::OutColor()
+{
+	Qstring color = color_;
+	return color;
+}
+
+QString player::OutCardsHeld()
+{
+	Qstring CardsHeld;
+	CardsHeld.append(QString("%1").arg(numberOfResources()));
+	return CardsHeld;
+} 
+
+QString player::OutVictoryPoints()
+{
+	QString VP;
+	VP.append(QString("%1").arg(victorypoints_);
+	return VP;
+}
+	
+QString player::OutRoll()
+{
+	Qstring roll;
+	roll.append(QString("%1").arg(roll_);
+	return roll;
+}
+	
+ QStringList player::checkHand()
+ {
+	QStringList hand;
+	QString wheat, sheep, lumber, stone, brick;
+
+	wheat.prepend("wheat_");
+	sheep.prepend("sheep_");
+	lumber.prepend("lumber_");
+	stone.preprend("stone_");
+	brick.prepend("brick_");
+	
+	wheat.append(QString("%1").arg(yellow_));
+	sheep.append(QString("%1").arg(lightGreen_));
+	lumber.append(QString("%1").arg(darkGreen_));
+	stone.append(QString("%1").arg(blue_));
+	brick.append(QString("%1").arg(red_));
+	
+	
+	hand << wheat << sheep << lumber << stone << brick;
+	return hand;     
+ }
+ 		

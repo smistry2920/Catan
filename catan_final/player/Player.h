@@ -1,10 +1,7 @@
-#ifndef PLAYER_H
-#define PLAYER_H
-
 #include<iostream>
 #include<string>
 #include<list>
-#include "Node.h"
+//#include "Node.h"
 
 using namespace std;
 
@@ -95,7 +92,7 @@ class Player{
     void changeColor(char&);
     void convertResources(); //try to switch out cards
 
-    void gainResources(int, Node );
+    //void gainResources(int, Node );
     void removeCardsOn7();
 
     bool areRoadsBlockingSettlement(int);
@@ -107,10 +104,17 @@ class Player{
     char playMonoply();
     int removeCardFromPlayer(char);
     void gainCardsFromMonopoly(int, char);
+    
+    QString OutColor();
+    QString OutName();
+    QStringList checkHand();
+    QString OutRoll();
+    QString OutVictoryPoints()
+    QString OutCardsHeld()
+    
 
 
     //constructor
     Player();
     ~Player();
 };
-#endif
