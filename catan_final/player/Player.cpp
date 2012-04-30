@@ -300,7 +300,7 @@ void Player::changeColor(char &color){
 a player has to give them the respective resources gained on
 a roll. */
 
-/*
+
 void Player::gainResources(int roll, Node onlyNode){
     list<settlement>::iterator current = pieces.begin();
 
@@ -322,7 +322,7 @@ void Player::gainResources(int roll, Node onlyNode){
     }
    
 }
-*/
+
 /*This is a private function called by gainResources. It finds which 
 of the players resources to add to given that he his settlement/city
 has a part matching a number*/
