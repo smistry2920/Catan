@@ -31,7 +31,13 @@ private:
     void activate_settlements();
     void activate_roads();
     void activate_other();
+//<<<<<<< HEAD
+    void button_output(QString,QString);
+    void settlement_output(QString,QString);
+    void city_output(QString,QString);
+//=======
     void activate_nodes();
+//>>>>>>> upstream/master
 
 };
 

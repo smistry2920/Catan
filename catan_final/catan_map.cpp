@@ -20,7 +20,7 @@ catan_map::catan_map(QWidget *parent) :
 
     activate_other();
 
-    activate_nodes();
+    //activate_nodes();
 
     //final signal mapping connection (calls signalSorter to sort signals!)
     connect(signalMapper, SIGNAL(mapped(const QString &)), this, SLOT(signalSorter(const QString &)));
@@ -57,13 +57,16 @@ void catan_map::signalSorter(const QString & button)
     else if (button.startsWith("roll")){
         qDebug() << "roll code: " << button;
     }
-
+//UNDER HERE!! all qDebugs are TEST CODE!!
+//////replace city_output ->> P1 and P2 with
+/////////qstrings that contain player number!!
     else{
         qDebug() << "=========================";
         qDebug() << "*************************";
         if (mapper.valid_city_check(button, "P1")){
             qDebug() << "City: valid city implemented for: " << button;
             qDebug() << "-------------------------";
+            city_output(button, "P3");
         }
         else{
             qDebug() << "City: settlment failed";
@@ -72,6 +75,7 @@ void catan_map::signalSorter(const QString & button)
         if (mapper.valid_settlement_check(button, "P1")){
             qDebug() << "valid settlement input for: " << button;
             qDebug() << "-------------------------";
+            settlement_output(button,"P4");
         }
         else{
             qDebug() << "Settlement: settle failed";
@@ -87,6 +91,315 @@ void catan_map::checkPlayer(){
 
     }
 */
+}
+
+void catan_map::settlement_output(QString button, QString player){
+    QString button_out = button.section("|",0,0);
+    button_out = button_out + "s";
+    button_output(button_out, player);
+}
+
+void catan_map::city_output(QString button, QString player){
+    QString button_out = button.section("|",0,0);
+    button_out = button_out + "c";
+    button_output(button_out, player);
+}
+
+void catan_map::button_output(QString button_out, QString player){
+    QString button_text;
+    QString button_color;
+    if(button_out.endsWith("c")){
+        button_text = "c";
+    }
+    else{
+        button_text = "s";
+    }
+    button_out.chop(1);
+
+    if (player == "P1"){
+        button_color = "background-color: rgb(69, 139, 116)";
+    }
+    if (player == "P2"){
+        button_color = "background-color: rgb(113, 113, 198)";
+    }
+    if (player == "P3"){
+        button_color = "background-color: rgb(255, 140, 0)";
+    }
+    if (player == "P4"){
+        button_color = "background-color: rgb(205, 150, 205)";
+    }
+    ///////////////////////////////////////////////////////
+
+    if(button_out == "221"){
+        ui->pushSettle_221->setText(button_text);
+        ui->pushSettle_221->setAutoFillBackground(true);
+        ui->pushSettle_221->setStyleSheet(button_color);
+    }
+    if (button_out == "223"){
+        ui->pushSettle_223->setText(button_text);
+        ui->pushSettle_223->setAutoFillBackground(true);
+        ui->pushSettle_223->setStyleSheet(button_color);
+    }
+    if (button_out == "230"){
+        ui->pushSettle_230->setText(button_text);
+        ui->pushSettle_230->setAutoFillBackground(true);
+        ui->pushSettle_230->setStyleSheet(button_color);
+    }
+    if (button_out == "281"){
+        ui->pushSettle_281->setText(button_text);
+        ui->pushSettle_281->setAutoFillBackground(true);
+        ui->pushSettle_281->setStyleSheet(button_color);
+    }
+    if (button_out == "330"){
+        ui->pushSettle_330->setText(button_text);
+        ui->pushSettle_330->setAutoFillBackground(true);
+        ui->pushSettle_330->setStyleSheet(button_color);
+    }
+    if (button_out == "331"){
+        ui->pushSettle_331->setText(button_text);
+        ui->pushSettle_331->setAutoFillBackground(true);
+        ui->pushSettle_331->setStyleSheet(button_color);
+    }
+    if (button_out == "334"){
+        ui->pushSettle_334->setText(button_text);
+        ui->pushSettle_334->setAutoFillBackground(true);
+        ui->pushSettle_334->setStyleSheet(button_color);
+    }
+    if (button_out == "171"){
+        ui->pushSettle_171->setText(button_text);
+        ui->pushSettle_171->setAutoFillBackground(true);
+        ui->pushSettle_171->setStyleSheet(button_color);
+    }
+    if (button_out == "220"){
+        ui->pushSettle_220->setText(button_text);
+        ui->pushSettle_220->setAutoFillBackground(true);
+        ui->pushSettle_220->setStyleSheet(button_color);
+    }
+    if (button_out == "22"){
+        ui->pushSettle_22->setText(button_text);
+        ui->pushSettle_22->setAutoFillBackground(true);
+        ui->pushSettle_22->setStyleSheet(button_color);
+    }
+    if (button_out == "23"){
+        ui->pushSettle_23->setText(button_text);
+        ui->pushSettle_23->setAutoFillBackground(true);
+        ui->pushSettle_23->setStyleSheet(button_color);
+    }
+    if (button_out == "30"){
+        ui->pushSettle_30->setText(button_text);
+        ui->pushSettle_30->setAutoFillBackground(true);
+        ui->pushSettle_30->setStyleSheet(button_color);
+    }
+    if (button_out == "33"){
+        ui->pushSettle_33->setText(button_text);
+        ui->pushSettle_33->setAutoFillBackground(true);
+        ui->pushSettle_33->setStyleSheet(button_color);
+    }
+    if (button_out == "34"){
+        ui->pushSettle_34->setText(button_text);
+        ui->pushSettle_34->setAutoFillBackground(true);
+        ui->pushSettle_34->setStyleSheet(button_color);
+    }
+    if (button_out == "340"){
+        ui->pushSettle_340->setText(button_text);
+        ui->pushSettle_340->setAutoFillBackground(true);
+        ui->pushSettle_340->setStyleSheet(button_color);
+    }
+    if (button_out == "391"){
+        ui->pushSettle_391->setText(button_text);
+        ui->pushSettle_391->setAutoFillBackground(true);
+        ui->pushSettle_391->setStyleSheet(button_color);
+    }
+    if (button_out == "112"){
+        ui->pushSettle_112->setText(button_text);
+        ui->pushSettle_112->setAutoFillBackground(true);
+        ui->pushSettle_112->setStyleSheet(button_color);
+    }
+    if (button_out == "120"){
+        ui->pushSettle_120->setText(button_text);
+        ui->pushSettle_120->setAutoFillBackground(true);
+        ui->pushSettle_120->setStyleSheet(button_color);
+    }
+    if (button_out == "12"){
+        ui->pushSettle_12->setText(button_text);
+        ui->pushSettle_12->setAutoFillBackground(true);
+        ui->pushSettle_12->setStyleSheet(button_color);
+    }
+    if (button_out == "20"){
+        ui->pushSettle_20->setText(button_text);
+        ui->pushSettle_20->setAutoFillBackground(true);
+        ui->pushSettle_20->setStyleSheet(button_color);
+    }
+    if (button_out == "2"){
+        ui->pushSettle_2->setText(button_text);
+        ui->pushSettle_2->setAutoFillBackground(true);
+        ui->pushSettle_2->setStyleSheet(button_color);
+    }
+    if (button_out == "3"){
+        ui->pushSettle_3->setText(button_text);
+        ui->pushSettle_3->setAutoFillBackground(true);
+        ui->pushSettle_3->setStyleSheet(button_color);
+    }
+    if (button_out == "4"){
+        ui->pushSettle_4->setText(button_text);
+        ui->pushSettle_4->setAutoFillBackground(true);
+        ui->pushSettle_4->setStyleSheet(button_color);
+    }
+    if (button_out == "40"){
+        ui->pushSettle_40->setText(button_text);
+        ui->pushSettle_40->setAutoFillBackground(true);
+        ui->pushSettle_40->setStyleSheet(button_color);
+    }
+    if (button_out == "44"){
+        ui->pushSettle_44->setText(button_text);
+        ui->pushSettle_44->setAutoFillBackground(true);
+        ui->pushSettle_44->setStyleSheet(button_color);
+    }
+    if (button_out == "440"){
+        ui->pushSettle_440->setText(button_text);
+        ui->pushSettle_440->setAutoFillBackground(true);
+        ui->pushSettle_440->setStyleSheet(button_color);
+    }
+    if (button_out == "441"){
+        ui->pushSettle_441->setText(button_text);
+        ui->pushSettle_441->setAutoFillBackground(true);
+        ui->pushSettle_441->setStyleSheet(button_color);
+    }
+    if (button_out == "111"){
+        ui->pushSettle_111->setText(button_text);
+        ui->pushSettle_111->setAutoFillBackground(true);
+        ui->pushSettle_111->setStyleSheet(button_color);
+    }
+    if (button_out == "110"){
+        ui->pushSettle_110->setText(button_text);
+        ui->pushSettle_110->setAutoFillBackground(true);
+        ui->pushSettle_110->setStyleSheet(button_color);
+    }
+    if (button_out == "11"){
+        ui->pushSettle_11->setText(button_text);
+        ui->pushSettle_11->setAutoFillBackground(true);
+        ui->pushSettle_11->setStyleSheet(button_color);
+    }
+    if (button_out == "10"){
+        ui->pushSettle_10->setText(button_text);
+        ui->pushSettle_10->setAutoFillBackground(true);
+        ui->pushSettle_10->setStyleSheet(button_color);
+    }
+    if (button_out == "1"){
+        ui->pushSettle_1->setText(button_text);
+        ui->pushSettle_1->setAutoFillBackground(true);
+        ui->pushSettle_1->setStyleSheet(button_color);
+    }
+    if (button_out == "6"){
+        ui->pushSettle_6->setText(button_text);
+        ui->pushSettle_6->setAutoFillBackground(true);
+        ui->pushSettle_6->setStyleSheet(button_color);
+    }
+    if (button_out == "5"){
+        ui->pushSettle_5->setText(button_text);
+        ui->pushSettle_5->setAutoFillBackground(true);
+        ui->pushSettle_5->setStyleSheet(button_color);
+    }
+    if (button_out == "50"){
+        ui->pushSettle_50->setText(button_text);
+        ui->pushSettle_50->setAutoFillBackground(true);
+        ui->pushSettle_50->setStyleSheet(button_color);
+    }
+    if (button_out == "45"){
+        ui->pushSettle_45->setText(button_text);
+        ui->pushSettle_45->setAutoFillBackground(true);
+        ui->pushSettle_45->setStyleSheet(button_color);
+    }
+    if (button_out == "450"){
+        ui->pushSettle_450->setText(button_text);
+        ui->pushSettle_450->setAutoFillBackground(true);
+        ui->pushSettle_450->setStyleSheet(button_color);
+    }
+    if (button_out == "445"){
+        ui->pushSettle_445->setText(button_text);
+        ui->pushSettle_445->setAutoFillBackground(true);
+        ui->pushSettle_445->setStyleSheet(button_color);
+    }
+    if (button_out == "700"){
+        ui->pushSettle_700->setText(button_text);
+        ui->pushSettle_700->setAutoFillBackground(true);
+        ui->pushSettle_700->setStyleSheet(button_color);
+    }
+    if (button_out == "610"){
+        ui->pushSettle_610->setText(button_text);
+        ui->pushSettle_610->setAutoFillBackground(true);
+        ui->pushSettle_610->setStyleSheet(button_color);
+    }
+    if (button_out == "61"){
+        ui->pushSettle_61->setText(button_text);
+        ui->pushSettle_61->setAutoFillBackground(true);
+        ui->pushSettle_61->setStyleSheet(button_color);
+    }
+    if (button_out == "66"){
+        ui->pushSettle_66->setText(button_text);
+        ui->pushSettle_66->setAutoFillBackground(true);
+        ui->pushSettle_66->setStyleSheet(button_color);
+    }
+    if (button_out == "60"){
+        ui->pushSettle_60->setText(button_text);
+        ui->pushSettle_60->setAutoFillBackground(true);
+        ui->pushSettle_60->setStyleSheet(button_color);
+    }
+    if (button_out == "56"){
+        ui->pushSettle_56->setText(button_text);
+        ui->pushSettle_56->setAutoFillBackground(true);
+        ui->pushSettle_56->setStyleSheet(button_color);
+    }
+    if (button_out == "55"){
+        ui->pushSettle_55->setText(button_text);
+        ui->pushSettle_55->setAutoFillBackground(true);
+        ui->pushSettle_55->setStyleSheet(button_color);
+    }
+    if (button_out == "550"){
+        ui->pushSettle_550->setText(button_text);
+        ui->pushSettle_550->setAutoFillBackground(true);
+        ui->pushSettle_550->setStyleSheet(button_color);
+    }
+    if (button_out == "501"){
+        ui->pushSettle_501->setText(button_text);
+        ui->pushSettle_501->setAutoFillBackground(true);
+        ui->pushSettle_501->setStyleSheet(button_color);
+    }
+    if (button_out == "661"){
+        ui->pushSettle_661->setText(button_text);
+        ui->pushSettle_661->setAutoFillBackground(true);
+        ui->pushSettle_661->setStyleSheet(button_color);
+    }
+    if (button_out == "666"){
+        ui->pushSettle_666->setText(button_text);
+        ui->pushSettle_666->setAutoFillBackground(true);
+        ui->pushSettle_666->setStyleSheet(button_color);
+    }
+    if (button_out == "660"){
+        ui->pushSettle_660->setText(button_text);
+        ui->pushSettle_660->setAutoFillBackground(true);
+        ui->pushSettle_660->setStyleSheet(button_color);
+    }
+    if (button_out == "611"){
+        ui->pushSettle_611->setText(button_text);
+        ui->pushSettle_611->setAutoFillBackground(true);
+        ui->pushSettle_611->setStyleSheet(button_color);
+    }
+    if (button_out == "560"){
+        ui->pushSettle_560->setText(button_text);
+        ui->pushSettle_560->setAutoFillBackground(true);
+        ui->pushSettle_560->setStyleSheet(button_color);
+    }
+    if (button_out == "556"){
+        ui->pushSettle_556->setText(button_text);
+        ui->pushSettle_556->setAutoFillBackground(true);
+        ui->pushSettle_556->setStyleSheet(button_color);
+    }
+    if (button_out == "551"){
+        ui->pushSettle_551->setText(button_text);
+        ui->pushSettle_551->setAutoFillBackground(true);
+        ui->pushSettle_551->setStyleSheet(button_color);
+    }
 }
 
 void catan_map::activate_settlements(){

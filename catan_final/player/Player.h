@@ -1,7 +1,7 @@
 #include<iostream>
 #include<string>
 #include<list>
-#include "Node.h"
+//#include "Node.h"
 
 using namespace std;
 
@@ -92,7 +92,7 @@ class Player{
     void changeColor(char&);
     void convertResources(); //try to switch out cards
 
-    void gainResources(int, Node );
+    //void gainResources(int, Node );
     void removeCardsOn7();
 
     bool areRoadsBlockingSettlement(int);
