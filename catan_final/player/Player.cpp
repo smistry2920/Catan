@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Node.h"
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -304,15 +305,16 @@ void Player::gainResources(int &roll){
 
     int size = pieces.size();
     //need to know how the city will be attached to a the color;
-    
+    Node a;
+
     for(int i = 0; i<size; i++){
-        if(current->top.node == roll){
+        if(a.findNode(current->top.node) == roll){
             addProperColor(current->top.color, current->city);
         }
-        if(current->left.node == roll){
+        if(a.findNode(current->left.node) == roll){
             addProperColor(current->left.color, current->city);
         }
-        if(current->right.node == roll){
+        if(a.findNode(current->right.node) == roll){
             addProperColor(current->right.color, current->city);
         }
         

@@ -20,6 +20,8 @@ catan_map::catan_map(QWidget *parent) :
 
     activate_other();
 
+    activate_nodes();
+
     //final signal mapping connection (calls signalSorter to sort signals!)
     connect(signalMapper, SIGNAL(mapped(const QString &)), this, SLOT(signalSorter(const QString &)));
     //checkPlayers();
@@ -516,4 +518,64 @@ void catan_map::activate_other(){
     //END MISCELLANEOS MAPPING
     ////////////////////////////////////////////
 
+}
+
+void catan_map::activate_nodes(){
+
+    connect(ui->node_01, SIGNAL(clicked()), signalMapper, SLOT(map()));
+    signalMapper->setMapping(ui->node_01, "node|1");
+
+    connect(ui->node_02, SIGNAL(clicked()), signalMapper, SLOT(map()));
+    signalMapper->setMapping(ui->node_02, "node|2");
+
+    connect(ui->node_03, SIGNAL(clicked()), signalMapper, SLOT(map()));
+    signalMapper->setMapping(ui->node_03, "node|3");
+
+    connect(ui->node_04, SIGNAL(clicked()), signalMapper, SLOT(map()));
+    signalMapper->setMapping(ui->node_04, "node|4");
+
+    connect(ui->node_05, SIGNAL(clicked()), signalMapper, SLOT(map()));
+    signalMapper->setMapping(ui->node_05, "node|5");
+
+    connect(ui->node_06, SIGNAL(clicked()), signalMapper, SLOT(map()));
+    signalMapper->setMapping(ui->node_06, "node|6");
+
+    connect(ui->node_07, SIGNAL(clicked()), signalMapper, SLOT(map()));
+    signalMapper->setMapping(ui->node_07, "node|7");
+
+    connect(ui->node_08, SIGNAL(clicked()), signalMapper, SLOT(map()));
+    signalMapper->setMapping(ui->node_08, "node|8")
+            ;
+    connect(ui->node_09, SIGNAL(clicked()), signalMapper, SLOT(map()));
+    signalMapper->setMapping(ui->node_09, "node|9");
+
+    connect(ui->node_10, SIGNAL(clicked()), signalMapper, SLOT(map()));
+    signalMapper->setMapping(ui->node_10, "node|10");
+
+    connect(ui->node_11, SIGNAL(clicked()), signalMapper, SLOT(map()));
+    signalMapper->setMapping(ui->node_11, "node|11");
+
+    connect(ui->node_12, SIGNAL(clicked()), signalMapper, SLOT(map()));
+    signalMapper->setMapping(ui->node_12, "node|12");
+
+    connect(ui->node_13, SIGNAL(clicked()), signalMapper, SLOT(map()));
+    signalMapper->setMapping(ui->node_13, "node|13");
+
+    connect(ui->node_14, SIGNAL(clicked()), signalMapper, SLOT(map()));
+    signalMapper->setMapping(ui->node_14, "node|14");
+
+    connect(ui->node_15, SIGNAL(clicked()), signalMapper, SLOT(map()));
+    signalMapper->setMapping(ui->node_15, "node|15");
+
+    connect(ui->node_16, SIGNAL(clicked()), signalMapper, SLOT(map()));
+    signalMapper->setMapping(ui->node_16, "node|16");
+
+    connect(ui->node_17, SIGNAL(clicked()), signalMapper, SLOT(map()));
+    signalMapper->setMapping(ui->node_17, "node|17");
+
+    connect(ui->node_18, SIGNAL(clicked()), signalMapper, SLOT(map()));
+    signalMapper->setMapping(ui->node_18, "node|18");
+
+    connect(ui->node_19, SIGNAL(clicked()), signalMapper, SLOT(map()));
+    signalMapper->setMapping(ui->node_19, "node|19");
 }
