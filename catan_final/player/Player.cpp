@@ -1,5 +1,4 @@
 #include "Player.h"
-#include "Node.h"
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -300,21 +299,21 @@ void Player::changeColor(char &color){
 /*This public function searches through all the settlements/cities
 a player has to give them the respective resources gained on
 a roll. */
-void Player::gainResources(int &roll){
+
+void Player::gainResources(int roll, Node onlyNode){
     list<settlement>::iterator current = pieces.begin();
 
     int size = pieces.size();
     //need to know how the city will be attached to a the color;
-    Node a;
 
     for(int i = 0; i<size; i++){
-        if(a.findNode(current->top.node) == roll){
+        if(onlyNode.findNode(current->top.node) == roll){
             addProperColor(current->top.color, current->city);
         }
-        if(a.findNode(current->left.node) == roll){
+        if(onlyNode.findNode(current->left.node) == roll){
             addProperColor(current->left.color, current->city);
         }
-        if(a.findNode(current->right.node) == roll){
+        if(onlyNode.findNode(current->right.node) == roll){
             addProperColor(current->right.color, current->city);
         }
         

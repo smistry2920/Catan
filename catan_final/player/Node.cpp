@@ -3,7 +3,7 @@
 using namespace std;
     
 Node::Node(){
-    /*
+
     nodes[0] = 0;//case robber
     nodes[1] = 11;
     nodes[2] = 12;
@@ -24,7 +24,7 @@ Node::Node(){
     nodes[17] = 2;
     nodes[18] = 6;
     nodes[19] = 0; //desert
-    */
+
 
 }
 
