@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <QtCore>
 #include<iostream>
 #include<string>
 #include<list>
@@ -60,11 +61,7 @@ class Player{
     int  numberOfResources();
     int  numberOfDevelopments();
 
-    //called from buyItem()
-    void buyRoad();
-    void buySettlement();
-    void buyCity();
-    void buyDevelopmentCard();
+
 
     //Trading cards
     void whichCardsToTrade();       //trade withself
@@ -90,7 +87,6 @@ class Player{
     void checkStats();
     void seeResources();
     void seeDevelopments();
-    void buyItem();
     void changeName(string&);
     void changeColor(char&);
     void convertResources(); //try to switch out cards
@@ -108,6 +104,18 @@ class Player{
     int removeCardFromPlayer(char);
     void gainCardsFromMonopoly(int, char);
 
+
+    //buying:
+    void buyRoad();
+    void buySettlement(QString);
+    void buyCity(QString);
+    void buyDevelopmentCard();
+
+    //affording:
+    bool affordRoad();
+    bool affordSettlement();
+    bool affordCity();
+    bool affordDevelopmentCard();
 
     //constructor
     Player();

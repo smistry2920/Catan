@@ -27,7 +27,12 @@ private:
     Ui::catan_map *ui;
     QSignalMapper *signalMapper;
     map_tracker mapper;
+
     Player players[4];
+    int iter;
+
+    Node node;
+
     void activate_settlements();
     void activate_roads();
     void activate_other();
