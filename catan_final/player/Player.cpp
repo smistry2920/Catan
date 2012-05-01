@@ -524,49 +524,78 @@ char Player::removeRandomCard(){
     int i = rand() %5;
     //if(numberOfResources() <=7) shouldn't need this because of the caller function. It should also be re-used for when the robber is used.
     //   return '0';
-
-    if(i ==0){
-        if(yellow_ >0){
-            yellow_--;
-            return 'y';
+    if(numberOfResources()!=0){
+        if(i ==0){
+            if(yellow_ >0){
+                yellow_--;
+                return 'y';
+            }
+            else
+                removeRandomCard();
         }
-        else
-            removeRandomCard();
-    }
-    if(i ==1){
-        if(lightGreen_ >0){
-            lightGreen_--;
-            return 'l';
+        if(i ==1){
+            if(lightGreen_ >0){
+                lightGreen_--;
+                return 'l';
+            }
+            else
+                removeRandomCard();
         }
-        else
-            removeRandomCard();
-    }
-    if(i ==2){
-        if(darkGreen_ >0){
-            darkGreen_--;
-            return 'd';
+        if(i ==2){
+            if(darkGreen_ >0){
+                darkGreen_--;
+                return 'd';
+            }
+            else
+                removeRandomCard();
         }
-        else
-            removeRandomCard();
-    }
-    if(i ==3){
-        if(blue_ >0){
-            blue_--;
-            return 'b';
+        if(i ==3){
+            if(blue_ >0){
+                blue_--;
+                return 'b';
+            }
+            else
+                removeRandomCard();
         }
-        else
-            removeRandomCard();
-    }
-    if(i ==4){
-        if(red_ >0){
-            red_--;
-            return 'r';
+        if(i ==4){
+            if(red_ >0){
+                red_--;
+                return 'r';
+            }
+            else
+                removeRandomCard();
         }
-        else
-            removeRandomCard();
     }
-
     return '0';
+}
+
+/*This public function deteremines if the player has a city/settlement on a particular node(this is used for the robber)
+  */
+bool Player::nodeOnRobber(int robber){
+    list<settlement>::iterator current = pieces.begin();
+
+    int size = pieces.size();
+    for(int i = 0; i<size; ++i){
+        if(current->top.node ==robber || current->right.node == robber || current->left.node == robber)
+            return true;
+
+        current++;
+    }
+
+    return false;
+}
+
+void Player::addCard(char color){
+    if(color=='l')
+        lightGreen_++;
+    else if (color=='d')
+        darkGreen_++;
+    else if (color=='r')
+        red_++;
+    else if (color=='y')
+        yellow_++;
+    else if(color=='b')
+        blue_++;
 }
 
 /*This public function decides which development card

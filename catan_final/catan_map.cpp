@@ -92,7 +92,7 @@ void catan_map::signalSorter(const QString & button)
             for(int k = 0; k<numPlayers; k++)
                 players[k].removeCardsOn7();
 
-
+            /*
             int nodeNumber=0;
             node.placeRobber(nodeNumber);
             //int nodeNumber;
@@ -105,11 +105,14 @@ void catan_map::signalSorter(const QString & button)
             for(int i = 0; i<numPlayers; i++)
                 onNode[i] = 0;
 
-            for(int i = 0; i<numPlayer; i++){
+            for(int i = 0; i<numPlayers; i++){
                 if(i!=iter)
-                    cout<<"bulloks"<<endl;
-
+                    onNode[i] = players[i].nodeOnRobber(nodeNumber);
+                if(onNode[i] ==0)
+                    players[iter].addCard(players[i].removeRandomCard());
             }
+            */
+
 
         }
         for(int k = 0; k< numPlayers; k++)

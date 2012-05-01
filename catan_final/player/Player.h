@@ -105,6 +105,10 @@ class Player{
     void gainCardsFromMonopoly(int, char);
 
 
+    bool nodeOnRobber(int);
+
+    void addCard(char);
+
     //buying:
     void buyRoad();
     void buySettlement(QString);
