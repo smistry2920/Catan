@@ -38,6 +38,7 @@ private:
 
     bool robber;
 
+    void changeNode(QString);
     void activate_settlements();
     void activate_roads();
     void activate_other();

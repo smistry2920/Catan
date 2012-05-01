@@ -1269,3 +1269,67 @@ void catan_map::activate_nodes(){
     connect(ui->node_19, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->node_19, "node|19");
 }
+
+void catan_map::changeNode(QString node_num){
+
+    QString button_color = "background-color: rgb(69, 139, 116)";
+
+    if (node_num == "1"){
+        ui->node_01->setAutoFillBackground(true);
+        ui->node_01->setStyleSheet(button_color);
+    }
+    if (node_num == "2"){
+        ui->node_02->setText("R");
+    }
+    if (node_num == "3"){
+        ui->node_03->setText("R");;
+    }
+    if (node_num == "4"){
+        ui->node_04->setText("R");
+    }
+    if (node_num == "5"){
+        ui->node_05->setText("R");
+    }
+    if (node_num == "6"){
+        ui->node_06->setText("R");
+    }
+    if (node_num == "7"){
+        ui->node_07->setText("R");
+    }
+    if (node_num == "8"){
+        ui->node_08->setText("R");
+    }
+    if (node_num == "9"){
+        ui->node_09->setText("R");
+    }
+    if (node_num == "10"){
+        ui->node_10->setText("R");
+    }
+    if (node_num == "1"){
+        ui->node_11->setText("R");
+    }
+    if (node_num == "1"){
+        ui->node_12->setText("R");
+    }
+    if (node_num == "1"){
+        ui->node_13->setText("R");
+    }
+    if (node_num == "1"){
+        ui->node_14->setText("R");
+    }
+    if (node_num == "1"){
+        ui->node_15->setText("R");
+    }
+    if (node_num == "1"){
+        ui->node_16->setText("R");
+    }
+    if (node_num == "1"){
+        ui->node_17->setText("R");
+    }
+    if (node_num == "18"){
+        ui->node_18->setText("R");
+    }
+    if (node_num == "19"){
+        ui->node_19->setText("R");
+    }
+}
