@@ -36,6 +36,8 @@ private:
 
     Node node;
 
+    bool robber;
+
     void activate_settlements();
     void activate_roads();
     void activate_other();
