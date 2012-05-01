@@ -92,6 +92,9 @@ void catan_map::signalSorter(const QString & button)
             for(int k = 0; k<numPlayers; k++)
                 players[k].removeCardsOn7();
 
+
+            int nodeNumber=0;
+            node.placeRobber(nodeNumber);
             //some sort of wait for node click command to then place robber.
 
         }
