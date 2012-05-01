@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Node.h"
 using namespace std;
-    
+
 Node::Node(){
 
     nodes[0] = 0;//case robber
@@ -28,7 +28,7 @@ Node::Node(){
 
 }
 
-    
+
 int Node::findNode(int i){
     if(i==0)
         return 0;

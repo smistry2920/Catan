@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'catan_map.h'
 **
-** Created: Mon Apr 30 20:32:07 2012
+** Created: Tue May 1 15:37:43 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

@@ -27,6 +27,8 @@ catan_map::catan_map(QWidget *parent) :
     connect(signalMapper, SIGNAL(mapped(const QString &)), this, SLOT(signalSorter(const QString &)));
     //checkPlayers();
     checkPlayer();
+
+    temp_iterator = 0;
 }
 
 catan_map::~catan_map()
@@ -36,12 +38,29 @@ catan_map::~catan_map()
 
 void catan_map::signalSorter(const QString & button)
 {
-
+    QString player_name;
+    if (iter == 0){
+        player_name = "P1";
+    }
+    if (iter == 1){
+        player_name = "P2";
+    }
+    if (iter == 2){
+        player_name = "P3";
+    }
+    if (iter == 3){
+        player_name = "P4";
+    }
+    qDebug() << "==============";
     qDebug() << "made it here: " << button;
 
     //road button pushed
     if (button.startsWith("road")){
-        qDebug() << "road button: " << button;
+        qDebug() << "=====================";
+        if (mapper.valid_road_check(button,player_name)){
+            qDebug() << "road button: " << button;
+            road_output(button, player_name);
+        }
     }
 
     //view a hand!
@@ -93,26 +112,26 @@ void catan_map::signalSorter(const QString & button)
 //////replace city_output ->> P1 and P2 with
 /////////qstrings that contain player number!!
     else{
-        //////////////TEMPORARY
-        ///
-
         qDebug() << "*************************";
-        if (mapper.valid_city_check(button, "P1") && players[iter].affordCity()){
-            qDebug() << "City: valid city implemented for: " << button;
-            qDebug() << "-------------------------";
-            city_output(button, "P3");
-            players[iter].buyCity(button);
+        if (players[iter].affordCity()){
+            if (mapper.valid_city_check(button, player_name) && players[iter].affordCity()){
+                qDebug() << "City: valid city implemented for: " << button;
+                qDebug() << "-------------------------";
+                city_output(button, player_name);
+                players[iter].buyCity(button);
+            }
         }
         else{
             qDebug() << "City: settlment failed";
             qDebug() << "----------------------";
         }
-        if (mapper.valid_settlement_check(button, "P1") && players[iter].affordSettlement()){
-            qDebug() << "valid settlement input for: " << button;
-            qDebug() << "-------------------------";
-            settlement_output(button,"P4");
-            players[iter].buySettlement(button); //add settlement to player list
-
+        if (players[iter].affordSettlement()){
+            if (mapper.valid_settlement_check(button, player_name)){
+                qDebug() << "valid settlement input for: " << button;
+                qDebug() << "-------------------------";
+                settlement_output(button,player_name);
+                players[iter].buySettlement(button); //add settlement to player list
+            }
         }
         else{
             qDebug() << "Settlement: settle failed";
@@ -140,6 +159,318 @@ void catan_map::city_output(QString button, QString player){
     QString button_out = button.section("|",0,0);
     button_out = button_out + "c";
     button_output(button_out, player);
+}
+
+void catan_map::road_output(QString road, QString player){
+    QString road_out = road.section("|",0,0);
+    road_out.remove(0,4);
+    qDebug() << road_out;
+    QString button_color;
+    if (player == "P1"){
+        button_color = "background-color: rgb(69, 139, 116)";
+    }
+    if (player == "P2"){
+        button_color = "background-color: rgb(113, 113, 198)";
+    }
+    if (player == "P3"){
+        button_color = "background-color: rgb(255, 140, 0)";
+    }
+    if (player == "P4"){
+        button_color = "background-color: rgb(205, 150, 205)";
+    }
+    ///////////////////////////////////////////////////////
+    if (road_out == "01"){
+        ui->pushRoad_01->setAutoFillBackground(true);
+        ui->pushRoad_01->setStyleSheet(button_color);
+    }
+    if (road_out == "02"){
+        ui->pushRoad_02->setAutoFillBackground(true);
+        ui->pushRoad_02->setStyleSheet(button_color);
+    }
+    if (road_out == "03"){
+        ui->pushRoad_03->setAutoFillBackground(true);
+        ui->pushRoad_03->setStyleSheet(button_color);
+    }
+    if (road_out == "04"){
+        ui->pushRoad_04->setAutoFillBackground(true);
+        ui->pushRoad_04->setStyleSheet(button_color);
+    }
+    if (road_out == "05"){
+        ui->pushRoad_05->setAutoFillBackground(true);
+        ui->pushRoad_05->setStyleSheet(button_color);
+    }
+    if (road_out == "06"){
+        ui->pushRoad_06->setAutoFillBackground(true);
+        ui->pushRoad_06->setStyleSheet(button_color);
+    }
+    if (road_out == "07"){
+        ui->pushRoad_07->setAutoFillBackground(true);
+        ui->pushRoad_07->setStyleSheet(button_color);
+    }
+    if (road_out == "08"){
+        ui->pushRoad_08->setAutoFillBackground(true);
+        ui->pushRoad_08->setStyleSheet(button_color);
+    }
+    if (road_out == "09"){
+        ui->pushRoad_09->setAutoFillBackground(true);
+        ui->pushRoad_09->setStyleSheet(button_color);
+    }
+    if (road_out == "10"){
+        ui->pushRoad_10->setAutoFillBackground(true);
+        ui->pushRoad_10->setStyleSheet(button_color);
+    }
+    if (road_out == "11"){
+        ui->pushRoad_11->setAutoFillBackground(true);
+        ui->pushRoad_11->setStyleSheet(button_color);
+    }
+    if (road_out == "12"){
+        ui->pushRoad_12->setAutoFillBackground(true);
+        ui->pushRoad_12->setStyleSheet(button_color);
+    }
+    if (road_out == "13"){
+        ui->pushRoad_13->setAutoFillBackground(true);
+        ui->pushRoad_13->setStyleSheet(button_color);
+    }
+    if (road_out == "14"){
+        ui->pushRoad_14->setAutoFillBackground(true);
+        ui->pushRoad_14->setStyleSheet(button_color);
+    }
+    if (road_out == "15"){
+        ui->pushRoad_15->setAutoFillBackground(true);
+        ui->pushRoad_15->setStyleSheet(button_color);
+    }
+    if (road_out == "16"){
+        ui->pushRoad_16->setAutoFillBackground(true);
+        ui->pushRoad_16->setStyleSheet(button_color);
+    }
+    if (road_out == "17"){
+        ui->pushRoad_17->setAutoFillBackground(true);
+        ui->pushRoad_17->setStyleSheet(button_color);
+    }
+    if (road_out == "18"){
+        ui->pushRoad_18->setAutoFillBackground(true);
+        ui->pushRoad_18->setStyleSheet(button_color);
+    }
+    if (road_out == "19"){
+        ui->pushRoad_19->setAutoFillBackground(true);
+        ui->pushRoad_19->setStyleSheet(button_color);
+    }
+    if (road_out == "20"){
+        ui->pushRoad_20->setAutoFillBackground(true);
+        ui->pushRoad_20->setStyleSheet(button_color);
+    }
+    if (road_out == "21"){
+        ui->pushRoad_21->setAutoFillBackground(true);
+        ui->pushRoad_21->setStyleSheet(button_color);
+    }
+    if (road_out == "22"){
+        ui->pushRoad_22->setAutoFillBackground(true);
+        ui->pushRoad_22->setStyleSheet(button_color);
+    }
+    if (road_out == "23"){
+        ui->pushRoad_23->setAutoFillBackground(true);
+        ui->pushRoad_23->setStyleSheet(button_color);
+    }
+    if (road_out == "24"){
+        ui->pushRoad_24->setAutoFillBackground(true);
+        ui->pushRoad_24->setStyleSheet(button_color);
+    }
+    if (road_out == "25"){
+        ui->pushRoad_25->setAutoFillBackground(true);
+        ui->pushRoad_25->setStyleSheet(button_color);
+    }
+    if (road_out == "26"){
+        ui->pushRoad_26->setAutoFillBackground(true);
+        ui->pushRoad_26->setStyleSheet(button_color);
+    }
+    if (road_out == "27"){
+        ui->pushRoad_27->setAutoFillBackground(true);
+        ui->pushRoad_27->setStyleSheet(button_color);
+    }
+    if (road_out == "28"){
+        ui->pushRoad_28->setAutoFillBackground(true);
+        ui->pushRoad_28->setStyleSheet(button_color);
+    }
+    if (road_out == "29"){
+        ui->pushRoad_29->setAutoFillBackground(true);
+        ui->pushRoad_29->setStyleSheet(button_color);
+    }
+    if (road_out == "30"){
+        ui->pushRoad_30->setAutoFillBackground(true);
+        ui->pushRoad_30->setStyleSheet(button_color);
+    }
+    if (road_out == "31"){
+        ui->pushRoad_31->setAutoFillBackground(true);
+        ui->pushRoad_31->setStyleSheet(button_color);
+    }
+    if (road_out == "32"){
+        ui->pushRoad_32->setAutoFillBackground(true);
+        ui->pushRoad_32->setStyleSheet(button_color);
+    }
+    if (road_out == "33"){
+        ui->pushRoad_33->setAutoFillBackground(true);
+        ui->pushRoad_33->setStyleSheet(button_color);
+    }
+    if (road_out == "34"){
+        ui->pushRoad_34->setAutoFillBackground(true);
+        ui->pushRoad_34->setStyleSheet(button_color);
+    }
+    if (road_out == "35"){
+        ui->pushRoad_35->setAutoFillBackground(true);
+        ui->pushRoad_35->setStyleSheet(button_color);
+    }
+    if (road_out == "36"){
+        ui->pushRoad_36->setAutoFillBackground(true);
+        ui->pushRoad_36->setStyleSheet(button_color);
+    }
+    if (road_out == "37"){
+        ui->pushRoad_37->setAutoFillBackground(true);
+        ui->pushRoad_37->setStyleSheet(button_color);
+    }
+    if (road_out == "38"){
+        ui->pushRoad_38->setAutoFillBackground(true);
+        ui->pushRoad_38->setStyleSheet(button_color);
+    }
+    if (road_out == "39"){
+        ui->pushRoad_39->setAutoFillBackground(true);
+        ui->pushRoad_39->setStyleSheet(button_color);
+    }
+    if (road_out == "40"){
+        ui->pushRoad_40->setAutoFillBackground(true);
+        ui->pushRoad_40->setStyleSheet(button_color);
+    }
+    if (road_out == "41"){
+        ui->pushRoad_41->setAutoFillBackground(true);
+        ui->pushRoad_41->setStyleSheet(button_color);
+    }
+    if (road_out == "42"){
+        ui->pushRoad_42->setAutoFillBackground(true);
+        ui->pushRoad_42->setStyleSheet(button_color);
+    }
+    if (road_out == "43"){
+        ui->pushRoad_43->setAutoFillBackground(true);
+        ui->pushRoad_43->setStyleSheet(button_color);
+    }
+    if (road_out == "44"){
+        ui->pushRoad_44->setAutoFillBackground(true);
+        ui->pushRoad_44->setStyleSheet(button_color);
+    }
+    if (road_out == "45"){
+        ui->pushRoad_45->setAutoFillBackground(true);
+        ui->pushRoad_45->setStyleSheet(button_color);
+    }
+    if (road_out == "46"){
+        ui->pushRoad_46->setAutoFillBackground(true);
+        ui->pushRoad_46->setStyleSheet(button_color);
+    }
+    if (road_out == "47"){
+        ui->pushRoad_47->setAutoFillBackground(true);
+        ui->pushRoad_47->setStyleSheet(button_color);
+    }
+    if (road_out == "48"){
+        ui->pushRoad_48->setAutoFillBackground(true);
+        ui->pushRoad_48->setStyleSheet(button_color);
+    }
+    if (road_out == "49"){
+        ui->pushRoad_49->setAutoFillBackground(true);
+        ui->pushRoad_49->setStyleSheet(button_color);
+    }
+    if (road_out == "50"){
+        ui->pushRoad_50->setAutoFillBackground(true);
+        ui->pushRoad_50->setStyleSheet(button_color);
+    }
+    if (road_out == "51"){
+        ui->pushRoad_51->setAutoFillBackground(true);
+        ui->pushRoad_51->setStyleSheet(button_color);
+    }
+    if (road_out == "52"){
+        ui->pushRoad_52->setAutoFillBackground(true);
+        ui->pushRoad_52->setStyleSheet(button_color);
+    }
+    if (road_out == "53"){
+        ui->pushRoad_53->setAutoFillBackground(true);
+        ui->pushRoad_53->setStyleSheet(button_color);
+    }
+    if (road_out == "54"){
+        ui->pushRoad_54->setAutoFillBackground(true);
+        ui->pushRoad_54->setStyleSheet(button_color);
+    }
+    if (road_out == "55"){
+        ui->pushRoad_55->setAutoFillBackground(true);
+        ui->pushRoad_55->setStyleSheet(button_color);
+    }
+    if (road_out == "56"){
+        ui->pushRoad_56->setAutoFillBackground(true);
+        ui->pushRoad_56->setStyleSheet(button_color);
+    }
+    if (road_out == "57"){
+        ui->pushRoad_57->setAutoFillBackground(true);
+        ui->pushRoad_57->setStyleSheet(button_color);
+    }
+    if (road_out == "58"){
+        ui->pushRoad_58->setAutoFillBackground(true);
+        ui->pushRoad_58->setStyleSheet(button_color);
+    }
+    if (road_out == "59"){
+        ui->pushRoad_59->setAutoFillBackground(true);
+        ui->pushRoad_59->setStyleSheet(button_color);
+    }
+    if (road_out == "60"){
+        ui->pushRoad_60->setAutoFillBackground(true);
+        ui->pushRoad_60->setStyleSheet(button_color);
+    }
+    if (road_out == "61"){
+        ui->pushRoad_61->setAutoFillBackground(true);
+        ui->pushRoad_61->setStyleSheet(button_color);
+    }
+    if (road_out == "61"){
+        ui->pushRoad_61->setAutoFillBackground(true);
+        ui->pushRoad_61->setStyleSheet(button_color);
+    }
+    if (road_out == "62"){
+        ui->pushRoad_62->setAutoFillBackground(true);
+        ui->pushRoad_62->setStyleSheet(button_color);
+    }
+    if (road_out == "63"){
+        ui->pushRoad_63->setAutoFillBackground(true);
+        ui->pushRoad_63->setStyleSheet(button_color);
+    }
+    if (road_out == "64"){
+        ui->pushRoad_64->setAutoFillBackground(true);
+        ui->pushRoad_64->setStyleSheet(button_color);
+    }
+    if (road_out == "65"){
+        ui->pushRoad_65->setAutoFillBackground(true);
+        ui->pushRoad_65->setStyleSheet(button_color);
+    }
+    if (road_out == "66"){
+        ui->pushRoad_66->setAutoFillBackground(true);
+        ui->pushRoad_66->setStyleSheet(button_color);
+    }
+    if (road_out == "67"){
+        ui->pushRoad_67->setAutoFillBackground(true);
+        ui->pushRoad_67->setStyleSheet(button_color);
+    }
+    if (road_out == "68"){
+        ui->pushRoad_68->setAutoFillBackground(true);
+        ui->pushRoad_68->setStyleSheet(button_color);
+    }
+    if (road_out == "69"){
+        ui->pushRoad_69->setAutoFillBackground(true);
+        ui->pushRoad_69->setStyleSheet(button_color);
+    }
+    if (road_out == "70"){
+        ui->pushRoad_70->setAutoFillBackground(true);
+        ui->pushRoad_70->setStyleSheet(button_color);
+    }
+    if (road_out == "71"){
+        ui->pushRoad_71->setAutoFillBackground(true);
+        ui->pushRoad_71->setStyleSheet(button_color);
+    }
+    if (road_out == "72"){
+        ui->pushRoad_72->setAutoFillBackground(true);
+        ui->pushRoad_72->setStyleSheet(button_color);
+    }
 }
 
 void catan_map::button_output(QString button_out, QString player){
@@ -617,222 +948,222 @@ void catan_map::activate_roads(){
     ////////////////////////////////////////////
     //START ROAD MAPPING
     ////////////////
-   //road|top|bottom
+   //road|top|bottom|
     connect(ui->pushRoad_01, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_01, "road|223|221");
+    signalMapper->setMapping(ui->pushRoad_01, "road01|223|221");
 
     connect(ui->pushRoad_02, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_02, "road|223|230");
+    signalMapper->setMapping(ui->pushRoad_02, "road02|223|230");
 
     connect(ui->pushRoad_03, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_03, "road|230|281");
+    signalMapper->setMapping(ui->pushRoad_03, "road03|230|281");
 
     connect(ui->pushRoad_04, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_04, "road|281|330");
+    signalMapper->setMapping(ui->pushRoad_04, "road04|281|330");
 
     connect(ui->pushRoad_05, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_05, "road|331|330");
+    signalMapper->setMapping(ui->pushRoad_05, "road05|331|330");
 
     connect(ui->pushRoad_06, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_06, "road|334|331");
+    signalMapper->setMapping(ui->pushRoad_06, "road06|334|331");
 
     connect(ui->pushRoad_07, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_07, "road|221|220");
+    signalMapper->setMapping(ui->pushRoad_07, "road07|221|220");
 
     connect(ui->pushRoad_08, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_08, "road|230|23");
+    signalMapper->setMapping(ui->pushRoad_08, "road08|230|023");
 
     connect(ui->pushRoad_09, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_09, "road|330|30");
+    signalMapper->setMapping(ui->pushRoad_09, "road09|330|030");
 
     connect(ui->pushRoad_10, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_10, "road|334|340");
+    signalMapper->setMapping(ui->pushRoad_10, "road10|334|340");
 
     connect(ui->pushRoad_11, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_11, "road|220|171");
+    signalMapper->setMapping(ui->pushRoad_11, "road11|220|171");
 
     connect(ui->pushRoad_12, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_12, "road|220|22");
+    signalMapper->setMapping(ui->pushRoad_12, "road12|220|022");
 
     connect(ui->pushRoad_13, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_13, "road|23|22");
+    signalMapper->setMapping(ui->pushRoad_13, "road13|023|022");
 
     connect(ui->pushRoad_14, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_14, "road|23|30");
+    signalMapper->setMapping(ui->pushRoad_14, "road14|023|030");
 
     connect(ui->pushRoad_15, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_15, "road|33|30");
+    signalMapper->setMapping(ui->pushRoad_15, "road15|033|030");
 
     connect(ui->pushRoad_16, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_16, "road|33|34");
+    signalMapper->setMapping(ui->pushRoad_16, "road16|033|034");
 
     connect(ui->pushRoad_17, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_17, "road|340|34");
+    signalMapper->setMapping(ui->pushRoad_17, "road17|340|034");
 
     connect(ui->pushRoad_18, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_18, "road|340|391");
+    signalMapper->setMapping(ui->pushRoad_18, "road18|340|391");
 \
     connect(ui->pushRoad_19, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_19, "road|171|10");
+    signalMapper->setMapping(ui->pushRoad_19, "road19|171|010");
 
     connect(ui->pushRoad_20, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_20, "road|22|20");
+    signalMapper->setMapping(ui->pushRoad_20, "road20|022|020");
 
     connect(ui->pushRoad_21, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_21, "road|30|3");
+    signalMapper->setMapping(ui->pushRoad_21, "road21|030|003");
 
     connect(ui->pushRoad_22, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_22, "road|34|40");
+    signalMapper->setMapping(ui->pushRoad_22, "road22|034|040");
 
     connect(ui->pushRoad_23, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_23, "road|391|440");
+    signalMapper->setMapping(ui->pushRoad_23, "road23|391|440");
 
     connect(ui->pushRoad_24, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_24, "road|10|112");
+    signalMapper->setMapping(ui->pushRoad_24, "road24|010|112");
 
     connect(ui->pushRoad_25, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_25, "road|10|12");
+    signalMapper->setMapping(ui->pushRoad_25, "road25|010|012");
 
     connect(ui->pushRoad_26, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_26, "road|20|12");
+    signalMapper->setMapping(ui->pushRoad_26, "road26|020|012");
 
     connect(ui->pushRoad_27, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_27, "road|20|2");
+    signalMapper->setMapping(ui->pushRoad_27, "road27|020|002");
 
     connect(ui->pushRoad_28, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_28, "road|3|2");
+    signalMapper->setMapping(ui->pushRoad_28, "road28|003|002");
 
     connect(ui->pushRoad_29, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_29, "road|3|4");
+    signalMapper->setMapping(ui->pushRoad_29, "road29|003|004");
 
     connect(ui->pushRoad_30, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_30, "road|4|40");
+    signalMapper->setMapping(ui->pushRoad_30, "road30|004|040");
 
     connect(ui->pushRoad_31, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_31, "road|40|44");
+    signalMapper->setMapping(ui->pushRoad_31, "road31|040|044");
 
     connect(ui->pushRoad_32, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_32, "road|440|44");
+    signalMapper->setMapping(ui->pushRoad_32, "road32|440|044");
 
     connect(ui->pushRoad_33, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_33, "road|440|441");
+    signalMapper->setMapping(ui->pushRoad_33, "road33|440|441");
 
     connect(ui->pushRoad_34, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_34, "road|112|111");
+    signalMapper->setMapping(ui->pushRoad_34, "road34|112|111");
 
     connect(ui->pushRoad_35, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_35, "road|12|11");
+    signalMapper->setMapping(ui->pushRoad_35, "road35|012|011");
 
     connect(ui->pushRoad_36, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_36, "road|1|2");
+    signalMapper->setMapping(ui->pushRoad_36, "road36|001|002");
 
     connect(ui->pushRoad_37, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_37, "road|4|5");
+    signalMapper->setMapping(ui->pushRoad_37, "road37|004|005");
 
     connect(ui->pushRoad_38, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_38, "road|44|45");
+    signalMapper->setMapping(ui->pushRoad_38, "road38|044|045");
 
     connect(ui->pushRoad_39, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_39, "road|441|445");
+    signalMapper->setMapping(ui->pushRoad_39, "road39|441|445");
 
     connect(ui->pushRoad_40, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_40, "road|110|111");
+    signalMapper->setMapping(ui->pushRoad_40, "road40|110|111");
 
     connect(ui->pushRoad_41, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_41, "road|11|110");
+    signalMapper->setMapping(ui->pushRoad_41, "road41|011|110");
 
     connect(ui->pushRoad_42, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_42, "road|11|10");
+    signalMapper->setMapping(ui->pushRoad_42, "road42|011|010");
 
     connect(ui->pushRoad_43, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_43, "road|1|10");
+    signalMapper->setMapping(ui->pushRoad_43, "road43|001|010");
 
     connect(ui->pushRoad_44, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_44, "road|1|6");
+    signalMapper->setMapping(ui->pushRoad_44, "road44|001|006");
 
     connect(ui->pushRoad_45, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_45, "road|5|6");
+    signalMapper->setMapping(ui->pushRoad_45, "road45|005|006");
 
     connect(ui->pushRoad_46, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_46, "road|5|50");
+    signalMapper->setMapping(ui->pushRoad_46, "road46|005|050");
 
     connect(ui->pushRoad_47, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_47, "road|45|50");
+    signalMapper->setMapping(ui->pushRoad_47, "road47|045|050");
 
     connect(ui->pushRoad_48, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_48, "road|45|450");
+    signalMapper->setMapping(ui->pushRoad_48, "road48|045|450");
 
     connect(ui->pushRoad_49, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_49, "road|450|445");
+    signalMapper->setMapping(ui->pushRoad_49, "road49|450|445");
 
     connect(ui->pushRoad_50, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_50, "road|110|700");
+    signalMapper->setMapping(ui->pushRoad_50, "road50|110|700");
 
     connect(ui->pushRoad_51, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_51, "road|10|61");
+    signalMapper->setMapping(ui->pushRoad_51, "road51|010|061");
 
     connect(ui->pushRoad_52, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_52, "road|6|60");
+    signalMapper->setMapping(ui->pushRoad_52, "road52|006|060");
 
     connect(ui->pushRoad_53, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_53, "road|50|55");
+    signalMapper->setMapping(ui->pushRoad_53, "road53|050|055");
 
     connect(ui->pushRoad_54, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_54, "road|450|501");
+    signalMapper->setMapping(ui->pushRoad_54, "road54|450|501");
 
     connect(ui->pushRoad_55, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_55, "road|700|610");
+    signalMapper->setMapping(ui->pushRoad_55, "road55|700|610");
 
     connect(ui->pushRoad_56, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_56, "road|61|610");
+    signalMapper->setMapping(ui->pushRoad_56, "road56|061|610");
 
     connect(ui->pushRoad_57, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_57, "road|61|66");
+    signalMapper->setMapping(ui->pushRoad_57, "road57|061|066");
 
     connect(ui->pushRoad_58, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_58, "road|60|66");
+    signalMapper->setMapping(ui->pushRoad_58, "road58|060|066");
 
     connect(ui->pushRoad_59, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_59, "road|60|56");
+    signalMapper->setMapping(ui->pushRoad_59, "road59|060|056");
 
     connect(ui->pushRoad_60, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_60, "road|55|56");
+    signalMapper->setMapping(ui->pushRoad_60, "road60|055|056");
 
     connect(ui->pushRoad_61, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_61, "road|55|550");
+    signalMapper->setMapping(ui->pushRoad_61, "road61|055|550");
 
     connect(ui->pushRoad_62, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_62, "road|550|501");
+    signalMapper->setMapping(ui->pushRoad_62, "road62|550|501");
 
     connect(ui->pushRoad_63, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_63, "road|610|661");
+    signalMapper->setMapping(ui->pushRoad_63, "road63|610|661");
 
     connect(ui->pushRoad_64, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_64, "road|66|660");
+    signalMapper->setMapping(ui->pushRoad_64, "road64|066|660");
 
     connect(ui->pushRoad_65, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_65, "road|56|560");
+    signalMapper->setMapping(ui->pushRoad_65, "road65|056|560");
 
     connect(ui->pushRoad_66, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_66, "road|550|551");
+    signalMapper->setMapping(ui->pushRoad_66, "road66|550|551");
 
     connect(ui->pushRoad_67, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_67, "road|661|666");
+    signalMapper->setMapping(ui->pushRoad_67, "road67|661|666");
 
     connect(ui->pushRoad_68, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_68, "road|666|660");
+    signalMapper->setMapping(ui->pushRoad_68, "road68|666|660");
 
     connect(ui->pushRoad_69, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_69, "road|660|611");
+    signalMapper->setMapping(ui->pushRoad_69, "road69|660|611");
 
     connect(ui->pushRoad_70, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_70, "road|611|560");
+    signalMapper->setMapping(ui->pushRoad_70, "road70|611|560");
 
     connect(ui->pushRoad_71, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_71, "road|560|556");
+    signalMapper->setMapping(ui->pushRoad_71, "road71|560|556");
 
     connect(ui->pushRoad_72, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_72, "road|551|556");
+    signalMapper->setMapping(ui->pushRoad_72, "road72|551|556");
 
     ///////////////
     //END ROAD MAPPING
