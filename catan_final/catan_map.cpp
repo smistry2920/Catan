@@ -19,6 +19,7 @@ catan_map::catan_map(QWidget *parent) :
     activate_roads();
 
     activate_other();
+    iter = 0;
 
     //activate_nodes();
 
@@ -64,41 +65,82 @@ void catan_map::signalSorter(const QString & button)
 
     //view a hand!
     else if (button.startsWith("v")){
-        qDebug() << "view hand: " << button;
+        //players[iter].seeResources();
+        bool ok = true;
+        QString player_hand = button.at(7);
+        int p_viewHand = player_hand.toInt(&ok,10);
+        p_viewHand --;
+        //qDebug() << "view hand: " << button << player_hand<<"***"<<p_viewhand;
+        players[p_viewHand].seeResources();
+
     }
 
     //buy a development card
-    else if (button.startsWith("buy")){
+    else if (button.startsWith("buy") && players[iter].affordDevelopmentCard()){
         qDebug() << "buy development card: " << button;
     }
 
     //roll
     else if (button.startsWith("roll")){
+        int numPlayers = 4;
+        int i = players[iter].roll() + players[iter].roll();
+        QString out = QString::number(i);
+        ui->roll_outcome->setText(out);
         qDebug() << "roll code: " << button;
+
+        if(i==7){//roll 7 conditions
+            for(int k = 0; k<numPlayers; k++)
+                players[k].removeCardsOn7();
+
+            //some sort of wait for node click command to then place robber.
+
+        }
+        for(int k = 0; k< numPlayers; k++)
+            players[k].gainResources(i,node);
+
+        iter++;
+
+        if(iter>=numPlayers)
+            iter = 0;
+
+
     }
 //UNDER HERE!! all qDebugs are TEST CODE!!
 //////replace city_output ->> P1 and P2 with
 /////////qstrings that contain player number!!
     else{
-        qDebug() << "=========================";
+        //////////////TEMPORARY
+        ///
+
         qDebug() << "*************************";
-        if (mapper.valid_city_check(button, player)){
+//        if (mapper.valid_city_check(button, player)){
+//            qDebug() << "City: valid city implemented for: " << button;
+//            qDebug() << "-------------------------";
+//            city_output(button, player);
+//            ++temp_iterator;
+//            if (temp_iterator>3){
+//                temp_iterator = 0;
+//            }
+        if (mapper.valid_city_check(button, "P1") && players[iter].affordCity()){
             qDebug() << "City: valid city implemented for: " << button;
             qDebug() << "-------------------------";
-            city_output(button, player);
-            ++temp_iterator;
-            if (temp_iterator>3){
-                temp_iterator = 0;
-            }
+            city_output(button, "P3");
+            players[iter].buyCity(button);
         }
         else{
             qDebug() << "City: settlment failed";
             qDebug() << "----------------------";
         }
-        if (mapper.valid_settlement_check(button, player)){
+//        if (mapper.valid_settlement_check(button, player)){
+//            qDebug() << "valid settlement input for: " << button;
+//            qDebug() << "-------------------------";
+//            settlement_output(button, player);
+//=======
+        if (mapper.valid_settlement_check(button, "P1") && players[iter].affordSettlement()){
             qDebug() << "valid settlement input for: " << button;
             qDebug() << "-------------------------";
-            settlement_output(button, player);
+            settlement_output(button,"P4");
+            players[iter].buySettlement(button); //add settlement to player list
         }
         else{
             qDebug() << "Settlement: settle failed";

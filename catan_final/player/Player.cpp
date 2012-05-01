@@ -14,11 +14,11 @@ Player::Player(){
     this->armySize_     = 0;
     char color = 'g';
     this->playerColor_  = color;
-    this->yellow_       = 0;
-    this->lightGreen_   = 0;
-    this->darkGreen_    = 0;
-    this->blue_         = 0;
-    this->red_          = 0;
+    this->yellow_       = 10;
+    this->lightGreen_   = 10;
+    this->darkGreen_    = 10;
+    this->blue_         = 10;
+    this->red_          = 10;
 
     this->knight_       = 0;
     this->victoryPointCard_ = 0;
@@ -75,6 +75,7 @@ void Player::seeResources(){
     cout<<"Dark Green: "<<darkGreen_<<endl;
     cout<<"Blue: "<<blue_<<endl;
     cout<<"Red: "<<red_<<endl<<endl;
+    seeDevelopments();
 }
 
 //This public functionallows a player to see
@@ -85,34 +86,6 @@ void Player::seeDevelopments(){
     cout<<"Road Builder: "<<roadBuilder_<<endl;
     cout<<"Monoply: "<<monopoly_<<endl;
     cout<<"Year Of Plenth: "<<yearOfPlenty_<<endl<<endl;
-}
-
-/*This public function brings up the buy menu. It calls the
-proper private functions from here for whichever thing the player
-wants to purchase. */
-void Player::buyItem(){
-    cout<<"What would you like to buy: "<<endl;
-    cout<<"1) Road        (1 Red, 1 Dark Green)"<<endl;
-    cout<<"2) Settlement  (1 Red, 1 Dark Green, 1 Light Green, 1 Yellow)"<<endl;
-    cout<<"3) City        (3 Blue, 2 Yellow)"<<endl;
-    cout<<"4) Development Card (1 Blue, 1 Yellow, 1 Light Green)"<<endl;
-    cout<<"0) to cancel"<<endl;
-    int number;
-    cin>>number;
-    cout<<endl;
-    if(number==1 || number==2 || number==3 || number==4){
-        if(number==1)
-            buyRoad();
-        else if (number ==2)
-            buySettlement();
-        else if (number==3)
-            buyCity();
-        else if (number==4)
-            buyDevelopmentCard(); 
-        seeResources();
-    }
-    cout<<"exit"<<endl;
-
 }
 
 /*This public function has to be called for each opponent (everyone but the player you are on).
@@ -192,100 +165,185 @@ int Player::checkRoad(){
 }
 
 
-//this private function allows a player to purchase a road
+//public function allows player to see if they can purchase a road
+bool Player::affordRoad(){
+    if(red_>0 && darkGreen_>0)
+        return 1;
+    cout<<"You do not have the resources to purchase a road!"<<endl<<endl;
+    return 0;
+
+}
+
+//this public function allows a player to purchase a road
 void Player::buyRoad(){
-    if(red_>0 && darkGreen_>0){
-        //do action to place road
-        red_--;
-        darkGreen_--;
+    //do action to place road
+    red_--;
+    darkGreen_--;
 
-        struct roads ro;
-        //filling in the .top and .bottom @suneil
-        ro.top = 0;
-        ro.bottom = 0;
-        //end @suneil
-        pavement.push_front(ro);
-
-    } else
-        cout<<"You do not have the resources to purchase a road!"<<endl<<endl;
+    struct roads ro;
+    //filling in the .top and .bottom @suneil
+    ro.top = 0;
+    ro.bottom = 0;
+    //end @suneil
+    pavement.push_front(ro);
 
 }
 
-//This private fuction allows a player to purchase a settlement.
-void Player::buySettlement(){
-    if(red_ >0 && darkGreen_ >0 && lightGreen_ >0 && yellow_>0){
-        //do action to place settlement
-        red_--;
-        darkGreen_--;
-        yellow_--;
-        lightGreen_--;
-        victoryPoints_++;
 
-        struct settlement set;
-        set.city = 1;
-
-        //filling in the rest until we figure out how it connects to the board @ suneil
-        set.cityNumber = 1;
-        set.left.node = 1;
-        set.left.color = 'l';
-        set.right.node = 1;
-        set.right.color = 'l';
-        set.top.node =1;
-        set.top.color = 'l';
-
-        set.port = 'a';
-
-        //end @suneil
-        
-        pieces.push_front(set);//add city to list.
-
-    }else
+//public function check to see if player can afford settlement
+bool Player::affordSettlement(){
+        if(red_ >0 && darkGreen_ >0 && lightGreen_ >0 && yellow_>0)
+            return 1;
         cout<<"You do not have the resources to purchase a settlement!"<<endl<<endl;
+        return 0;
 }
 
-/*This private function does the action of changing a settlement into a city and
+
+//This public fuction allows a player to purchase a settlement.
+void Player::buySettlement(QString line){
+
+    //Format is city ID|left Color|left node|right Color|right node|top color|top node|port
+    bool ok = true;
+    char lC;
+    char rC;
+    char tC;
+    char port;
+    QString ID_temp = line.section("|",0,0);
+    int ID = ID_temp.toInt(&ok, 10);
+    ID_temp = line.section("|",1,1);
+
+    {
+        QByteArray ba = ID_temp.toLocal8Bit();
+        const char *cstring = ba.data();
+        lC = *cstring;
+    }
+
+    ID_temp = line.section("|",2,2);
+    int lN = ID_temp.toInt(&ok, 10);
+    ID_temp = line.section("|",3,3);
+    {
+        QByteArray ba = ID_temp.toLocal8Bit();
+        const char *cstring = ba.data();
+        rC = *cstring;
+    }
+
+    ID_temp = line.section("|",4,4);
+    int rN = ID_temp.toInt(&ok, 10);
+    ID_temp = line.section("|",5,5);
+    {
+        QByteArray ba = ID_temp.toLocal8Bit();
+        const char *cstring = ba.data();
+        tC = *cstring;
+    }
+    ID_temp = line.section("|",6,6);
+    int tN = ID_temp.toInt(&ok, 10);
+    ID_temp = line.section("|", 7,7);
+    {
+        QByteArray ba = ID_temp.toLocal8Bit();
+        const char *cstring = ba.data();
+        port = *cstring;
+    }
+
+    cout<<"buying sett:"<<endl;
+    cout<<ID<<lC<<lN<<rC<<rN<<tC<<tN<<port<<endl;
+
+
+
+    //do action to place settlement
+    red_--;
+    darkGreen_--;
+    yellow_--;
+    lightGreen_--;
+    victoryPoints_++;
+
+    struct settlement set;
+    set.city = 1;
+
+    set.cityNumber  = ID;
+    set.left.node   = lN;
+    set.left.color  = lC;
+    set.right.node  = rN;
+    set.right.color = rC;
+    set.top.node    = tN;
+    set.top.color   = tC;
+
+    set.port = port;
+
+    pieces.push_front(set);//add city to list.
+
+
+}
+
+
+bool Player::affordCity(){
+    if(blue_>=3 && yellow_>=2)
+        return 1;
+    cout<<"You do not have the resources to purchase a city!"<<endl<<endl;
+    return 0;
+
+
+}
+
+/*This public function does the action of changing a settlement into a city and
 charging the respective resources.*/
-void Player::buyCity(){
-    if(blue_>=3 && yellow_>=2){
-        //do action to place settlement, but also we have to make sure a settlement is already in that space.
-        
-        //cycle through list of settlements to make sure there is a settlement to begin with
-        list<settlement>::iterator current = pieces.begin();
-        int size = pieces.size();
-        int numOfCities = 0;
-        for(int i = 0; i<size; i++){
-            if(current->city == 2)
-                numOfCities++;
-            current++;
-        }
+void Player::buyCity(QString line){
 
-        if(numOfCities!=size){ //it's possible to build a city (aka not every building is a city)
-            blue_ -= 3;
-            yellow_ -= 2;
-            victoryPoints_++;
-            //then we have to do some sort of cycle to change the proper settlement into a city.
-        }
-        else{   //we can't build a city because there are no settlements (Everything already is a city)
-            cout<<"You have no settlements!"<<endl;
-        }
-        
-    } else
-        cout<<"You do not have the resources to purchase a city!"<<endl<<endl;
+    bool ok = true;
+    QString ID_temp = line.section("|",0,0);
+    int ID = ID_temp.toInt(&ok, 10);
+
+    cout<<"In buy city, city id: "<<ID<<endl;
+
+
+    //find settlement and change it to a city
+    list<settlement>::iterator current = pieces.begin();
+    int size = pieces.size();
+
+    for(int i = 0; i<size; i++){
+        if(current->cityNumber==ID)
+            current->city = 2;
+        current++;
+    }
+
+    //charge user
+    blue_ -= 3;
+    yellow_ -= 2;
+    victoryPoints_++;
 
 }
 
-/*This private function lets you buy a development card.
+
+bool Player::affordDevelopmentCard(){
+    if(blue_>0 && yellow_>0 && lightGreen_>0)
+        return 1;
+
+    cout<<"You do not have the resources to purchase a developmentCard!"<<endl<<endl;
+    return 0;
+}
+
+/*This public function lets you buy a development card.
 It will have to call the private function UNKOWNRIGHTNOW
 to figure out which card you get
 */
 void Player::buyDevelopmentCard(){
-    if(blue_>0 && yellow_>0 && lightGreen_>0){
-        //do action to fetch developmentCard
-        blue_--;
-        yellow_--;
-        lightGreen_--;
-    } else
-        cout<<"You do not have the resources to purchase a developmentCard!"<<endl<<endl;
+    //do action to fetch developmentCard
+    blue_--;
+    yellow_--;
+    lightGreen_--;
+    int num = rand() %25;
+
+    if(num<2)
+        yearOfPlenty_++;
+    else if (num<4)
+        monopoly_++;
+    else if (num<6)
+        roadBuilder_++;
+    else if(num<11)
+        victoryPointCard_++;
+    else
+        knight_++;
+
+
 }
 
 void Player::changeName(string & name){
@@ -300,7 +358,7 @@ void Player::changeColor(char &color){
 a player has to give them the respective resources gained on
 a roll. */
 
-/*
+
 void Player::gainResources(int roll, Node onlyNode){
     list<settlement>::iterator current = pieces.begin();
 
@@ -322,7 +380,7 @@ void Player::gainResources(int roll, Node onlyNode){
     }
    
 }
-*/
+
 /*This is a private function called by gainResources. It finds which 
 of the players resources to add to given that he his settlement/city
 has a part matching a number*/
