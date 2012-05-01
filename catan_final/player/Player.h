@@ -75,7 +75,7 @@ class Player{
     int checkRoad();
 
     //removing card on 7
-    char removeRandomCard();
+
     
     //playing dev card
     void playVictoryPoint();
@@ -92,7 +92,6 @@ class Player{
     void convertResources(); //try to switch out cards
 
     void gainResources(int, Node );
-    void removeCardsOn7();
 
     bool areRoadsBlockingSettlement(int);
     bool isSettlementBlockingRoad(int);
@@ -101,13 +100,15 @@ class Player{
     int playDevCard();
     //For monopoly cards:
     char playMonoply();
-    int removeCardFromPlayer(char);
+    int removeAllOneCardFromPlayer(char);
     void gainCardsFromMonopoly(int, char);
 
-
+    //robber's and 7
     bool nodeOnRobber(int);
-
     void addCard(char);
+    char removeRandomCard();
+    void removeCardsOn7();
+
 
     //buying:
     void buyRoad();

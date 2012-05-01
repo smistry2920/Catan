@@ -7,6 +7,7 @@
 
 //constructor
 Player::Player(){
+    srand ( time(NULL) );
     this->name_ = "Jeff";
 
     this->victoryPoints_= 0;
@@ -33,6 +34,7 @@ Player::~Player(){
 
 //public function for rolling dice
 int Player::roll(){
+
     return rand() %6 +1;
 }
 
@@ -681,7 +683,7 @@ char Player::playMonoply(){
 
 /* This public function removes all of a certain card from
 a player and returns that number. This function is relevant for when a player is playing the Monopoly card, and should be called for all players. All of the integers should be returns and will be later rewarded to the player playing the card. */
-int Player::removeCardFromPlayer(char color){
+int Player::removeAllOneCardFromPlayer(char color){
 
     int num = 0;
     if(color =='y'){
