@@ -76,7 +76,21 @@ void catan_map::signalSorter(const QString & button)
 
             int nodeNumber=0;
             node.placeRobber(nodeNumber);
+            //int nodeNumber;
+
+
+
             //some sort of wait for node click command to then place robber.
+            //then we get to take a card form a player on that node.
+            bool onNode[4];
+            for(int i = 0; i<numPlayers; i++)
+                onNode[i] = 0;
+
+            for(int i = 0; i<numPlayer; i++){
+                if(i!=iter)
+                    cout<<"bulloks"<<endl;
+
+            }
 
         }
         for(int k = 0; k< numPlayers; k++)
