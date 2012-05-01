@@ -26,6 +26,8 @@ catan_map::catan_map(QWidget *parent) :
     connect(signalMapper, SIGNAL(mapped(const QString &)), this, SLOT(signalSorter(const QString &)));
     //checkPlayers();
     checkPlayer();
+
+    temp_iterator = 0;
 }
 
 catan_map::~catan_map()
@@ -35,14 +37,28 @@ catan_map::~catan_map()
 
 void catan_map::signalSorter(const QString & button)
 {
-
+    QString player;
+    if (temp_iterator == 0){
+        player = "P1";
+    }
+    if (temp_iterator == 1){
+        player = "P2";
+    }
+    if (temp_iterator == 2){
+        player = "P3";
+    }
+    if (temp_iterator == 3){
+        player = "P4";
+    }
+    qDebug() << "==============";
     qDebug() << "made it here: " << button;
 
     //road button pushed
     if (button.startsWith("road")){
-        if (mapper.valid_road_check(button,"P1")){
+        qDebug() << "=====================";
+        if (mapper.valid_road_check(button,player)){
             qDebug() << "road button: " << button;
-            road_output(button, "P1");
+            road_output(button, player);
         }
     }
 
@@ -66,19 +82,23 @@ void catan_map::signalSorter(const QString & button)
     else{
         qDebug() << "=========================";
         qDebug() << "*************************";
-        if (mapper.valid_city_check(button, "P1")){
+        if (mapper.valid_city_check(button, player)){
             qDebug() << "City: valid city implemented for: " << button;
             qDebug() << "-------------------------";
-            city_output(button, "P1");
+            city_output(button, player);
+            ++temp_iterator;
+            if (temp_iterator>3){
+                temp_iterator = 0;
+            }
         }
         else{
             qDebug() << "City: settlment failed";
             qDebug() << "----------------------";
         }
-        if (mapper.valid_settlement_check(button, "P1")){
+        if (mapper.valid_settlement_check(button, player)){
             qDebug() << "valid settlement input for: " << button;
             qDebug() << "-------------------------";
-            settlement_output(button,"P2");
+            settlement_output(button, player);
         }
         else{
             qDebug() << "Settlement: settle failed";
@@ -918,10 +938,10 @@ void catan_map::activate_roads(){
     signalMapper->setMapping(ui->pushRoad_07, "road07|221|220");
 
     connect(ui->pushRoad_08, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_08, "road08|230|23");
+    signalMapper->setMapping(ui->pushRoad_08, "road08|230|023");
 
     connect(ui->pushRoad_09, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_09, "road09|330|30");
+    signalMapper->setMapping(ui->pushRoad_09, "road09|330|030");
 
     connect(ui->pushRoad_10, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushRoad_10, "road10|334|340");
@@ -930,67 +950,67 @@ void catan_map::activate_roads(){
     signalMapper->setMapping(ui->pushRoad_11, "road11|220|171");
 
     connect(ui->pushRoad_12, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_12, "road12|220|22");
+    signalMapper->setMapping(ui->pushRoad_12, "road12|220|022");
 
     connect(ui->pushRoad_13, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_13, "road13|23|22");
+    signalMapper->setMapping(ui->pushRoad_13, "road13|023|022");
 
     connect(ui->pushRoad_14, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_14, "road14|23|30");
+    signalMapper->setMapping(ui->pushRoad_14, "road14|023|030");
 
     connect(ui->pushRoad_15, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_15, "road15|33|30");
+    signalMapper->setMapping(ui->pushRoad_15, "road15|033|030");
 
     connect(ui->pushRoad_16, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_16, "road16|33|34");
+    signalMapper->setMapping(ui->pushRoad_16, "road16|033|034");
 
     connect(ui->pushRoad_17, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_17, "road17|340|34");
+    signalMapper->setMapping(ui->pushRoad_17, "road17|340|034");
 
     connect(ui->pushRoad_18, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushRoad_18, "road18|340|391");
 \
     connect(ui->pushRoad_19, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_19, "road19|171|10");
+    signalMapper->setMapping(ui->pushRoad_19, "road19|171|010");
 
     connect(ui->pushRoad_20, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_20, "road20|22|20");
+    signalMapper->setMapping(ui->pushRoad_20, "road20|022|020");
 
     connect(ui->pushRoad_21, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_21, "road21|30|3");
+    signalMapper->setMapping(ui->pushRoad_21, "road21|030|003");
 
     connect(ui->pushRoad_22, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_22, "road22|34|40");
+    signalMapper->setMapping(ui->pushRoad_22, "road22|034|040");
 
     connect(ui->pushRoad_23, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushRoad_23, "road23|391|440");
 
     connect(ui->pushRoad_24, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_24, "road24|10|112");
+    signalMapper->setMapping(ui->pushRoad_24, "road24|010|112");
 
     connect(ui->pushRoad_25, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_25, "road25|10|12");
+    signalMapper->setMapping(ui->pushRoad_25, "road25|010|012");
 
     connect(ui->pushRoad_26, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_26, "road26|20|12");
+    signalMapper->setMapping(ui->pushRoad_26, "road26|020|012");
 
     connect(ui->pushRoad_27, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_27, "road27|20|2");
+    signalMapper->setMapping(ui->pushRoad_27, "road27|020|002");
 
     connect(ui->pushRoad_28, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_28, "road28|3|2");
+    signalMapper->setMapping(ui->pushRoad_28, "road28|003|002");
 
     connect(ui->pushRoad_29, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_29, "road29|3|4");
+    signalMapper->setMapping(ui->pushRoad_29, "road29|003|004");
 
     connect(ui->pushRoad_30, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_30, "road30|4|40");
+    signalMapper->setMapping(ui->pushRoad_30, "road30|004|040");
 
     connect(ui->pushRoad_31, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_31, "road31|40|44");
+    signalMapper->setMapping(ui->pushRoad_31, "road31|040|044");
 
     connect(ui->pushRoad_32, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_32, "road32|440|44");
+    signalMapper->setMapping(ui->pushRoad_32, "road32|440|044");
 
     connect(ui->pushRoad_33, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushRoad_33, "road33|440|441");
@@ -999,16 +1019,16 @@ void catan_map::activate_roads(){
     signalMapper->setMapping(ui->pushRoad_34, "road34|112|111");
 
     connect(ui->pushRoad_35, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_35, "road35|12|11");
+    signalMapper->setMapping(ui->pushRoad_35, "road35|012|011");
 
     connect(ui->pushRoad_36, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_36, "road36|1|2");
+    signalMapper->setMapping(ui->pushRoad_36, "road36|001|002");
 
     connect(ui->pushRoad_37, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_37, "road37|4|5");
+    signalMapper->setMapping(ui->pushRoad_37, "road37|004|005");
 
     connect(ui->pushRoad_38, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_38, "road38|44|45");
+    signalMapper->setMapping(ui->pushRoad_38, "road38|044|045");
 
     connect(ui->pushRoad_39, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushRoad_39, "road39|441|445");
@@ -1017,28 +1037,28 @@ void catan_map::activate_roads(){
     signalMapper->setMapping(ui->pushRoad_40, "road40|110|111");
 
     connect(ui->pushRoad_41, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_41, "road41|11|110");
+    signalMapper->setMapping(ui->pushRoad_41, "road41|011|110");
 
     connect(ui->pushRoad_42, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_42, "road42|11|10");
+    signalMapper->setMapping(ui->pushRoad_42, "road42|011|010");
 
     connect(ui->pushRoad_43, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_43, "road43|1|10");
+    signalMapper->setMapping(ui->pushRoad_43, "road43|001|010");
 
     connect(ui->pushRoad_44, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_44, "road44|1|6");
+    signalMapper->setMapping(ui->pushRoad_44, "road44|001|006");
 
     connect(ui->pushRoad_45, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_45, "road45|5|6");
+    signalMapper->setMapping(ui->pushRoad_45, "road45|005|006");
 
     connect(ui->pushRoad_46, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_46, "road46|5|50");
+    signalMapper->setMapping(ui->pushRoad_46, "road46|005|050");
 
     connect(ui->pushRoad_47, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_47, "road47|45|50");
+    signalMapper->setMapping(ui->pushRoad_47, "road47|045|050");
 
     connect(ui->pushRoad_48, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_48, "road48|45|450");
+    signalMapper->setMapping(ui->pushRoad_48, "road48|045|450");
 
     connect(ui->pushRoad_49, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushRoad_49, "road49|450|445");
@@ -1047,13 +1067,13 @@ void catan_map::activate_roads(){
     signalMapper->setMapping(ui->pushRoad_50, "road50|110|700");
 
     connect(ui->pushRoad_51, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_51, "road51|10|61");
+    signalMapper->setMapping(ui->pushRoad_51, "road51|010|061");
 
     connect(ui->pushRoad_52, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_52, "road52|6|60");
+    signalMapper->setMapping(ui->pushRoad_52, "road52|006|060");
 
     connect(ui->pushRoad_53, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_53, "road53|50|55");
+    signalMapper->setMapping(ui->pushRoad_53, "road53|050|055");
 
     connect(ui->pushRoad_54, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushRoad_54, "road54|450|501");
@@ -1062,22 +1082,22 @@ void catan_map::activate_roads(){
     signalMapper->setMapping(ui->pushRoad_55, "road55|700|610");
 
     connect(ui->pushRoad_56, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_56, "road56|61|610");
+    signalMapper->setMapping(ui->pushRoad_56, "road56|061|610");
 
     connect(ui->pushRoad_57, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_57, "road57|61|66");
+    signalMapper->setMapping(ui->pushRoad_57, "road57|061|066");
 
     connect(ui->pushRoad_58, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_58, "road58|60|66");
+    signalMapper->setMapping(ui->pushRoad_58, "road58|060|066");
 
     connect(ui->pushRoad_59, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_59, "road59|60|56");
+    signalMapper->setMapping(ui->pushRoad_59, "road59|060|056");
 
     connect(ui->pushRoad_60, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_60, "road60|55|56");
+    signalMapper->setMapping(ui->pushRoad_60, "road60|055|056");
 
     connect(ui->pushRoad_61, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_61, "road61|55|550");
+    signalMapper->setMapping(ui->pushRoad_61, "road61|055|550");
 
     connect(ui->pushRoad_62, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushRoad_62, "road62|550|501");
@@ -1086,10 +1106,10 @@ void catan_map::activate_roads(){
     signalMapper->setMapping(ui->pushRoad_63, "road63|610|661");
 
     connect(ui->pushRoad_64, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_64, "road64|66|660");
+    signalMapper->setMapping(ui->pushRoad_64, "road64|066|660");
 
     connect(ui->pushRoad_65, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_65, "road65|56|560");
+    signalMapper->setMapping(ui->pushRoad_65, "road65|056|560");
 
     connect(ui->pushRoad_66, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushRoad_66, "road66|550|551");

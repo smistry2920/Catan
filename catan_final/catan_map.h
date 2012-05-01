@@ -24,6 +24,9 @@ private slots:
     void signalSorter(const QString &); //sorts signals
 
 private:
+    ///temporary test code (DELETE WHEN FINISHED!)
+    int temp_iterator;
+
     Ui::catan_map *ui;
     QSignalMapper *signalMapper;
     map_tracker mapper;

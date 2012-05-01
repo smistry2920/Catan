@@ -15,6 +15,7 @@ bool map_tracker::valid_settlement_check(QString settle_in, QString player){
     bool check2 = false;
     bool check3 = false;
     bool check4 = false;
+    bool inner_road_check = false;
     bool main_check = false;
     QStringList neighbors;
     int settlement_location = settlement.toInt(&ok,10);
@@ -30,7 +31,9 @@ bool map_tracker::valid_settlement_check(QString settle_in, QString player){
     settlement = QString::number(settlement_location);
     check4 = settle_check(settlement);
 
-    if (check1 == true && check2 == true && check3 == true && check4 == true){
+    inner_road_check = road_neighbors(settlement, player, 1);
+
+    if (check1 == true && check2 == true && check3 == true && check4 == true && inner_road_check == true){
         add_settlement(settlement, player);
         main_check = true;
     }
@@ -94,7 +97,9 @@ void map_tracker::set_city(int city_convert){
 ////////////////////////////////////
 //checks if the road is a legel placement for the player!
 bool map_tracker::valid_road_check(QString road, QString player){
-    if (roads.contains(road)){
+    QStringList same_check = roads.filter(road);
+    if (same_check.size() > 0){
+        qDebug() << "road already owned";
         return false;
     }
     qDebug() << "not a copy road";
@@ -109,7 +114,9 @@ bool map_tracker::valid_road_check(QString road, QString player){
     int c2_index = settlements.indexOf(city2);
     //road neighbors will return false if more than 1
     //road owned by player (including current one)
+    qDebug() << "city 2 road check";
     bool city2_roadcheck = road_neighbors(city2_temp, player, 0);
+    qDebug() << "city 1 road check";
     bool city1_roadcheck = road_neighbors(city1_temp, player, 0);
 
     if (c1_index != -1){
@@ -131,16 +138,31 @@ bool map_tracker::valid_road_check(QString road, QString player){
             roads << road + "|" + player;
             return true;
         }
+        if (!city2_roadcheck){
+            qDebug() << "city 2(not player's) has neighbor roads of player";
+            return false;
+        }
     }
 
     if (c1_index == -1 &&  c2_index == -1){
+        qDebug() << "both cities unoccupied";
         if (!city1_roadcheck || !city2_roadcheck){
             roads << road + "|" + player;
             return true;
         }
+    }
+    if (c1_index == -1){
+        qDebug() << "city 1 unoccupied";
+        if (!city1_roadcheck){
+            roads << road + "|" + player;
+            return true;
+        }
+    }
+    if (c2_index == -1){
+        qDebug() << "city2 unoccupied";
         if (!city2_roadcheck){
-            qDebug() << "city 2(not player's) has neighbor roads of player";
-            return false;
+            roads << road + "|" + player;
+            return true;
         }
     }
 
@@ -148,59 +170,70 @@ bool map_tracker::valid_road_check(QString road, QString player){
 }
 
 bool map_tracker::road_neighbors(QString city, QString player, int function_switch){
+    if (city.size() < 3){
+        city = "0"+ city;
+        if (city.size() == 2){
+            city = "0" + city;
+        }
+    }
     QStringList settlement_roads = roads.filter(city);
     QString road1_owner, road2_owner,road3_owner;
     int count = 0;
+    qDebug() << settlement_roads;
     if (settlement_roads.size() > 0){
         QString road1 = settlement_roads[0];
         road1_owner = road1.section("|",3,3);
-        if (road1_owner == player){
-            if (function_switch == 1){
-                ++count;
-            }
-            else{
-                return false;
-            }
+        qDebug() << road1_owner << " -road1_owner vs " << player;
+        if (road1_owner == player && function_switch == 0){
+           //road1 owner match
+           qDebug() << road1_owner << " matched";
+           return false;
+        }
+        if (function_switch == 1){
+            ++count;
         }
     }
     if (settlement_roads.size() > 1){
         QString road2 = settlement_roads[1];
         road2_owner = road2.section("|",3,3);
-        if (road2_owner == player){
-            if (function_switch == 1){
-                ++count;
-            }
-            else{
-                return false;
-            }
+        qDebug() << road2_owner << " -road2_owner vs" << player;
+        if (road2_owner == player && function_switch == 0){
+            //road1 owner match
+            qDebug() << road2_owner << " matched";
+            return false;
         }
+        if (function_switch == 1){
+            ++count;
+        }
+
     }
     if (function_switch == 1){
         if (settlement_roads.size() > 2){
             QString road3 = settlement_roads[2];
             road3_owner = road3.section("|",3,3);
+            qDebug() << road3_owner << " -road3_owner vs" << player;
             if (road3_owner != player){
                     ++count;
                 }
             }
+        qDebug() << "count: " << count;
         if (count > 1){
             if (road1_owner == road2_owner){
-                return false;
+                if (road1_owner != player){
+                    return false;
+                }
             }
         }
         if (count > 2){
             if (road3_owner == road2_owner || road3_owner == road1_owner){
-                return false;
+                if (road3_owner != player){
+                    return false;
+                }
             }
         }
     }
     return true;
 }
-
-void map_tracker::add_road(QString road){
-    road = "null";
-}
-
 
 QStringList map_tracker::settlement_neighbors(int x){
     //qDebug() << "search neighbors of: " << x;

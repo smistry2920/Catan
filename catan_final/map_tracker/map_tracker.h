@@ -16,7 +16,6 @@ public:
 private:
     //add the settlement/city or road to respective QString
     void set_city(int);
-    void add_road(QString);
     void add_settlement(QString,QString);
 
     //find neighbors of respective settlement/road
