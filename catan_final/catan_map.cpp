@@ -49,9 +49,10 @@ void catan_map::signalSorter(const QString & button)
         //players[iter].seeResources();
         bool ok = true;
         QString player_hand = button.at(7);
-        int p_viewhand = player_hand.toInt(&ok,10);
+        int p_viewHand = player_hand.toInt(&ok,10);
+        p_viewHand --;
         //qDebug() << "view hand: " << button << player_hand<<"***"<<p_viewhand;
-        players[p_viewhand].seeResources();
+        players[p_viewHand].seeResources();
 
     }
 
@@ -68,6 +69,13 @@ void catan_map::signalSorter(const QString & button)
         ui->roll_outcome->setText(out);
         qDebug() << "roll code: " << button;
 
+        if(i==7){//roll 7 conditions
+            for(int k = 0; k<numPlayers; k++)
+                players[k].removeCardsOn7();
+
+            //some sort of wait for node click command to then place robber.
+
+        }
         for(int k = 0; k< numPlayers; k++)
             players[k].gainResources(i,node);
 
