@@ -1,7 +1,11 @@
+#ifndef PLAYER_H
+#define PLAYER_H
+
+#include <QtCore>
 #include<iostream>
 #include<string>
 #include<list>
-//#include "Node.h"
+#include "Node.h"
 
 using namespace std;
 
@@ -57,11 +61,7 @@ class Player{
     int  numberOfResources();
     int  numberOfDevelopments();
 
-    //called from buyItem()
-    void buyRoad();
-    void buySettlement();
-    void buyCity();
-    void buyDevelopmentCard();
+
 
     //Trading cards
     void whichCardsToTrade();       //trade withself
@@ -87,12 +87,11 @@ class Player{
     void checkStats();
     void seeResources();
     void seeDevelopments();
-    void buyItem();
     void changeName(string&);
     void changeColor(char&);
     void convertResources(); //try to switch out cards
 
-    //void gainResources(int, Node );
+    void gainResources(int, Node );
     void removeCardsOn7();
 
     bool areRoadsBlockingSettlement(int);
@@ -104,17 +103,48 @@ class Player{
     char playMonoply();
     int removeCardFromPlayer(char);
     void gainCardsFromMonopoly(int, char);
-    
-    QString OutColor();
-    QString OutName();
-    QStringList checkHand();
-    QString OutRoll();
-    QString OutVictoryPoints()
-    QString OutCardsHeld()
-    
 
+
+    //buying:
+    void buyRoad();
+    void buySettlement(QString);
+    void buyCity(QString);
+    void buyDevelopmentCard();
+
+    //affording:
+    bool affordRoad();
+    bool affordSettlement();
+    bool affordCity();
+    bool affordDevelopmentCard();
+
+    //QStringList seeResources();
+    //QStringList seeDevelopments();
+    //QString buyRoad();
+    //QString convertResources();
+    //QString whichCardsToTrade();
 
     //constructor
     Player();
     ~Player();
 };
+
+/*class Hand: Public Player{
+
+    //resources
+    int yellow_;     //y
+    int lightGreen_; //l
+    int darkGreen_;  //d
+    int blue_;       //b
+    int red_;        //r
+
+    //developmentCards
+    int knight_;
+    int victoryPointCard_;
+    int roadBuilder_;
+    int monopoly_;
+    int yearOfPlenty_;
+
+
+};*/
+
+#endif

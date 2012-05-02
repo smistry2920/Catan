@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <iomanip>
+#include <QtCore>
 
 
 //constructor
@@ -14,36 +15,24 @@ Player::Player(){
     this->armySize_     = 0;
     char color = 'g';
     this->playerColor_  = color;
-    this->yellow_       = 0;
-    this->lightGreen_   = 0;
-    this->darkGreen_    = 0;
-    this->blue_         = 0;
-    this->red_          = 0;
+    this->yellow_       = 10;
+    this->lightGreen_   = 10;
+    this->darkGreen_    = 10;
+    this->blue_         = 10;
+    this->red_          = 10;
 
     this->knight_       = 0;
     this->victoryPointCard_ = 0;
-    this->roadBuilder_  
+    this->roadBuilder_  = 0;
     this->monopoly_     = 0;
     this->yearOfPlenty_ = 0;
 }
-
-
-class Hand : public Player
-{
-  public:
-    this->yellow_       = 0;
-    this->lightGreen_   = 0;
-    this->darkGreen_    = 0;
-    this->blue_         = 0;
-    this->red_          = 0;
-}
-
 
 Player::~Player(){
 //destroy the lists
 }
 
-//public function for rolling dicegit 
+//public function for rolling dice
 int Player::roll(){
     return rand() %6 +1;
 }
@@ -87,7 +76,33 @@ void Player::seeResources(){
     cout<<"Dark Green: "<<darkGreen_<<endl;
     cout<<"Blue: "<<blue_<<endl;
     cout<<"Red: "<<red_<<endl<<endl;
+    seeDevelopments();
 }
+
+/***Returns the amount of resources are in your hand. Should use this function above
+  because it will be able to send QStringList to GUI
+
+QStringList Player::seeResources()
+{
+       QStringList hand;
+       QString wheat, sheep, lumber, stone, brick;
+
+       wheat.prepend("wheat_");
+       sheep.prepend("sheep_");
+       lumber.prepend("lumber_");
+       stone.prepend("stone_");
+       brick.prepend("brick_");
+
+       wheat.append(QString("%1").arg(yellow_));
+       sheep.append(QString("%1").arg(lightGreen_));
+       lumber.append(QString("%1").arg(darkGreen_));
+       stone.append(QString("%1").arg(blue_));
+       brick.append(QString("%1").arg(red_));
+
+
+       hand << wheat << sheep << lumber << stone << brick;
+       return hand;
+}*/
 
 //This public functionallows a player to see
 //which development cards he or she has
@@ -99,33 +114,20 @@ void Player::seeDevelopments(){
     cout<<"Year Of Plenth: "<<yearOfPlenty_<<endl<<endl;
 }
 
-/*This public function brings up the buy menu. It calls the
-proper private functions from here for whichever thing the player
-wants to purchase. */
-void Player::buyItem(){
-    cout<<"What would you like to buy: "<<endl;
-    cout<<"1) Road        (1 Red, 1 Dark Green)"<<endl;
-    cout<<"2) Settlement  (1 Red, 1 Dark Green, 1 Light Green, 1 Yellow)"<<endl;
-    cout<<"3) City        (3 Blue, 2 Yellow)"<<endl;
-    cout<<"4) Development Card (1 Blue, 1 Yellow, 1 Light Green)"<<endl;
-    cout<<"0) to cancel"<<endl;
-    int number;
-    cin>>number;
-    cout<<endl;
-    if(number==1 || number==2 || number==3 || number==4){
-        if(number==1)
-            buyRoad();
-        else if (number ==2)
-            buySettlement();
-        else if (number==3)
-            buyCity();
-        else if (number==4)
-            buyDevelopmentCard(); 
-        seeResources();
-    }
-    cout<<"exit"<<endl;
 
-}
+/***use this altered function to output Qstrings instead of cout
+**QStringList Player::seeDevelopments(){
+    QStringList developmentCards;
+    QString Knights, VictoryPoint, RoadBuilder, Monopoly, YearofPlenty;
+
+    Knights.append(QString("%1").arg(knight_));
+    VictoryPoint.append(QString("%1").arg(victoryPointCard_));
+    RoadBuilder.append(QString("%1").arg(roadBuilder_));
+    Monopoly.append(QString("%1").arg(monopoly_));
+    YearofPlenty.append(QString("%1").arg(yearOfPlenty_));
+
+    return developmentCards << Knights << VictoryPoint << RoadBuilder << Monopoly << YearofPlenty;
+}*/
 
 /*This public function has to be called for each opponent (everyone but the player you are on).
 It checks to see if a settlement is being placed in a spot that would
@@ -204,100 +206,200 @@ int Player::checkRoad(){
 }
 
 
-//this private function allows a player to purchase a road
+//public function allows player to see if they can purchase a road
+bool Player::affordRoad(){
+    if(red_>0 && darkGreen_>0)
+        return 1;
+    cout<<"You do not have the resources to purchase a road!"<<endl<<endl;
+    return 0;
+
+}
+
+//this public function allows a player to purchase a road
 void Player::buyRoad(){
-    if(red_>0 && darkGreen_>0){
-        //do action to place road
-        red_--;
-        darkGreen_--;
+    //do action to place road
+    red_--;
+    darkGreen_--;
 
-        struct roads ro;
-        //filling in the .top and .bottom @suneil
-        ro.top = 0;
-        ro.bottom = 0;
-        //end @suneil
-        pavement.push_front(ro);
-
-    } else
-        cout<<"You do not have the resources to purchase a road!"<<endl<<endl;
+    struct roads ro;
+    //filling in the .top and .bottom @suneil
+    ro.top = 0;
+    ro.bottom = 0;
+    //end @suneil
+    pavement.push_front(ro);
 
 }
+/***Same function just outputs a QString
+QString Player::buyRoad(){
 
-//This private fuction allows a player to purchase a settlement.
-void Player::buySettlement(){
-    if(red_ >0 && darkGreen_ >0 && lightGreen_ >0 && yellow_>0){
-        //do action to place settlement
-        red_--;
-        darkGreen_--;
-        yellow_--;
-        lightGreen_--;
-        victoryPoints_++;
+QString roadFails = "You do not have the resources to purchase a road!";
+QString roadWorks = "Road Purchased";
 
-        struct settlement set;
-        set.city = 1;
+    red_--;
+    darkGreen_--;
 
-        //filling in the rest until we figure out how it connects to the board @ suneil
-        set.cityNumber = 1;
-        set.left.node = 1;
-        set.left.color = 'l';
-        set.right.node = 1;
-        set.right.color = 'l';
-        set.top.node =1;
-        set.top.color = 'l';
+    struct roads ro;
+    //filling in the .top and .bottom @suneil
+    ro.top = 0;
+    ro.bottom = 0;
+    //end @suneil
+    pavement.push_front(ro);
+}*/
 
-        set.port = 'a';
 
-        //end @suneil
-        
-        pieces.push_front(set);//add city to list.
-
-    }else
+//public function check to see if player can afford settlement
+bool Player::affordSettlement(){
+        if(red_ >0 && darkGreen_ >0 && lightGreen_ >0 && yellow_>0)
+            return 1;
         cout<<"You do not have the resources to purchase a settlement!"<<endl<<endl;
+        return 0;
 }
 
-/*This private function does the action of changing a settlement into a city and
+
+//This public fuction allows a player to purchase a settlement.
+void Player::buySettlement(QString line){
+
+    //Format is city ID|left Color|left node|right Color|right node|top color|top node|port
+    bool ok = true;
+    char lC;
+    char rC;
+    char tC;
+    char port;
+    QString ID_temp = line.section("|",0,0);
+    int ID = ID_temp.toInt(&ok, 10);
+    ID_temp = line.section("|",1,1);
+
+    {
+        QByteArray ba = ID_temp.toLocal8Bit();
+        const char *cstring = ba.data();
+        lC = *cstring;
+    }
+
+    ID_temp = line.section("|",2,2);
+    int lN = ID_temp.toInt(&ok, 10);
+    ID_temp = line.section("|",3,3);
+    {
+        QByteArray ba = ID_temp.toLocal8Bit();
+        const char *cstring = ba.data();
+        rC = *cstring;
+    }
+
+    ID_temp = line.section("|",4,4);
+    int rN = ID_temp.toInt(&ok, 10);
+    ID_temp = line.section("|",5,5);
+    {
+        QByteArray ba = ID_temp.toLocal8Bit();
+        const char *cstring = ba.data();
+        tC = *cstring;
+    }
+    ID_temp = line.section("|",6,6);
+    int tN = ID_temp.toInt(&ok, 10);
+    ID_temp = line.section("|", 7,7);
+    {
+        QByteArray ba = ID_temp.toLocal8Bit();
+        const char *cstring = ba.data();
+        port = *cstring;
+    }
+
+    cout<<"buying sett:"<<endl;
+    cout<<ID<<lC<<lN<<rC<<rN<<tC<<tN<<port<<endl;
+
+
+
+    //do action to place settlement
+    red_--;
+    darkGreen_--;
+    yellow_--;
+    lightGreen_--;
+    victoryPoints_++;
+
+    struct settlement set;
+    set.city = 1;
+
+    set.cityNumber  = ID;
+    set.left.node   = lN;
+    set.left.color  = lC;
+    set.right.node  = rN;
+    set.right.color = rC;
+    set.top.node    = tN;
+    set.top.color   = tC;
+
+    set.port = port;
+
+    pieces.push_front(set);//add city to list.
+
+
+}
+
+
+bool Player::affordCity(){
+    if(blue_>=3 && yellow_>=2)
+        return 1;
+    cout<<"You do not have the resources to purchase a city!"<<endl<<endl;
+    //We need to figure out to send a QString with above statement and bool type.
+    return 0;
+}
+
+
+/*This public function does the action of changing a settlement into a city and
 charging the respective resources.*/
-void Player::buyCity(){
-    if(blue_>=3 && yellow_>=2){
-        //do action to place settlement, but also we have to make sure a settlement is already in that space.
-        
-        //cycle through list of settlements to make sure there is a settlement to begin with
-        list<settlement>::iterator current = pieces.begin();
-        int size = pieces.size();
-        int numOfCities = 0;
-        for(int i = 0; i<size; i++){
-            if(current->city == 2)
-                numOfCities++;
-            current++;
-        }
+void Player::buyCity(QString line){
 
-        if(numOfCities!=size){ //it's possible to build a city (aka not every building is a city)
-            blue_ -= 3;
-            yellow_ -= 2;
-            victoryPoints_++;
-            //then we have to do some sort of cycle to change the proper settlement into a city.
-        }
-        else{   //we can't build a city because there are no settlements (Everything already is a city)
-            cout<<"You have no settlements!"<<endl;
-        }
-        
-    } else
-        cout<<"You do not have the resources to purchase a city!"<<endl<<endl;
+    bool ok = true;
+    QString ID_temp = line.section("|",0,0);
+    int ID = ID_temp.toInt(&ok, 10);
+
+    cout<<"In buy city, city id: "<<ID<<endl;
+
+
+    //find settlement and change it to a city
+    list<settlement>::iterator current = pieces.begin();
+    int size = pieces.size();
+
+    for(int i = 0; i<size; i++){
+        if(current->cityNumber==ID)
+            current->city = 2;
+        current++;
+    }
+
+    //charge user
+    blue_ -= 3;
+    yellow_ -= 2;
+    victoryPoints_++;
 
 }
 
-/*This private function lets you buy a development card.
+
+bool Player::affordDevelopmentCard(){
+    if(blue_>0 && yellow_>0 && lightGreen_>0)
+        return 1;
+
+    cout<<"You do not have the resources to purchase a developmentCard!"<<endl<<endl;
+    //Need to figure out how to send this line as a QString also.
+    return 0;
+}
+
+/*This public function lets you buy a development card.
 It will have to call the private function UNKOWNRIGHTNOW
 to figure out which card you get
 */
 void Player::buyDevelopmentCard(){
-    if(blue_>0 && yellow_>0 && lightGreen_>0){
-        //do action to fetch developmentCard
-        blue_--;
-        yellow_--;
-        lightGreen_--;
-    } else
-        cout<<"You do not have the resources to purchase a developmentCard!"<<endl<<endl;
+    //do action to fetch developmentCard
+    blue_--;
+    yellow_--;
+    lightGreen_--;
+    int num = rand() %25;
+
+    if(num<2)
+        yearOfPlenty_++;
+    else if (num<4)
+        monopoly_++;
+    else if (num<6)
+        roadBuilder_++;
+    else if(num<11)
+        victoryPointCard_++;
+    else
+        knight_++;
 }
 
 void Player::changeName(string & name){
@@ -312,7 +414,7 @@ void Player::changeColor(char &color){
 a player has to give them the respective resources gained on
 a roll. */
 
-/*
+
 void Player::gainResources(int roll, Node onlyNode){
     list<settlement>::iterator current = pieces.begin();
 
@@ -334,7 +436,7 @@ void Player::gainResources(int roll, Node onlyNode){
     }
    
 }
-*/
+
 /*This is a private function called by gainResources. It finds which 
 of the players resources to add to given that he his settlement/city
 has a part matching a number*/
@@ -360,7 +462,8 @@ card you decide on here */
 
 void Player::convertResources(){
     seeResources();
-    
+
+    //Need to have this either printed to an ouput or made into a pop-up window
     cout<<"1) Trade for yellow"<<endl;
     cout<<"2) Trade for light green"<<endl;
     cout<<"3) Trade for dark green"<<endl;
@@ -368,7 +471,7 @@ void Player::convertResources(){
     cout<<"5) Trade for red"<<endl;
     cout<<"0) Cancel"<<endl<<endl;
     int input;
-    cin>>input;
+    cin>>input;         //Need to find button that corresponds with this
     if(input==1 || input==2 || input==3 || input==4 || input==5){
         this->whichCardsToTrade();
 
@@ -388,6 +491,41 @@ void Player::convertResources(){
     
 }
 
+/***Same function above just uses Qstrings to output
+QString Player::convertResources(){
+    seeResources();
+
+    QString convertPass = "Conversion successful!";
+    QString convertCancel = "Conversion Cancelled";
+
+    //Need to have this either printed to an ouput or made into a pop-up window
+    cout<<"1) Trade for yellow"<<endl;
+    cout<<"2) Trade for light green"<<endl;
+    cout<<"3) Trade for dark green"<<endl;
+    cout<<"4) Trade for blue"<<endl;
+    cout<<"5) Trade for red"<<endl;
+    cout<<"0) Cancel"<<endl<<endl;
+    int input;
+    cin>>input;         //Need to find button that corresponds with this
+    if(input==1 || input==2 || input==3 || input==4 || input==5){
+        this->whichCardsToTrade();
+
+        if(input==1)
+            this->yellow_++;
+        else if (input==2)
+            this->lightGreen_++;
+        else if(input==3)
+            this->darkGreen_++;
+        else if(input==4)
+            this->blue_++;
+        else if(input==5)
+            this->red_++;
+        return convertPass;
+
+    }else
+        return convertCancel;
+
+}*/
 
 /*this private function lets you trade cards with the bank.
 it finds the conversion factor to get a trade. The defualt
@@ -402,6 +540,7 @@ void Player::whichCardsToTrade(){
     int blue = findBestTrade('b');
     int red = findBestTrade('r');
 
+    //Need to make pop up window that will display these options
     cout<<"1) Give up yellow        "<<yellow<<":1"<<endl;
     cout<<"2) Give up light green   "<<lightGreen<<":1"<<endl;
     cout<<"3) Give up dark green    "<<darkGreen<<":1"<<endl;
@@ -409,7 +548,7 @@ void Player::whichCardsToTrade(){
     cout<<"5) Give up red           "<<red<<":1"<<endl;
     cout<<"0) Cancel"<<endl;
     int input;
-    cin>>input;
+    cin>>input;       //Need a way to take in this value might need to make more than one function
 
     if(input==1 || input==2 || input==3 || input==4 || input==5){
 
@@ -431,6 +570,50 @@ void Player::whichCardsToTrade(){
     }else
         cout<<"Cancelled"<<endl;
 }
+
+/*Same as function above just has output QStrings
+QString Player::whichCardsToTrade(){
+    //maybe show the conversion too rather than just assuming the person knows
+
+    QString insuffientResources = "Not enough resources for conversion!"
+    QString tradeCancel = "Cancelled";
+
+    int yellow = findBestTrade('y');
+    int lightGreen = findBestTrade('l');
+    int darkGreen = findBestTrade('d');
+    int blue = findBestTrade('b');
+    int red = findBestTrade('r');
+
+    //Need to make pop up window that will display these options
+    cout<<"1) Give up yellow        "<<yellow<<":1"<<endl;
+    cout<<"2) Give up light green   "<<lightGreen<<":1"<<endl;
+    cout<<"3) Give up dark green    "<<darkGreen<<":1"<<endl;
+    cout<<"4) Give up blue          "<<blue<<":1"<<endl;
+    cout<<"5) Give up red           "<<red<<":1"<<endl;
+    cout<<"0) Cancel"<<endl;
+    int input;
+    cin>>input;       //Need a way to take in this value might need to make more than one function
+
+    if(input==1 || input==2 || input==3 || input==4 || input==5){
+
+        if(input==1 && this->yellow_ >=yellow){
+            this->yellow_ -=yellow;
+        }else if (input==2 &&this->lightGreen_ >=lightGreen){
+            this->lightGreen_ -=lightGreen;
+        }else if(input==3 && this->darkGreen_ >=darkGreen){
+            this->darkGreen_-=darkGreen;
+        }else if(input==4 && this->blue_ >=blue){
+            this->blue_ -=blue;
+        }else if(input==5 && this->red_ >= red){
+            this->red_ -=red;
+        } else{
+            return insuffientResources;
+        }
+        seeResources();
+
+    }else
+        return tradeCancel;
+}*/
 
 /*This is a private function called by whichCardsToTrade.
 It takes a given color and determines if you have a port that matches it.
@@ -523,11 +706,11 @@ char Player::removeRandomCard(){
     return '0';
 }
 
-/*This public function decides which development card
-the player wants to play. The main function then uses if
-statements to decide what to do next. */
+
+
+//Need to Find away to output QStrings for card checks
 int Player::playDevCard(){
-    cout<<"Which Development Card would you like to play?"<<endl;
+    cout<<"Which Development Card would you like to play?"<<endl;       //Need a way to display this as a popup window or output terminal
     cout<<"1) Knight Card"<<endl;
     cout<<"2) Victory Point"<<endl;
     cout<<"3) Road Builder"<<endl;
@@ -535,7 +718,7 @@ int Player::playDevCard(){
     cout<<"5) Year Of Plenty"<<endl;
     cout<<"6) Cancel"<<endl;
     int input;
-    cin>>input;
+    cin>>input;                                                     //Way to input cards
 
     if(input==1 ){
         if(knight_ >0){
@@ -573,7 +756,7 @@ int Player::playDevCard(){
         }
         cout<<"You have no Year Of Plenty Cards!"<<endl;
     }
-    
+
     return 0;
 }
 
@@ -690,58 +873,4 @@ void Player::playYearOfPlenty(){
     }
 }
 
-QString Player::OutName()
-{
-	QString name = name_;
-	return name;
-}
 
-QString player::OutColor()
-{
-	Qstring color = color_;
-	return color;
-}
-
-QString player::OutCardsHeld()
-{
-	Qstring CardsHeld;
-	CardsHeld.append(QString("%1").arg(numberOfResources()));
-	return CardsHeld;
-} 
-
-QString player::OutVictoryPoints()
-{
-	QString VP;
-	VP.append(QString("%1").arg(victorypoints_);
-	return VP;
-}
-	
-QString player::OutRoll()
-{
-	Qstring roll;
-	roll.append(QString("%1").arg(roll_);
-	return roll;
-}
-	
- QStringList player::checkHand()
- {
-	QStringList hand;
-	QString wheat, sheep, lumber, stone, brick;
-
-	wheat.prepend("wheat_");
-	sheep.prepend("sheep_");
-	lumber.prepend("lumber_");
-	stone.preprend("stone_");
-	brick.prepend("brick_");
-	
-	wheat.append(QString("%1").arg(yellow_));
-	sheep.append(QString("%1").arg(lightGreen_));
-	lumber.append(QString("%1").arg(darkGreen_));
-	stone.append(QString("%1").arg(blue_));
-	brick.append(QString("%1").arg(red_));
-	
-	
-	hand << wheat << sheep << lumber << stone << brick;
-	return hand;     
- }
- 		

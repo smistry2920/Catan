@@ -5,7 +5,7 @@
 #include <QtCore>
 #include "map_tracker/map_tracker.h"
 #include "player/Player.h"
-#include "player/Node.h"
+//#include "player/Noder.h"
 
 namespace Ui {
     class catan_map;
@@ -24,10 +24,21 @@ private slots:
     void signalSorter(const QString &); //sorts signals
 
 private:
+    ///temporary test code (DELETE WHEN FINISHED!)
+    int temp_iterator;
+
     Ui::catan_map *ui;
     QSignalMapper *signalMapper;
     map_tracker mapper;
+
     Player players[4];
+    int iter;
+
+    Node node;
+
+    bool robber;
+
+    void changeNode(QString);
     void activate_settlements();
     void activate_roads();
     void activate_other();
@@ -35,6 +46,7 @@ private:
     void button_output(QString,QString);
     void settlement_output(QString,QString);
     void city_output(QString,QString);
+    void road_output(QString,QString);
 //=======
     void activate_nodes();
 //>>>>>>> upstream/master
