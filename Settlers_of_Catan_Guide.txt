@@ -1,0 +1,202 @@
+*****************************************
+*******   The Settlers of Catan   *******
+*****************************************
+
+
+
+
+Key
+****************************************************
+** Resources:Brick, Wood, Ore, Grain, and Sheep   **
+****************************************************
+** Conversions: ************************************
+** Roads: 1 Wood and 1 Brick                      **
+** Settlement: 1 Brick, 1 Wood, and 1 Grain       **
+** City: 3 Grain and 2 Ore                        **
+** Development Card:1 Sheep,1 Grain, and 1 Ore    **
+****************************************************
+
+**************
+** OVERVIEW **
+**************
+
+In Settlers of Catan, each player represents a group of settlers who have landed on the remote island of Catan. The goal of the game is to become the dominant group on the island by acquiring Victory Points. Victory Points are earned by building settlements and cities, by having the longest road or the largest army, or by purchasing certain cards.
+
+Building requires resources. Each settlement or city receives resources based on the nearby terrain. Forests produce wood, mountains produce ore, hills produce bricks, plains produce grain, and pastures produce sheep. Players can use these resources to build settlements, roads, and cities. Resources can also be exchanged for development cards that contain knights or other advantages.
+
+The game is played in turns. Going clockwise, each player starts their turn by rolling two dice. The number rolled determines which terrain produces resources. All players who have settlements or cities adjacent to those areas gain the corresponding resources. After rolling, a player can trade resources with other players or with the bank, and can buy settlements, roads, cities or cards from the bank with these resources. The winner is the first player to have 10 Victory Points on their turn.
+
+*********************
+**Distribution     **
+*********************
+
+Each player has 5 settlements, 4 cities and 15 roads of their color.
+
+Roll for first
+
+Place starting settlements
+
+Each player starts the game with two settlements and two roads. Each player places one settlement and one road at a time, starting with the player who rolled highest.
+
+********************************
+** How to place settlements:  **
+********************************
+
+Settlements are placed on the intersection of three hexes (see capital letters in the diagram on the next page). Settlements can be placed on any intersection that includes a land hex, including intersections that touch water hexes. All settlements must be placed at least two intersections away from any other settlement.
+
+Each settlement touches three different hexes. These hexes determine the resources that the settlement can produce. The number on each hex is the number that must be rolled for that hex to produce its resource.
+
+
+*************************
+** How to place roads: **
+*************************
+
+Roads are placed on the edge between two hexes (see lower case letters in diagram on the next page). One of these hexes must be a land hex. Each road connects two corners. When a player places a road during setup, it must connect to the settlement that he places with it.
+
+Example:
+
+This example shows the first round of setup building in a three player game. Arne places settlement A and road a. Since settlement A touches a pasture, a hill, and a mountain, it can produce sheep, bricks, or ore depending on which number is rolled. Amy places settlement B and road b. Since settlement B touches a port hex, she will be able to make special trades, as explained below. Since her settlement only touches two land hexes, this settlement can only produce two different resources. Chuck tries to place settlement X. Since this is only one corner away from settlement A, this is an illegal play. He reconsiders and places Settlement C and road c.
+
+Continue clockwise until the last player places a first settlement and road. That player then places a second settlement and road, and placing continues counter-clockwise from that player.
+
+When a player places his second settlement, he receives one resource from each hex touching that settlement. These (up to three) resources are that player's starting resource hand. Once all players have placed two settlements and two roads, regular turns begin. The player who rolled the highest goes first, and play continues clockwise.
+
+Example (continued):
+
+Since Chuck placed the last settlement in the first round of building, he places the first settlement in the second round. He places settlement D and road d. Since settlement D touches a forest, plain and pasture, he collects a wood, a grain, and a sheep as his starting resources. Amy places settlement E and collects two grain and one brick. She tries to place a road on edge X, but realizes that this does not touch the settlement she is playing, so she plays road e instead. Arne places settlement F and road f and collects his resources. He will now take his first turn, and play will continue with Amy.
+
+
+************
+** HEXES  **
+************
+
+There are eight types of hex: plain, pasture, hill, mountain, forest, desert, port, and water. Five of the six land hexes produce specific resources:
+
+
+******************
+** TURN SUMMARY **
+******************
+
+During a player's turn, he rolls the dice to determine which hexes produce resources, then he can trade resources with other players and build settlements, roads. or cities. A player can trade and buy in any order, even going back and forth from one to the other and can trade and buy as many times as he wants during one turn. If a player has 10 Victory Points at any time during his turn, he wins.
+
+
+*****************
+** HOW TO PLAY **
+*****************
+
+A player begins his turn by rolling two dice and adding them together. The number he rolls indicates which hexes produce resources. All hexes whose number equals the roll produce their resource. All players (even if it's not their turn) gain one resource card for each settlement touching any of those hexes and two resources for each city that touches the hex.If a player rolls a "7," no hexes produce resources and the robber moves, as explained below.
+
+
+*********************
+** Trade Resources **
+*********************
+
+After rolling, a player can trade resources with other players. All trades must involve the player whose turn it is; other players may not trade amongst themselves. Players need not offer an equal number of resource cards. Players are allowed to discuss what they have in their hand with other players to facilitate trading. Once a trade is agreed upon, both players exchange the stated resource card(s); they cannot cheat the other player by giving anything other than what was offered. Each trade must contain at least one resource card from each player. Trades can never include Development cards.
+
+In addition to trading with other players, a player can trade resources with the bank. On his turn, a player can trade four of any one resource to the bank in exchange for one of any resource. This is the only type of trade that can be made with the bank unless a player has a settlement or city touching a port hex, as explained below.
+
+In addition to trading, a player can use his resource cards to build settlements, roads, or cities, or to buy cards. The exchange rates are shown on the building cost cards. To build something, a player must discard the appropriate resource cards and take his purchase. When a settlement, road, or city is built, it is immediately placed on the board, as explained below. Each player can only build as many settlements, roads, or cities as he has tokens of that type. Each player has five settlements, four cities and fifteen roads.
+
+
+*************************
+** PLACING SETTLEMENTS **
+*************************
+
+Settlements cost one brick, one wood, one grain and one sheep to build. They are placed at an intersection where three hexes meet. Settlements can be placed on any intersection of any land hex, including intersections that touch water hexes. All settlements must be placed at least two intersections away from any other settlement or city.
+
+After setup, a player can only place settlements on intersections that connect to his roads. If none of that player's roads touch the intersection he wishes to build on, he must first build roads to that intersection. A player can build at any point along his roads, not just at the ends. Other player's roads do not influence where a player can build settlements.
+
+
+*******************
+** PLACING ROADS **
+*******************
+
+A road costs one wood and one brick. Roads are placed on the edge between two hexes, connecting two intersections. At least one of these hexes must be a land hex. Once a player has built on that edge, no other player can build there; there can only be one road on each edge.
+
+Every road that a player builds must connect to one of his existing roads, settlements, or cities. If a player builds a settlement or city at the end of one of another player's roads, the second player cannot build from that intersection. If a player builds a settlement or city in the middle of a chain of another player's roads, the second player can still build roads connecting to the roads on either side of that settlement or city.
+
+********************
+** PLACING CITIES **
+********************
+
+Cities cost three grain and two ore. They replace settlements. When a player purchases a city, he removes one of his settlements from the board and places a city on that intersection. A city produces two resources instead of one from all adjacent hexes. Note that a player can build a settlement on an intersection and immediately upgrade it to a ciy if that player has sufficient resources.
+
+Example:
+
+Amy has been saving up her resources for a while. She decides to splurge and build one of everything. She gives three grain and two ore to the bank and buys a city. To place it, she removes the settlement she had at spot A and replaces it with a city. Then she considers building a city at spot B. Unfortunately, she does not have roads connecting her to this spot, so she cannot build a settlement there. Instead, she pays one wood and one brick to the bank and builds a road on spot c. She then pays one wood, one brick, one grain and one sheep to build a settlement at spot B.
+
+
+************
+** ROBBER **
+************
+
+If any player rolls a "7" at the beginning of his turn, strange things happen. No hexes produce resources that turn, players with too many cards must discard the excess, and the robber moves.
+
+All players with more than seven resource cards must discard half of their resource cards (rounded down). The player who is discarding chooses which of their resource cards to discard. For example, a player with nine resource cards when a "7" is rolled must choose four of them to discard.
+
+Moving the robber does two things: he blocks production in the new hex, and he steals a resource card on the behalf of the player who moved him.
+
+The player who caused the robber to move takes the robber token and places it on any land hex on the board. The robber must be moved; it cannot stay on the same hex. The robber can be moved to a hex that no players touch. While the robber remains there, that hex cannot produce any resource, even when its number is rolled. The only way to revitalize the hex is to move the robber token again.
+
+The player who placed the robber token can steal one resource from one player who has a settlement or city touching the hex (i.e., adjacent to) where the robber was placed. This resource card is taken at random from the player's hand.
+
+The robber can also be moved by playing a Knight card. See "Development Cards" below for details.
+
+
+***********
+** PORTS **
+***********
+
+Ports are indicated by semi-circles on the corners of some water hexes. If a player has a settlement or city built on an intersection that contains a port, that player can make special trades with the bank. These trades may be made immediately upon building the port, even during the same turn. Note that not all corners of port hexes have ports; only those with semi-circles are actually ports. There are two types of ports: generic ports and specific ports.
+
+Specific ports have a resource pictured in the center of the hex. They allow a player to trade two of that specific resource for one of any resource. The resource that can be traded at that port is indicated by the icon shown on the port hex. No other resources can be traded at specific ports, but the player can still make normal four for one trades involving other resources.
+
+
+***********************
+** DEVELOPMENT CARDS **
+***********************
+
+By paying one sheep, one grain, and one ore, a player can draw a card from the top of the development deck. There are three types of cards in the development deck: Progress cards, Knights, and Victory Point cards. All players should keep their development cards hidden from other players until they choose to play them. Development cards can be used at any time during a player's turn, but not on the turn that they are drawn (except VP cards). Since a player's turn officially begins before he rolls the dice, a player can play a card before rolling the dice. For example, you could play a Knight card before rolling to move the robber from one of your hexes. A player can play only one development card (except for Victory Point cards) each turn.
+
+Road Building:
+**************
+When a player plays this card, he can immediately place two road segments onto the board, as if he had just built them.
+
+Discovery:
+**********
+When a player plays this card, he can immediately take any two resource cards from the bank and add them to his hand. These can be two different resources or two of the same resource. They may immediately be used to build.
+
+Monopoly:
+*********
+When a player plays this card, he must announce one type of resource. All other players must give the player who played this card all of their resource cards of that type.
+
+Knight Cards:
+*************
+When a player plays a Knight card, he must move the robber. The hex where the robber rests does not produce resources until the robber moves off that hex. See Robber for more details. Also, the player who played the Knight card can steal one random resource card from any player with a settlement or city touching that hex. Unlike rolling a "7," no one has to discard cards after a Knight.
+
+Once a player finishes resolving the robber, he adds the Knight to his army. The card no longer has any effect, but the number of Knight cards a player has is used to determine who gets the Largest Army bonus.
+
+
+*************************
+** Victory Point Cards **
+*************************
+
+VP cards provide an extra Victory Point towards winning. They are played differently from other developement cards. VP cards are kept hidden from the other players until their owner has 10 Victory Points, including the cards. The owner then plays all his VP cards at once to achieve victory. A player can play as many VP cards as he wants (even if he has already played another Developement card), and can even play them on the turn that they are drawn.
+
+Special Bonuses
+There is another way to gain victory points. Players who build impressive armed forces can gain extra points for their achievements. The player with the largest army of at least three knights each gain two extra points.
+
+This reward is only for the largest army on the board, there can only be one player with each award at any point. If a player already has the card and another player exceeds (not just equals) that player's total, then the new player takes the card (and the points) away from the old player.
+
+*****************
+** PROBABILITY **
+*****************
+When rolling two dice, the probability of rolling certain numbers is greater than others. Since there are 6 ways to roll a "7" (1+6, 6+1, 2+5, 5+2, 4+3, 3+4) and only 1 way to roll a "12" (6+6) or a "2" (1+1), 7 comes up much more often than 12 or 2. The size of the number on the counters in the game represents this probability; the larger numbers are more likely to be rolled. The probabilities are listed here:
+
+        "2" & "12"       3%
+        "3" & "11"       6%
+        "4" & "10"       8%
+        "5" &  "9"      11%
+        "6" &  "8"      14%
+        "7"                 17%
+
