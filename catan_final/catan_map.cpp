@@ -116,9 +116,8 @@ void catan_map::signalSorter(const QString & button)
 
 
         }
-    //UNDER HERE!! all qDebugs are TEST CODE!!
-    //////replace city_output ->> P1 and P2 with
-    /////////qstrings that contain player number!!
+
+        //qDebug used for testing and troubleshooting.
         else if (!button.startsWith("node")){
             qDebug() << "*************************";
             if (players[iter].affordCity()){
@@ -127,23 +126,28 @@ void catan_map::signalSorter(const QString & button)
                     qDebug() << "-------------------------";
                     city_output(button, player_name);
                     players[iter].buyCity(button);
+                    ui->instruction->setText("City Successfully placed.");
+                }
+                else{
+                    qDebug() << "City: settlment failed";
+                    qDebug() << "----------------------";
+                    ui->instruction->setText("City construction failed, check resources or proper placement.");
                 }
             }
-            else{
-                qDebug() << "City: settlment failed";
-                qDebug() << "----------------------";
-            }
+
             if (players[iter].affordSettlement()){
                 if (mapper.valid_settlement_check(button, player_name)){
                     qDebug() << "valid settlement input for: " << button;
                     qDebug() << "-------------------------";
                     settlement_output(button,player_name);
                     players[iter].buySettlement(button); //add settlement to player list
+                    ui->instruction->setText("Settlement successfully placed.");
                 }
             }
             else{
                 qDebug() << "Settlement: settle failed";
                 qDebug() << "-------------------------";
+                ui->instruction->setText("Settlement construction failed, check resources or proper placement.");
             }
         }
     }
@@ -781,10 +785,12 @@ void catan_map::button_output(QString button_out, QString player){
 
 void catan_map::activate_settlements(){
 
-    /////////////////////////////////////////////
-    //START SETTLEMENT BUTTON MAPPING!!
-    ///////////////////
-    //Format is city ID|left Color|left node|right Color|right node|top color|top node|port
+    //////////////////////////////////////////////////////////////////////////////////////////
+    //START OF SETTLEMENT BUTTON MAPPING!!                                                  //
+    //////////////////////////////////////////////////////////////////////////////////////////
+    //Format is city ID|left Color|left node|right Color|right node|top color|top node|port///
+    //////////////////////////////////////////////////////////////////////////////////////////
+
     connect(ui->pushSettle_221, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushSettle_221, "221|0|0|d|1|0|0|3");
 
@@ -947,17 +953,19 @@ void catan_map::activate_settlements(){
     connect(ui->pushSettle_551, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushSettle_551, "551|d|18|0|0|0|0|0");
 
-    //////////////////
-    //END SETTLEMENT BUTTON MAPPING
+    ////////////////////////////////////////////
+    //END SETTLEMENT BUTTON MAPPING           //
     ////////////////////////////////////////////
 }
 
 void catan_map::activate_roads(){
 
     ////////////////////////////////////////////
-    //START ROAD MAPPING
-    ////////////////
-   //road|top|bottom|
+    //START ROAD MAPPING                      //
+    ////////////////////////////////////////////
+    //road|top|bottom|                        //
+    ////////////////////////////////////////////
+
     connect(ui->pushRoad_01, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushRoad_01, "road01|223|221");
 
@@ -1174,8 +1182,8 @@ void catan_map::activate_roads(){
     connect(ui->pushRoad_72, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushRoad_72, "road72|551|556");
 
-    ///////////////
-    //END ROAD MAPPING
+    ///////////////////////////////////////////
+    //END ROAD MAPPING                       //
     ///////////////////////////////////////////
 
 }
@@ -1183,8 +1191,8 @@ void catan_map::activate_roads(){
 void catan_map::activate_other(){
 
     ////////////////////////////////////////////
-    //START MISCELLANEOS MAPPING
-    ////////////////
+    //START MISCELLANEOS MAPPING              //
+    ////////////////////////////////////////////
 
     connect(ui->vhandButton_01, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->vhandButton_01, "vhand_01");
@@ -1204,13 +1212,18 @@ void catan_map::activate_other(){
     connect(ui->rollButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->rollButton, "roll");
 
-    ///////////////
-    //END MISCELLANEOS MAPPING
+    ////////////////////////////////////////////
+    //END MISCELLANEOS MAPPING                //
     ////////////////////////////////////////////
 
 }
 
 void catan_map::activate_nodes(){
+
+    //////////////////////////////////////////////////////////////
+    //SETTING THE CORRECT DICE ROLLS TO THEIR CORRESPONDING     //
+    //NODES.                                                    //
+    //////////////////////////////////////////////////////////////
 
     connect(ui->node_01, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->node_01, "node|1");
@@ -1272,6 +1285,12 @@ void catan_map::activate_nodes(){
 
 void catan_map::changeNode(QString node_num){
 
+    ////////////////////////////////////////////////////////////////
+    //USED FOR THE ROBBER AND KNIGHT SITUATION IN ORDER TO CHANGE //
+    //THE VALUES OF THE NODES.                                    //
+    ////////////////////////////////////////////////////////////////
+
+    //Used to distinquish the robber.
     QString button_color = "background-color: rgb(69, 139, 116)";
 
     if (node_num == "1"){

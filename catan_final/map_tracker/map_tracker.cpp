@@ -4,9 +4,11 @@ map_tracker::map_tracker()
 {
 }
 
-/////////////////////////////////
-////start settlement creation
-//checks if a settlement is valid, if so, it adds it to the
+//////////////////////////////////////////////////////////////////////
+//START OF SETTLEMENT CREATION                                      //
+//CHECKS IF A SETTLEMENT IS VALID, IF SO, IT ADDS A SETTLEMTN THERE.//
+//////////////////////////////////////////////////////////////////////
+
 bool map_tracker::valid_settlement_check(QString settle_in, QString player){
     QString settlement = settle_in.section("|",0,0);
     //qDebug() << "settlement: " << settlement;
@@ -57,13 +59,17 @@ bool map_tracker::settle_check(QString neighbor){
     }
     return status;
 }
-////////end settlement creation!
-///////////////////////////////
+
+////////////////////////////////////
+//END OF SETTLEMENT CREATION.     //
+////////////////////////////////////
 
 
-//////////////////////////////
-////start city creation!
-//valid city checker! Checks if a city is a valid placement and then places a city there!
+/////////////////////////////////////////////////////////////////////////////////////////////
+//START CITY CREATION!                                                                     //
+//VALID CITY CHECKER! CHECKS IS A CITY IS A VALID PLACEMENT AND THEN PLACES A CITY THERE!  //
+/////////////////////////////////////////////////////////////////////////////////////////////
+
 bool map_tracker::valid_city_check(QString settlement, QString player){
     QString settle = settlement.section("|",0,0);
     bool ok = true;
@@ -93,9 +99,14 @@ void map_tracker::set_city(int city_convert){
     //qDebug() << settlements;
     // qDebug() << p_settle_ownership;
 }
-//////////end city creation!!
 ////////////////////////////////////
-//checks if the road is a legel placement for the player!
+//END OF CITY CREATION!           //
+////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////
+//CHECKS IF THE ROAD IS A LEGAL PLACEMENT FOR THE PLAYER!//
+///////////////////////////////////////////////////////////
 bool map_tracker::valid_road_check(QString road, QString player){
     QStringList same_check = roads.filter(road);
     if (same_check.size() > 0){
