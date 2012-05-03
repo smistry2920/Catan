@@ -23,20 +23,26 @@ catan_map::catan_map(QWidget *parent) :
     activate_nodes();
 
     iter = 0;
+    reverse = false;
 
     //activate_nodes();
 
     //final signal mapping connection (calls signalSorter to sort signals!)
     connect(signalMapper, SIGNAL(mapped(const QString &)), this, SLOT(signalSorter(const QString &)));
-    //checkPlayers();
-    checkPlayer();
 
     robber = false;
+    initial_settle = true;
+    initial_settle_place();
 }
 
 catan_map::~catan_map()
 {
     delete ui;
+}
+
+void catan_map::initial_settle_place(){
+
+    ui->instruction->setText("player 1, choose a settlement");
 }
 
 void catan_map::signalSorter(const QString & button)
@@ -54,109 +60,122 @@ void catan_map::signalSorter(const QString & button)
     if (iter == 3){
         player_name = "P4";
     }
-    qDebug() << "==============";
-    qDebug() << "made it here: " << button;
+    if (!initial_settle){
+        qDebug() << "==============";
+        qDebug() << "made it here: " << button;
 
-    if (button.startsWith("node") && robber){
-        QString temp_holder = button.section("|",1,1);
-        int nodeNumber = temp_holder.toInt(&robber,10);
-        node.placeRobber(nodeNumber);
-        changeNode(temp_holder);
-        robber = false;
+        if (button.startsWith("node") && robber){
+            QString temp_holder = button.section("|",1,1);
+            int nodeNumber = temp_holder.toInt(&robber,10);
+            node.placeRobber(nodeNumber);
+            changeNode(temp_holder);
+            robber = false;
+        }
+        //if robber is active, you must first place the robber!
+        if (!robber){
+            //road button pushed
+            if (button.startsWith("road")){
+                qDebug() << "=====================";
+                if (mapper.valid_road_check(button,player_name)){
+                    qDebug() << "road button: " << button;
+                    road_output(button, player_name);
+                }
+            }
+
+            //view a hand!
+            else if (button.startsWith("v")){
+                //players[iter].seeResources();
+                bool ok = true;
+                QString player_hand = button.at(7);
+                int p_viewHand = player_hand.toInt(&ok,10);
+                p_viewHand --;
+                //qDebug() << "view hand: " << button << player_hand<<"***"<<p_viewhand;
+                players[p_viewHand].seeResources();
+
+            }
+
+            //buy a development card
+            else if (button.startsWith("buy") && players[iter].affordDevelopmentCard()){
+                qDebug() << "buy development card: " << button;
+            }
+
+            //roll
+            else if (button.startsWith("roll")){
+                int numPlayers = 4;
+                int i = players[iter].roll() + players[iter].roll();
+                QString out = QString::number(i);
+                ui->roll_outcome->setText(out);
+                qDebug() << "roll code: " << button;
+
+                if(i==7){//roll 7 conditions
+                    for(int k = 0; k<numPlayers; k++)
+                        players[k].removeCardsOn7();
+                    //some sort of wait for node click command to then place robber.
+                        robber = true;
+                }
+                for(int k = 0; k< numPlayers; k++)
+                    players[k].gainResources(i,node);
+
+                iter++;
+
+                if(iter>=numPlayers)
+                    iter = 0;
+
+
+            }
+        //UNDER HERE!! all qDebugs are TEST CODE!!
+        //////replace city_output ->> P1 and P2 with
+        /////////qstrings that contain player number!!
+            else if (!button.startsWith("node")){
+                qDebug() << "*************************";
+                if (players[iter].affordCity()){
+                    if (mapper.valid_city_check(button, player_name) && players[iter].affordCity()){
+                        qDebug() << "City: valid city implemented for: " << button;
+                        qDebug() << "-------------------------";
+                        city_output(button, player_name);
+                        players[iter].buyCity(button);
+                    }
+                }
+                else{
+                    qDebug() << "City: settlment failed";
+                    qDebug() << "----------------------";
+                }
+                if (players[iter].affordSettlement()){
+                    if (mapper.valid_settlement_check(button, player_name)){
+                        qDebug() << "valid settlement input for: " << button;
+                        qDebug() << "-------------------------";
+                        settlement_output(button,player_name);
+                        players[iter].buySettlement(button); //add settlement to player list
+                    }
+                }
+                else{
+                    qDebug() << "Settlement: settle failed";
+                    qDebug() << "-------------------------";
+                }
+            }
+        }
     }
-    //if robber is active, you must first place the robber!
-    if (!robber){
-        //road button pushed
-        if (button.startsWith("road")){
-            qDebug() << "=====================";
-            if (mapper.valid_road_check(button,player_name)){
-                qDebug() << "road button: " << button;
-                road_output(button, player_name);
-            }
-        }
-
-        //view a hand!
-        else if (button.startsWith("v")){
-            //players[iter].seeResources();
-            bool ok = true;
-            QString player_hand = button.at(7);
-            int p_viewHand = player_hand.toInt(&ok,10);
-            p_viewHand --;
-            //qDebug() << "view hand: " << button << player_hand<<"***"<<p_viewhand;
-            players[p_viewHand].seeResources();
-
-        }
-
-        //buy a development card
-        else if (button.startsWith("buy") && players[iter].affordDevelopmentCard()){
-            qDebug() << "buy development card: " << button;
-        }
-
-        //roll
-        else if (button.startsWith("roll")){
-            int numPlayers = 4;
-            int i = players[iter].roll() + players[iter].roll();
-            QString out = QString::number(i);
-            ui->roll_outcome->setText(out);
-            qDebug() << "roll code: " << button;
-
-            if(i==7){//roll 7 conditions
-                for(int k = 0; k<numPlayers; k++)
-                    players[k].removeCardsOn7();
-                //some sort of wait for node click command to then place robber.
-                    robber = true;
-            }
-            for(int k = 0; k< numPlayers; k++)
-                players[k].gainResources(i,node);
-
-            iter++;
-
-            if(iter>=numPlayers)
-                iter = 0;
-
-
-        }
-    //UNDER HERE!! all qDebugs are TEST CODE!!
-    //////replace city_output ->> P1 and P2 with
-    /////////qstrings that contain player number!!
-        else if (!button.startsWith("node")){
-            qDebug() << "*************************";
-            if (players[iter].affordCity()){
-                if (mapper.valid_city_check(button, player_name) && players[iter].affordCity()){
-                    qDebug() << "City: valid city implemented for: " << button;
-                    qDebug() << "-------------------------";
-                    city_output(button, player_name);
-                    players[iter].buyCity(button);
+    else{
+        if (button.section("|",8,8) == "s"){
+            if(mapper.valid_settlement_check(button,player_name)){
+                settlement_output(button,player_name);
+                ++iter;
+                if(reverse){
+                    iter = iter - 2;
+                    if (iter == -1){
+                        reverse = false;
+                        initial_settle = false;
+                    }
                 }
-            }
-            else{
-                qDebug() << "City: settlment failed";
-                qDebug() << "----------------------";
-            }
-            if (players[iter].affordSettlement()){
-                if (mapper.valid_settlement_check(button, player_name)){
-                    qDebug() << "valid settlement input for: " << button;
-                    qDebug() << "-------------------------";
-                    settlement_output(button,player_name);
-                    players[iter].buySettlement(button); //add settlement to player list
+                if(iter == 4){
+                    iter = 3;
+                    reverse = true;
                 }
-            }
-            else{
-                qDebug() << "Settlement: settle failed";
-                qDebug() << "-------------------------";
             }
         }
     }
 }
 
-void catan_map::checkPlayer(){
-/*    if (player.player_amount == 1){
-        ui->handButton_4->setDisabled(false);
-        ui->player3_label->setText(player.name(1));
-
-    }
-*/
-}
 
 void catan_map::settlement_output(QString button, QString player){
     QString button_out = button.section("|",0,0);
@@ -786,166 +805,166 @@ void catan_map::activate_settlements(){
     ///////////////////
     //Format is city ID|left Color|left node|right Color|right node|top color|top node|port
     connect(ui->pushSettle_221, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_221, "221|0|0|d|1|0|0|3");
+    signalMapper->setMapping(ui->pushSettle_221, "221|0|0|d|1|0|0|3|s");
 
     connect(ui->pushSettle_223, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_223, "223|0|0|0|0|d|1|3");
+    signalMapper->setMapping(ui->pushSettle_223, "223|0|0|0|0|d|1|3|s");
 
     connect(ui->pushSettle_230, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_230, "230|d|1|l|2|0|0|0");
+    signalMapper->setMapping(ui->pushSettle_230, "230|d|1|l|2|0|0|0|s");
 
     connect(ui->pushSettle_281, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_281, "281|0|0|0|0|l|2|l");
+    signalMapper->setMapping(ui->pushSettle_281, "281|0|0|0|0|l|2|l|s");
 
     connect(ui->pushSettle_330, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_330, "330|l|2|y|3|0|0|l");
+    signalMapper->setMapping(ui->pushSettle_330, "330|l|2|y|3|0|0|l|s");
 
     connect(ui->pushSettle_331, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_331, "331|0|0|0|0|y|3|0");
+    signalMapper->setMapping(ui->pushSettle_331, "331|0|0|0|0|y|3|0|s");
 
     connect(ui->pushSettle_334, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_334, "334|y|3|0|0|0|0|0");
+    signalMapper->setMapping(ui->pushSettle_334, "334|y|3|0|0|0|0|0|s");
 
     connect(ui->pushSettle_171, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_171, "171|0|0|r|4|0|0|b");
+    signalMapper->setMapping(ui->pushSettle_171, "171|0|0|r|4|0|0|b|s");
 
     connect(ui->pushSettle_220, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_220, "220|0|0|d|1|r|4|0");
+    signalMapper->setMapping(ui->pushSettle_220, "220|0|0|d|1|r|4|0|s");
 
     connect(ui->pushSettle_22, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_22, "22|r|4|b|5|d|1|0");
+    signalMapper->setMapping(ui->pushSettle_22, "22|r|4|b|5|d|1|0|s");
 
     connect(ui->pushSettle_23, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_23, "23|d|1|l|2|b|5|0");
+    signalMapper->setMapping(ui->pushSettle_23, "23|d|1|l|2|b|5|0|s");
 
     connect(ui->pushSettle_30, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_30, "30|b|5|r|6|l|2|0");
+    signalMapper->setMapping(ui->pushSettle_30, "30|b|5|r|6|l|2|0|s");
 
     connect(ui->pushSettle_33, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_33, "33|l|2|y|3|r|6|0");
+    signalMapper->setMapping(ui->pushSettle_33, "33|l|2|y|3|r|6|0|s");
 
     connect(ui->pushSettle_34, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_34, "34|r|6|l|7|y|3|0");
+    signalMapper->setMapping(ui->pushSettle_34, "34|r|6|l|7|y|3|0|s");
 
     connect(ui->pushSettle_340, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_340, "340|y|3|0|0|l|7|3");
+    signalMapper->setMapping(ui->pushSettle_340, "340|y|3|0|0|l|7|3|s");
 
     connect(ui->pushSettle_391, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_391, "391|l|7|0|0|0|0|3");
+    signalMapper->setMapping(ui->pushSettle_391, "391|l|7|0|0|0|0|3|s");
 
     connect(ui->pushSettle_112, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_112, "112|0|0|0|0|0|0|0");
+    signalMapper->setMapping(ui->pushSettle_112, "112|0|0|0|0|0|0|0|s");
 
     connect(ui->pushSettle_120, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_120, "120|0|0|r|4|0|0|b");
+    signalMapper->setMapping(ui->pushSettle_120, "120|0|0|r|4|0|0|b|s");
 
     connect(ui->pushSettle_12, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_12, "12|0|0|d|8|r|4|0");
+    signalMapper->setMapping(ui->pushSettle_12, "12|0|0|d|8|r|4|0|s");
 
     connect(ui->pushSettle_20, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_20, "20|r|4|d|5|d|8|0");
+    signalMapper->setMapping(ui->pushSettle_20, "20|r|4|d|5|d|8|0|s");
 
     connect(ui->pushSettle_2, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_2, "2|d|8|y|9|b|5|0");
+    signalMapper->setMapping(ui->pushSettle_2, "2|d|8|y|9|b|5|0|s");
 
     connect(ui->pushSettle_3, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_3, "3|b|5|r|6|y|9|0");
+    signalMapper->setMapping(ui->pushSettle_3, "3|b|5|r|6|y|9|0|s");
 
     connect(ui->pushSettle_4, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_4, "4|y|9|d|10|r|6|0");
+    signalMapper->setMapping(ui->pushSettle_4, "4|y|9|d|10|r|6|0|s");
 
     connect(ui->pushSettle_40, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_40, "40|r|6|l|7|d|10|0");
+    signalMapper->setMapping(ui->pushSettle_40, "40|r|6|l|7|d|10|0|s");
 
     connect(ui->pushSettle_44, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_44, "44|d|10|y|11|l|7|0");
+    signalMapper->setMapping(ui->pushSettle_44, "44|d|10|y|11|l|7|0|s");
 
     connect(ui->pushSettle_440, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_440, "440|l|7|0|0|y|11|0");
+    signalMapper->setMapping(ui->pushSettle_440, "440|l|7|0|0|y|11|0|s");
 
     connect(ui->pushSettle_441, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_441, "441|y|11|0|0|0|0|3");
+    signalMapper->setMapping(ui->pushSettle_441, "441|y|11|0|0|0|0|3|s");
 
     connect(ui->pushSettle_111, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_111, "111|0|0|0|0|0|0|0");
+    signalMapper->setMapping(ui->pushSettle_111, "111|0|0|0|0|0|0|0|s");
 
     connect(ui->pushSettle_110, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_110, "110|0|0|r|12|0|0|y");
+    signalMapper->setMapping(ui->pushSettle_110, "110|0|0|r|12|0|0|y|s");
 
     connect(ui->pushSettle_11, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_11, "11|0|0|d|8|r|12|0");
+    signalMapper->setMapping(ui->pushSettle_11, "11|0|0|d|8|r|12|0|s");
 
     connect(ui->pushSettle_10, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_10, "10|r|12|l|13|d|8|0");
+    signalMapper->setMapping(ui->pushSettle_10, "10|r|12|l|13|d|8|0|s");
 
     connect(ui->pushSettle_1, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_1, "1|d|8|y|9|l|13|0");
+    signalMapper->setMapping(ui->pushSettle_1, "1|d|8|y|9|l|13|0|s");
 
     connect(ui->pushSettle_6, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_6, "6|l|13|l|14|y|9|0");
+    signalMapper->setMapping(ui->pushSettle_6, "6|l|13|l|14|y|9|0|s");
 
     connect(ui->pushSettle_5, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_5, "5|l|9|d|10|l|14|0");
+    signalMapper->setMapping(ui->pushSettle_5, "5|l|9|d|10|l|14|0|s");
 
     connect(ui->pushSettle_50, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_50, "50|l|14|b|15|d|10|0");
+    signalMapper->setMapping(ui->pushSettle_50, "50|l|14|b|15|d|10|0|s");
 
     connect(ui->pushSettle_45, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_45, "45|d|10|y|11|b|15|0");
+    signalMapper->setMapping(ui->pushSettle_45, "45|d|10|y|11|b|15|0|s");
 
     connect(ui->pushSettle_450, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_450, "450|b|15|0|0|y|11|0");
+    signalMapper->setMapping(ui->pushSettle_450, "450|b|15|0|0|y|11|0|s");
 
     connect(ui->pushSettle_445, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_445, "445|y|11|0|0|0|0|3");
+    signalMapper->setMapping(ui->pushSettle_445, "445|y|11|0|0|0|0|3|s");
 
     connect(ui->pushSettle_700, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_700, "700|0|0|r|12|0|0|y");
+    signalMapper->setMapping(ui->pushSettle_700, "700|0|0|r|12|0|0|y|s");
 
     connect(ui->pushSettle_610, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_610, "610|0|0|b|16|r|12|0");
+    signalMapper->setMapping(ui->pushSettle_610, "610|0|0|b|16|r|12|0|s");
 
     connect(ui->pushSettle_61, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_61, "61|r|12|l|13|b|16|0");
+    signalMapper->setMapping(ui->pushSettle_61, "61|r|12|l|13|b|16|0|s");
 
     connect(ui->pushSettle_66, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_66, "66|b|16|y|17|l|13|0");
+    signalMapper->setMapping(ui->pushSettle_66, "66|b|16|y|17|l|13|0|s");
 
     connect(ui->pushSettle_60, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_60, "60|l|13|l|14|y|17|0");
+    signalMapper->setMapping(ui->pushSettle_60, "60|l|13|l|14|y|17|0|s");
 
     connect(ui->pushSettle_56, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_56, "56|l|17|d|18|l|14|0");
+    signalMapper->setMapping(ui->pushSettle_56, "56|l|17|d|18|l|14|0|s");
 
     connect(ui->pushSettle_55, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_55, "55|l|14|b|15|d|18|0");
+    signalMapper->setMapping(ui->pushSettle_55, "55|l|14|b|15|d|18|0|s");
 
     connect(ui->pushSettle_550, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_550, "550|d|18|0|0|b|15|r");
+    signalMapper->setMapping(ui->pushSettle_550, "550|d|18|0|0|b|15|r|s");
 
     connect(ui->pushSettle_501, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_501, "501|b|3|0|0|0|0|r");
+    signalMapper->setMapping(ui->pushSettle_501, "501|b|3|0|0|0|0|r|s");
 
     connect(ui->pushSettle_661, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_661, "661|0|0|b|16|0|0|3");
+    signalMapper->setMapping(ui->pushSettle_661, "661|0|0|b|16|0|0|3|s");
 
     connect(ui->pushSettle_666, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_666, "666|0|0|0|0|b|16|3");
+    signalMapper->setMapping(ui->pushSettle_666, "666|0|0|0|0|b|16|3|s");
 
     connect(ui->pushSettle_660, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_660, "660|b|16|y|17|0|0|0");
+    signalMapper->setMapping(ui->pushSettle_660, "660|b|16|y|17|0|0|0|s");
 
     connect(ui->pushSettle_611, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_611, "611|0|0|0|0|l|17|d");
+    signalMapper->setMapping(ui->pushSettle_611, "611|0|0|0|0|l|17|d|s");
 
     connect(ui->pushSettle_560, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_560, "560|y|17|d|18|0|0|d");
+    signalMapper->setMapping(ui->pushSettle_560, "560|y|17|d|18|0|0|d|s");
 
     connect(ui->pushSettle_556, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_556, "556|0|0|0|0|d|18|0");
+    signalMapper->setMapping(ui->pushSettle_556, "556|0|0|0|0|d|18|0|s");
 
     connect(ui->pushSettle_551, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushSettle_551, "551|d|18|0|0|0|0|0");
+    signalMapper->setMapping(ui->pushSettle_551, "551|d|18|0|0|0|0|0|s");
 
     //////////////////
     //END SETTLEMENT BUTTON MAPPING
