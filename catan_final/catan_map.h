@@ -18,7 +18,7 @@ class catan_map : public QMainWindow
 public:
     explicit catan_map(QWidget *parent = 0);
     ~catan_map();
-    void checkPlayer();
+   // void checkPlayer();
 
 private slots:
     void signalSorter(const QString &); //sorts signals
@@ -37,7 +37,10 @@ private:
     Node node;
 
     bool robber;
+    bool initial_settle;
+    bool reverse;
 
+    void initial_settle_place();
     void changeNode(QString);
     void activate_settlements();
     void activate_roads();
