@@ -115,6 +115,11 @@ void catan_map::signalSorter(const QString & button)
 
         //roll
         else if (button.startsWith("roll")){
+
+            iter++;             //change to next player
+            if(iter>=numPlayers)
+                iter = 0;
+
             int i = players[iter].roll() + players[iter].roll();
             QString out = QString::number(i);
             ui->roll_outcome->setText(out);
@@ -129,9 +134,6 @@ void catan_map::signalSorter(const QString & button)
             for(int k = 0; k< numPlayers; k++)
                 players[k].gainResources(i,node);
 
-            iter++;             //change to next player
-            if(iter>=numPlayers)
-                iter = 0;
         }
     //UNDER HERE!! all qDebugs are TEST CODE!!
     //////replace city_output ->> P1 and P2 with
