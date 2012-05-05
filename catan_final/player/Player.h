@@ -96,6 +96,7 @@ class Player{
     void changeName(string&);
     void changeColor(char&);
     void convertResources(); //try to switch out cards
+    void collectOriginalCards([=]);
 
     void gainResources(int, Node );
 
