@@ -24,8 +24,6 @@ Node::Node(){
     nodes[17] = 2;
     nodes[18] = 6;
     nodes[19] = 0; //desert
-
-
 }
 
 

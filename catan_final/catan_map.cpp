@@ -47,6 +47,7 @@ void catan_map::initial_settle_place(){
 
 void catan_map::signalSorter(const QString & button)
 {
+    int numPlayers = 4;
     QString player_name;
     if (iter == 0){
         player_name = "P1";
@@ -60,6 +61,7 @@ void catan_map::signalSorter(const QString & button)
     if (iter == 3){
         player_name = "P4";
     }
+
     if (!initial_settle){
         qDebug() << "==============";
         qDebug() << "made it here: " << button;
@@ -68,7 +70,26 @@ void catan_map::signalSorter(const QString & button)
             QString temp_holder = button.section("|",1,1);
             int nodeNumber = temp_holder.toInt(&robber,10);
             node.placeRobber(nodeNumber);
-            changeNode(temp_holder);
+
+            //then we get to take a card form a player on that node.
+            bool onNode[4];
+            for(int i = 0; i<numPlayers; i++)
+                onNode[i] = 0;
+
+            for(int i = 0; i<numPlayers; i++){
+                onNode[i] = players[i].nodeOnRobber(nodeNumber);
+                cout<<"player"<<i<<"  on node: "<<onNode[i]<<endl;
+                if(onNode[i] ==1){
+                    char card = players[i].removeRandomCard();
+                    cout<<"taking: "<<card<<"  from player"<<i<<"  giving to: "<<iter<<endl;
+
+                    players[iter].addCard(card);
+                 //   players[iter].addCard(players[i].removeRandomCard()); //give current player other cards
+                }
+            }
+
+            node.placeRobber(nodeNumber);
+            //changeNode(temp_holder);
             robber = false;
         }
         //if robber is active, you must first place the robber!
@@ -91,6 +112,7 @@ void catan_map::signalSorter(const QString & button)
                 p_viewHand --;
                 //qDebug() << "view hand: " << button << player_hand<<"***"<<p_viewhand;
                 players[p_viewHand].seeResources();
+                cout<<"****"<<p_viewHand<<endl;
 
             }
 
@@ -101,7 +123,10 @@ void catan_map::signalSorter(const QString & button)
 
             //roll
             else if (button.startsWith("roll")){
-                int numPlayers = 4;
+                iter++;             //change to next player
+                if(iter>=numPlayers)
+                    iter = 0;
+
                 int i = players[iter].roll() + players[iter].roll();
                 QString out = QString::number(i);
                 ui->roll_outcome->setText(out);
@@ -116,12 +141,7 @@ void catan_map::signalSorter(const QString & button)
                 for(int k = 0; k< numPlayers; k++)
                     players[k].gainResources(i,node);
 
-                iter++;
-
-                if(iter>=numPlayers)
-                    iter = 0;
-
-
+//>>>>>>> b80d3e9263cbd7c924c9ae47d0ce33e3ee0f01f0
             }
         //UNDER HERE!! all qDebugs are TEST CODE!!
         //////replace city_output ->> P1 and P2 with
@@ -158,6 +178,8 @@ void catan_map::signalSorter(const QString & button)
     else{
         if (button.section("|",8,8) == "s"){
             if(mapper.valid_settlement_check(button,player_name)){
+                players[iter].buySettlement(button);
+
                 settlement_output(button,player_name);
                 ++iter;
                 if(reverse){
@@ -174,6 +196,7 @@ void catan_map::signalSorter(const QString & button)
             }
         }
     }
+
 }
 
 
