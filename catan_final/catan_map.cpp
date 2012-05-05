@@ -105,15 +105,19 @@ void catan_map::signalSorter(const QString & button)
 
             //view a hand!
             else if (button.startsWith("v")){
+                qDebug() << "fucking here!";
                 //players[iter].seeResources();
-                bool ok = true;
-                QString player_hand = button.at(7);
-                int p_viewHand = player_hand.toInt(&ok,10);
-                p_viewHand --;
-                //qDebug() << "view hand: " << button << player_hand<<"***"<<p_viewhand;
-                players[p_viewHand].seeResources();
-                cout<<"****"<<p_viewHand<<endl;
-
+//                bool ok = true;
+//                QString player_hand = button.at(7);
+//                int p_viewHand = player_hand.toInt(&ok,10);
+//                p_viewHand --;
+//                //qDebug() << "view hand: " << button << player_hand<<"***"<<p_viewhand;
+//                players[p_viewHand].seeResources();
+//                cout<<"****"<<p_viewHand<<endl;
+                QMessageBox* vhand;
+                vhand = new QMessageBox;
+                vhand->setText(players[iter].outputHand());
+                vhand->show();
             }
 
             //buy a development card
@@ -140,8 +144,6 @@ void catan_map::signalSorter(const QString & button)
                 }
                 for(int k = 0; k< numPlayers; k++)
                     players[k].gainResources(i,node);
-
-//>>>>>>> b80d3e9263cbd7c924c9ae47d0ce33e3ee0f01f0
             }
         //UNDER HERE!! all qDebugs are TEST CODE!!
         //////replace city_output ->> P1 and P2 with
