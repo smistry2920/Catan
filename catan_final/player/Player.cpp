@@ -58,30 +58,40 @@ int Player::numberOfResources(){
     return total;
 }
 
-/***Returns the amount of resources are in your hand. Should use this function above
-  because it will be able to send QStringList to GUI
+//***Returns the amount of resources are in your hand. Should use this function above
+//  because it will be able to send QStringList to GUI
 
-QStringList Player::checkHand()
+QString Player::outputHand()
 {
-       QStringList hand;
-       QString wheat, sheep, lumber, stone, brick;
+       QString hand;
+//       QString wheat, sheep, lumber, stone, brick;
 
-       wheat.prepend("wheat_");
-       sheep.prepend("sheep_");
-       lumber.prepend("lumber_");
-       stone.prepend("stone_");
-       brick.prepend("brick_");
+        hand.append("wheat: ");
+        hand.append(QString::number(yellow_));
+        qDebug() << "FUCKING YELLOW" << yellow_;
 
-       wheat.append(QString("%1").arg(yellow_));
-       sheep.append(QString("%1").arg(lightGreen_));
-       lumber.append(QString("%1").arg(darkGreen_));
-       stone.append(QString("%1").arg(blue_));
-       brick.append(QString("%1").arg(red_));
+        hand.append("\nsheep: ");
+        hand.append(QString::number(lightGreen_));
+
+        hand.append("\nlumber: ");
+        hand.append(QString::number(darkGreen_));
+
+        hand.append("\nstone: ");
+        hand.append(QString::number(blue_));
+
+        hand.append("\nbrick: ");
+        hand.append(QString::number(red_));
+
+//       wheat.append(QString("%1").arg(yellow_));
+//       sheep.append(QString("%1").arg(lightGreen_));
+//       lumber.append(QString("%1").arg(darkGreen_));
+//       stone.append(QString("%1").arg(blue_));
+//       brick.append(QString("%1").arg(red_));
 
 
-       hand << wheat << sheep << lumber << stone << brick;
-       return hand;
-}*/
+        qDebug() << hand;
+        return hand;
+}
 
 
 //this private function calculates the

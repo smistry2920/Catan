@@ -11,9 +11,15 @@ using namespace std;
 
 class Player{
 
+    public:
+    QString outputHand();
+    int  numberOfResources();
+    //need to make this private again!!
+    int victoryPoints_;
+
     private:
     string name_;
-    int victoryPoints_;
+    //int victoryPoints_;
     int roadLength_;
     int armySize_;
     char playerColor_;
@@ -58,7 +64,7 @@ class Player{
     void checkLargestArmy();
 
     //called from checkStats()
-    int  numberOfResources();
+
     int  numberOfDevelopments();
 
 
