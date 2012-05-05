@@ -3,11 +3,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <iomanip>
-#include <QtCore>
 
 
 //constructor
 Player::Player(){
+    srand ( time(NULL) );
     this->name_ = "Jeff";
 
     this->victoryPoints_= 0;
@@ -34,6 +34,7 @@ Player::~Player(){
 
 //public function for rolling dice
 int Player::roll(){
+
     return rand() %6 +1;
 }
 
@@ -57,32 +58,10 @@ int Player::numberOfResources(){
     return total;
 }
 
-//this private function calculates the
-//totalnumber of development cards a player has
-int Player::numberOfDevelopments(){
-    int total = knight_;
-    total +=victoryPointCard_;
-    total +=roadBuilder_;
-    total +=monopoly_;
-    total +=yearOfPlenty_;
-    return total;
-}
-
-//This public functionallows a player to see
-//which resources he or she has
-void Player::seeResources(){
-    cout<<"Yellow: "<<yellow_<<endl;
-    cout<<"Light Green: "<<lightGreen_<<endl;
-    cout<<"Dark Green: "<<darkGreen_<<endl;
-    cout<<"Blue: "<<blue_<<endl;
-    cout<<"Red: "<<red_<<endl<<endl;
-    seeDevelopments();
-}
-
 /***Returns the amount of resources are in your hand. Should use this function above
   because it will be able to send QStringList to GUI
 
-QStringList Player::seeResources()
+QStringList Player::checkHand()
 {
        QStringList hand;
        QString wheat, sheep, lumber, stone, brick;
@@ -104,14 +83,16 @@ QStringList Player::seeResources()
        return hand;
 }*/
 
-//This public functionallows a player to see
-//which development cards he or she has
-void Player::seeDevelopments(){
-    cout<<"Knights: "<<knight_<<endl;
-    cout<<"Victory Point Card(s): "<<victoryPointCard_<<endl;
-    cout<<"Road Builder: "<<roadBuilder_<<endl;
-    cout<<"Monoply: "<<monopoly_<<endl;
-    cout<<"Year Of Plenth: "<<yearOfPlenty_<<endl<<endl;
+
+//this private function calculates the
+//totalnumber of development cards a player has
+int Player::numberOfDevelopments(){
+    int total = knight_;
+    total +=victoryPointCard_;
+    total +=roadBuilder_;
+    total +=monopoly_;
+    total +=yearOfPlenty_;
+    return total;
 }
 
 
@@ -128,6 +109,27 @@ void Player::seeDevelopments(){
 
     return developmentCards << Knights << VictoryPoint << RoadBuilder << Monopoly << YearofPlenty;
 }*/
+
+//This public functionallows a player to see
+//which resources he or she has
+void Player::seeResources(){
+    cout<<"Yellow: "<<yellow_<<endl;
+    cout<<"Light Green: "<<lightGreen_<<endl;
+    cout<<"Dark Green: "<<darkGreen_<<endl;
+    cout<<"Blue: "<<blue_<<endl;
+    cout<<"Red: "<<red_<<endl<<endl;
+    seeDevelopments();
+}
+
+//This public functionallows a player to see
+//which development cards he or she has
+void Player::seeDevelopments(){
+    cout<<"Knights: "<<knight_<<endl;
+    cout<<"Victory Point Card(s): "<<victoryPointCard_<<endl;
+    cout<<"Road Builder: "<<roadBuilder_<<endl;
+    cout<<"Monoply: "<<monopoly_<<endl;
+    cout<<"Year Of Plenth: "<<yearOfPlenty_<<endl<<endl;
+}
 
 /*This public function has to be called for each opponent (everyone but the player you are on).
 It checks to see if a settlement is being placed in a spot that would
@@ -229,6 +231,7 @@ void Player::buyRoad(){
     pavement.push_front(ro);
 
 }
+
 /***Same function just outputs a QString
 QString Player::buyRoad(){
 
@@ -245,7 +248,6 @@ QString roadWorks = "Road Purchased";
     //end @suneil
     pavement.push_front(ro);
 }*/
-
 
 //public function check to see if player can afford settlement
 bool Player::affordSettlement(){
@@ -336,10 +338,10 @@ bool Player::affordCity(){
     if(blue_>=3 && yellow_>=2)
         return 1;
     cout<<"You do not have the resources to purchase a city!"<<endl<<endl;
-    //We need to figure out to send a QString with above statement and bool type.
     return 0;
-}
 
+
+}
 
 /*This public function does the action of changing a settlement into a city and
 charging the respective resources.*/
@@ -375,7 +377,6 @@ bool Player::affordDevelopmentCard(){
         return 1;
 
     cout<<"You do not have the resources to purchase a developmentCard!"<<endl<<endl;
-    //Need to figure out how to send this line as a QString also.
     return 0;
 }
 
@@ -400,6 +401,8 @@ void Player::buyDevelopmentCard(){
         victoryPointCard_++;
     else
         knight_++;
+
+
 }
 
 void Player::changeName(string & name){
@@ -462,8 +465,7 @@ card you decide on here */
 
 void Player::convertResources(){
     seeResources();
-
-    //Need to have this either printed to an ouput or made into a pop-up window
+    
     cout<<"1) Trade for yellow"<<endl;
     cout<<"2) Trade for light green"<<endl;
     cout<<"3) Trade for dark green"<<endl;
@@ -471,7 +473,7 @@ void Player::convertResources(){
     cout<<"5) Trade for red"<<endl;
     cout<<"0) Cancel"<<endl<<endl;
     int input;
-    cin>>input;         //Need to find button that corresponds with this
+    cin>>input;
     if(input==1 || input==2 || input==3 || input==4 || input==5){
         this->whichCardsToTrade();
 
@@ -540,7 +542,6 @@ void Player::whichCardsToTrade(){
     int blue = findBestTrade('b');
     int red = findBestTrade('r');
 
-    //Need to make pop up window that will display these options
     cout<<"1) Give up yellow        "<<yellow<<":1"<<endl;
     cout<<"2) Give up light green   "<<lightGreen<<":1"<<endl;
     cout<<"3) Give up dark green    "<<darkGreen<<":1"<<endl;
@@ -548,7 +549,7 @@ void Player::whichCardsToTrade(){
     cout<<"5) Give up red           "<<red<<":1"<<endl;
     cout<<"0) Cancel"<<endl;
     int input;
-    cin>>input;       //Need a way to take in this value might need to make more than one function
+    cin>>input;
 
     if(input==1 || input==2 || input==3 || input==4 || input==5){
 
@@ -661,56 +662,85 @@ char Player::removeRandomCard(){
     int i = rand() %5;
     //if(numberOfResources() <=7) shouldn't need this because of the caller function. It should also be re-used for when the robber is used.
     //   return '0';
-
-    if(i ==0){
-        if(yellow_ >0){
-            yellow_--;
-            return 'y';
+    if(numberOfResources()!=0){
+        if(i ==0){
+            if(yellow_ >0){
+                yellow_--;
+                return 'y';
+            }
+            else
+                removeRandomCard();
         }
-        else
-            removeRandomCard();
-    }
-    if(i ==1){
-        if(lightGreen_ >0){
-            lightGreen_--;
-            return 'l';
+        if(i ==1){
+            if(lightGreen_ >0){
+                lightGreen_--;
+                return 'l';
+            }
+            else
+                removeRandomCard();
         }
-        else
-            removeRandomCard();
-    }
-    if(i ==2){
-        if(darkGreen_ >0){
-            darkGreen_--;
-            return 'd';
+        if(i ==2){
+            if(darkGreen_ >0){
+                darkGreen_--;
+                return 'd';
+            }
+            else
+                removeRandomCard();
         }
-        else
-            removeRandomCard();
-    }
-    if(i ==3){
-        if(blue_ >0){
-            blue_--;
-            return 'b';
+        if(i ==3){
+            if(blue_ >0){
+                blue_--;
+                return 'b';
+            }
+            else
+                removeRandomCard();
         }
-        else
-            removeRandomCard();
-    }
-    if(i ==4){
-        if(red_ >0){
-            red_--;
-            return 'r';
+        if(i ==4){
+            if(red_ >0){
+                red_--;
+                return 'r';
+            }
+            else
+                removeRandomCard();
         }
-        else
-            removeRandomCard();
     }
-
     return '0';
 }
 
+/*This public function deteremines if the player has a city/settlement on a particular node(this is used for the robber)
+  */
+bool Player::nodeOnRobber(int robber){
+    list<settlement>::iterator current = pieces.begin();
 
+    int size = pieces.size();
+    for(int i = 0; i<size; ++i){
+        if(current->top.node ==robber || current->right.node == robber || current->left.node == robber)
+            return true;
 
-//Need to Find away to output QStrings for card checks
+        current++;
+    }
+
+    return false;
+}
+
+void Player::addCard(char color){
+    if(color=='l')
+        lightGreen_++;
+    else if (color=='d')
+        darkGreen_++;
+    else if (color=='r')
+        red_++;
+    else if (color=='y')
+        yellow_++;
+    else if(color=='b')
+        blue_++;
+}
+
+/*This public function decides which development card
+the player wants to play. The main function then uses if
+statements to decide what to do next. */
 int Player::playDevCard(){
-    cout<<"Which Development Card would you like to play?"<<endl;       //Need a way to display this as a popup window or output terminal
+    cout<<"Which Development Card would you like to play?"<<endl;
     cout<<"1) Knight Card"<<endl;
     cout<<"2) Victory Point"<<endl;
     cout<<"3) Road Builder"<<endl;
@@ -718,7 +748,7 @@ int Player::playDevCard(){
     cout<<"5) Year Of Plenty"<<endl;
     cout<<"6) Cancel"<<endl;
     int input;
-    cin>>input;                                                     //Way to input cards
+    cin>>input;
 
     if(input==1 ){
         if(knight_ >0){
@@ -756,7 +786,7 @@ int Player::playDevCard(){
         }
         cout<<"You have no Year Of Plenty Cards!"<<endl;
     }
-
+    
     return 0;
 }
 
@@ -789,7 +819,7 @@ char Player::playMonoply(){
 
 /* This public function removes all of a certain card from
 a player and returns that number. This function is relevant for when a player is playing the Monopoly card, and should be called for all players. All of the integers should be returns and will be later rewarded to the player playing the card. */
-int Player::removeCardFromPlayer(char color){
+int Player::removeAllOneCardFromPlayer(char color){
 
     int num = 0;
     if(color =='y'){
