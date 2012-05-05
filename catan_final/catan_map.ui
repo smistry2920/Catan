@@ -1787,7 +1787,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>77</string>
+     <string>N</string>
     </property>
    </widget>
    <widget class="QPushButton" name="buyDevButton">
@@ -2780,9 +2780,9 @@
    </property>
    <widget class="QMenu" name="menuSample">
     <property name="title">
-     <string>Sample</string>
+     <string>Options</string>
     </property>
-    <addaction name="actionWorks"/>
+    <addaction name="actionExit"/>
    </widget>
    <addaction name="menuSample"/>
   </widget>
@@ -2795,13 +2795,30 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionWorks">
+  <action name="actionExit">
    <property name="text">
-    <string>Works!!</string>
+    <string>Exit</string>
    </property>
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actionExit</sender>
+   <signal>activated()</signal>
+   <receiver>catan_map</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>351</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
