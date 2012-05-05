@@ -1703,12 +1703,12 @@
       <rect>
        <x>150</x>
        <y>10</y>
-       <width>67</width>
+       <width>101</width>
        <height>17</height>
       </rect>
      </property>
      <property name="text">
-      <string>Color</string>
+      <string>Color: Green</string>
      </property>
     </widget>
     <widget class="QLabel" name="victoryPnts1">
@@ -1833,7 +1833,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Player 1</string>
+      <string>Player 2</string>
      </property>
     </widget>
     <widget class="QLabel" name="color2_label">
@@ -1841,12 +1841,12 @@
       <rect>
        <x>150</x>
        <y>10</y>
-       <width>67</width>
+       <width>91</width>
        <height>17</height>
       </rect>
      </property>
      <property name="text">
-      <string>Color</string>
+      <string>Color: Blue</string>
      </property>
     </widget>
     <widget class="QLabel" name="victoryPnts2">
@@ -1919,7 +1919,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Player 1</string>
+      <string>Player 3</string>
      </property>
     </widget>
     <widget class="QLabel" name="color3_label">
@@ -1927,12 +1927,12 @@
       <rect>
        <x>150</x>
        <y>10</y>
-       <width>67</width>
+       <width>101</width>
        <height>17</height>
       </rect>
      </property>
      <property name="text">
-      <string>Color</string>
+      <string>Color: Orange</string>
      </property>
     </widget>
     <widget class="QLabel" name="victoryPnts3">
@@ -2005,7 +2005,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Player 1</string>
+      <string>Player 4</string>
      </property>
     </widget>
     <widget class="QLabel" name="color4_label">
@@ -2013,12 +2013,12 @@
       <rect>
        <x>150</x>
        <y>10</y>
-       <width>67</width>
+       <width>91</width>
        <height>17</height>
       </rect>
      </property>
      <property name="text">
-      <string>Color</string>
+      <string>Color: Pink</string>
      </property>
     </widget>
     <widget class="QLabel" name="victoryPnts4">
@@ -2775,7 +2775,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>26</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSample">

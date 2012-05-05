@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'catan_map.ui'
 **
-** Created: Fri May 4 20:59:02 2012
+** Created: Sat May 5 16:16:00 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -632,7 +632,7 @@ public:
         player1_label->setFont(font);
         color1_label = new QLabel(frame);
         color1_label->setObjectName(QString::fromUtf8("color1_label"));
-        color1_label->setGeometry(QRect(150, 10, 67, 17));
+        color1_label->setGeometry(QRect(150, 10, 101, 17));
         victoryPnts1 = new QLabel(frame);
         victoryPnts1->setObjectName(QString::fromUtf8("victoryPnts1"));
         victoryPnts1->setGeometry(QRect(10, 120, 131, 17));
@@ -665,7 +665,7 @@ public:
         player2_label->setFont(font);
         color2_label = new QLabel(frame_2);
         color2_label->setObjectName(QString::fromUtf8("color2_label"));
-        color2_label->setGeometry(QRect(150, 10, 67, 17));
+        color2_label->setGeometry(QRect(150, 10, 91, 17));
         victoryPnts2 = new QLabel(frame_2);
         victoryPnts2->setObjectName(QString::fromUtf8("victoryPnts2"));
         victoryPnts2->setGeometry(QRect(10, 120, 131, 17));
@@ -686,7 +686,7 @@ public:
         player3_label->setFont(font);
         color3_label = new QLabel(frame_3);
         color3_label->setObjectName(QString::fromUtf8("color3_label"));
-        color3_label->setGeometry(QRect(150, 10, 67, 17));
+        color3_label->setGeometry(QRect(150, 10, 101, 17));
         victoryPnts3 = new QLabel(frame_3);
         victoryPnts3->setObjectName(QString::fromUtf8("victoryPnts3"));
         victoryPnts3->setGeometry(QRect(10, 120, 131, 17));
@@ -707,7 +707,7 @@ public:
         player4_label->setFont(font);
         color4_label = new QLabel(frame_4);
         color4_label->setObjectName(QString::fromUtf8("color4_label"));
-        color4_label->setGeometry(QRect(150, 10, 67, 17));
+        color4_label->setGeometry(QRect(150, 10, 91, 17));
         victoryPnts4 = new QLabel(frame_4);
         victoryPnts4->setObjectName(QString::fromUtf8("victoryPnts4"));
         victoryPnts4->setGeometry(QRect(10, 120, 131, 17));
@@ -1021,7 +1021,7 @@ public:
         node_19->raise();
         menuBar = new QMenuBar(catan_map);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1000, 26));
+        menuBar->setGeometry(QRect(0, 0, 1000, 25));
         menuSample = new QMenu(menuBar);
         menuSample->setObjectName(QString::fromUtf8("menuSample"));
         catan_map->setMenuBar(menuBar);
@@ -1172,7 +1172,7 @@ public:
         pushRoad_29->setText(QString());
         pushRoad_49->setText(QString());
         player1_label->setText(QApplication::translate("catan_map", "Player 1", 0, QApplication::UnicodeUTF8));
-        color1_label->setText(QApplication::translate("catan_map", "Color", 0, QApplication::UnicodeUTF8));
+        color1_label->setText(QApplication::translate("catan_map", "Color: Green", 0, QApplication::UnicodeUTF8));
         victoryPnts1->setText(QApplication::translate("catan_map", "Victory Points:", 0, QApplication::UnicodeUTF8));
         cardsHeld1_label->setText(QApplication::translate("catan_map", "Cards Held:", 0, QApplication::UnicodeUTF8));
         vhandButton_01->setText(QApplication::translate("catan_map", "View Hand", 0, QApplication::UnicodeUTF8));
@@ -1180,18 +1180,18 @@ public:
         rollButton->setText(QApplication::translate("catan_map", "Roll Dice", 0, QApplication::UnicodeUTF8));
         roll_outcome->setText(QApplication::translate("catan_map", "Current Roll:", 0, QApplication::UnicodeUTF8));
         buyDevButton->setText(QApplication::translate("catan_map", "Buy Development Card", 0, QApplication::UnicodeUTF8));
-        player2_label->setText(QApplication::translate("catan_map", "Player 1", 0, QApplication::UnicodeUTF8));
-        color2_label->setText(QApplication::translate("catan_map", "Color", 0, QApplication::UnicodeUTF8));
+        player2_label->setText(QApplication::translate("catan_map", "Player 2", 0, QApplication::UnicodeUTF8));
+        color2_label->setText(QApplication::translate("catan_map", "Color: Blue", 0, QApplication::UnicodeUTF8));
         victoryPnts2->setText(QApplication::translate("catan_map", "Victory Points:", 0, QApplication::UnicodeUTF8));
         cardsHeld2_label->setText(QApplication::translate("catan_map", "Cards Held:", 0, QApplication::UnicodeUTF8));
         vhandButton_02->setText(QApplication::translate("catan_map", "View Hand", 0, QApplication::UnicodeUTF8));
-        player3_label->setText(QApplication::translate("catan_map", "Player 1", 0, QApplication::UnicodeUTF8));
-        color3_label->setText(QApplication::translate("catan_map", "Color", 0, QApplication::UnicodeUTF8));
+        player3_label->setText(QApplication::translate("catan_map", "Player 3", 0, QApplication::UnicodeUTF8));
+        color3_label->setText(QApplication::translate("catan_map", "Color: Orange", 0, QApplication::UnicodeUTF8));
         victoryPnts3->setText(QApplication::translate("catan_map", "Victory Points:", 0, QApplication::UnicodeUTF8));
         cardsHeld3_label->setText(QApplication::translate("catan_map", "Cards Held:", 0, QApplication::UnicodeUTF8));
         vhandButton_03->setText(QApplication::translate("catan_map", "View Hand", 0, QApplication::UnicodeUTF8));
-        player4_label->setText(QApplication::translate("catan_map", "Player 1", 0, QApplication::UnicodeUTF8));
-        color4_label->setText(QApplication::translate("catan_map", "Color", 0, QApplication::UnicodeUTF8));
+        player4_label->setText(QApplication::translate("catan_map", "Player 4", 0, QApplication::UnicodeUTF8));
+        color4_label->setText(QApplication::translate("catan_map", "Color: Pink", 0, QApplication::UnicodeUTF8));
         victoryPnts4->setText(QApplication::translate("catan_map", "Victory Points:", 0, QApplication::UnicodeUTF8));
         cardsHeld4_label->setText(QApplication::translate("catan_map", "Cards Held:", 0, QApplication::UnicodeUTF8));
         vhandButton_04->setText(QApplication::translate("catan_map", "View Hand", 0, QApplication::UnicodeUTF8));

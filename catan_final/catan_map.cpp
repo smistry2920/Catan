@@ -32,7 +32,7 @@ catan_map::catan_map(QWidget *parent) :
     numPlayers = 4;
     robber = false;
     initial_settle = true;
-    initial_settle_place();
+    init_settle_road = true;
 }
 
 catan_map::~catan_map()
@@ -47,19 +47,6 @@ void catan_map::initial_settle_place(){
 
 void catan_map::signalSorter(const QString & button)
 {
-    QString player_name;
-    if (iter == 0){
-        player_name = "P1";
-    }
-    if (iter == 1){
-        player_name = "P2";
-    }
-    if (iter == 2){
-        player_name = "P3";
-    }
-    if (iter == 3){
-        player_name = "P4";
-    }
     update_players();
     if (!initial_settle){
         qDebug() << "==============";
@@ -72,13 +59,8 @@ void catan_map::signalSorter(const QString & button)
         if (!robber){
             //road button pushed
             if (button.startsWith("road") && players[iter].affordRoad()){
-                qDebug() << "=====================";
-                if (mapper.valid_road_check(button,player_name)){
-                    players[iter].buyRoad();
-                    qDebug() << "road button: " << button;
-                    road_output(button, player_name);
-               }
-           }
+                road_pushed(button);
+            }
             //view a hand!
             else if (button.startsWith("v")){
                 viewHand(button);
@@ -93,99 +75,47 @@ void catan_map::signalSorter(const QString & button)
             else if (button.startsWith("roll")){
                 rollSelected(button);
             }
-        //UNDER HERE!! all qDebugs are TEST CODE!!
-        //////replace city_output ->> P1 and P2 with
-        /////////qstrings that contain player number!!
-            else if (!button.startsWith("node")){
-                qDebug() << "*************************";
-                if (players[iter].affordCity()){
-                    if (mapper.valid_city_check(button, player_name) && players[iter].affordCity()){
-                        qDebug() << "City: valid city implemented for: " << button;
-                        qDebug() << "-------------------------";
-                        city_output(button, player_name);
-                        players[iter].buyCity(button);
-                    }
-                }
-                else{
-                    qDebug() << "City: settlment failed";
-                    qDebug() << "----------------------";
-                }
-                if (players[iter].affordSettlement()){
-                    if (mapper.valid_settlement_check(button, player_name)){
-                        qDebug() << "valid settlement input for: " << button;
-                        qDebug() << "-------------------------";
-                        settlement_output(button,player_name);
-                        players[iter].buySettlement(button); //add settlement to player list
-                    }
-                }
-                else{
-                    qDebug() << "Settlement: settle failed";
-                    qDebug() << "-------------------------";
-                }
+            //city/settlement creaton
+            else if (button.endsWith("s")){
+                city_settlement_create(button);
             }
         }
     }
+    //initial game code (allow for 2 cities and 2 roads per player)
     else{
-        if (button.section("|",8,8) == "s"){
-            if(mapper.valid_settlement_check(button,player_name)){
-                players[iter].buySettlement(button);
-                settlement_output(button,player_name);
-
-            }
-        }else if (button.startsWith("road")){
-            qDebug() << "=====================";
-            if (mapper.valid_road_check(button,player_name)){
-                players[iter].buyRoad();
-                players[iter].seeResources();
-                qDebug() << "road button: " << button;
-                road_output(button, player_name);
-            }
-            ++iter;
-            if(reverse){
-                iter = iter - 2;
-                if (iter == -1){
-                    reverse = false;
-                    initial_settle = false;
-                }
-            }
-            if(iter == 4){
-                iter = 3;
-                reverse = true;
-            }
-        }
-
+        initial_game_start(button);
     }
 
 }
 
 
-void catan_map::settlement_output(QString button, QString player){
+void catan_map::settlement_output(QString button){
     QString button_out = button.section("|",0,0);
     button_out = button_out + "s";
-    button_output(button_out, player);
+    button_output(button_out);
 }
 
-void catan_map::city_output(QString button, QString player){
+void catan_map::city_output(QString button){
     QString button_out = button.section("|",0,0);
     button_out = button_out + "c";
-    button_output(button_out, player);
+    button_output(button_out);
 }
 
-void catan_map::road_output(QString road, QString player){
+void catan_map::road_output(QString road){
     QString road_out = road.section("|",0,0);
     road_out.remove(0,4);
     qDebug() << road_out;
     QString button_color;
-    if (player == "P1"){
+    if (player_name == "P1"){
         button_color = "background-color: rgb(69, 139, 116)";
     }
-    if (player == "P2"){
+    if (player_name == "P2"){
         button_color = "background-color: rgb(113, 113, 198)";
     }
-    if (player == "P3"){
+    if (player_name == "P3"){
         button_color = "background-color: rgb(255, 140, 0)";
     }
-    if (player == "P4"){
+    if (player_name == "P4"){
         button_color = "background-color: rgb(205, 150, 205)";
     }
     ///////////////////////////////////////////////////////
@@ -483,7 +413,7 @@ void catan_map::road_output(QString road, QString player){
     }
 }
 
-void catan_map::button_output(QString button_out, QString player){
+void catan_map::button_output(QString button_out){
     QString button_text;
     QString button_color;
     if(button_out.endsWith("c")){
@@ -494,16 +424,16 @@ void catan_map::button_output(QString button_out, QString player){
     }
     button_out.chop(1);
 
-    if (player == "P1"){
+    if (player_name == "P1"){
         button_color = "background-color: rgb(69, 139, 116)";
     }
-    if (player == "P2"){
+    if (player_name == "P2"){
         button_color = "background-color: rgb(113, 113, 198)";
     }
-    if (player == "P3"){
+    if (player_name == "P3"){
         button_color = "background-color: rgb(255, 140, 0)";
     }
-    if (player == "P4"){
+    if (player_name == "P4"){
         button_color = "background-color: rgb(205, 150, 205)";
     }
     ///////////////////////////////////////////////////////
@@ -984,7 +914,7 @@ void catan_map::activate_roads(){
     signalMapper->setMapping(ui->pushRoad_08, "road08|230|023");
 
     connect(ui->pushRoad_09, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_09, "road09|330|030");
+    signalMapper->setMapping(ui->pushRoad_09, "road09|330|033");
 
     connect(ui->pushRoad_10, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushRoad_10, "road10|334|340");
@@ -1014,7 +944,7 @@ void catan_map::activate_roads(){
     signalMapper->setMapping(ui->pushRoad_18, "road18|340|391");
 \
     connect(ui->pushRoad_19, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_19, "road19|171|010");
+    signalMapper->setMapping(ui->pushRoad_19, "road19|171|120");
 
     connect(ui->pushRoad_20, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushRoad_20, "road20|022|020");
@@ -1029,10 +959,10 @@ void catan_map::activate_roads(){
     signalMapper->setMapping(ui->pushRoad_23, "road23|391|440");
 
     connect(ui->pushRoad_24, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_24, "road24|010|112");
+    signalMapper->setMapping(ui->pushRoad_24, "road24|120|112");
 
     connect(ui->pushRoad_25, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    signalMapper->setMapping(ui->pushRoad_25, "road25|010|012");
+    signalMapper->setMapping(ui->pushRoad_25, "road25|120|012");
 
     connect(ui->pushRoad_26, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushRoad_26, "road26|020|012");
@@ -1334,6 +1264,7 @@ void catan_map::changeNode(QString node_num){
         ui->node_19->setText("R");
     }
 }
+
 void catan_map::nodeSelectedOnRobber(QString button){
     QString temp_holder = button.section("|",1,1);
     int nodeNumber = temp_holder.toInt(&robber,10);
@@ -1384,14 +1315,28 @@ void catan_map::rollSelected(QString button){
   //  return i;
 }
 void catan_map::viewHand(QString button){
-    //players[iter].seeResources();
+    bool ok = true;
+    QString player = button.at(7);
+    int player_num = player.toInt(&ok,10);
     QMessageBox* vhand;
     vhand = new QMessageBox;
-    vhand->setText(players[iter].outputHand());
+    vhand->setText(players[player_num].outputHand());
     vhand->show();
 }
 
 void catan_map::update_players(){
+    if (iter == 0){
+        player_name = "P1";
+    }
+    if (iter == 1){
+        player_name = "P2";
+    }
+    if (iter == 2){
+        player_name = "P3";
+    }
+    if (iter == 3){
+        player_name = "P4";
+    }
     // int x = players[i].numberOfResources();
     QString vict_pts = "Victory Points: ";
     QString cards = "Cards Held: ";
@@ -1412,4 +1357,72 @@ void catan_map::update_players(){
     ui->victoryPnts3->setText(vict_pts + vict_pts3);
     QString vict_pts4 = QString::number(players[3].victoryPoints_);
     ui->victoryPnts4->setText(vict_pts + vict_pts4);
+}
+
+void catan_map::initial_game_start(QString button){
+    if (button.section("|",8,8) == "s" && init_settle_road){
+        if(mapper.valid_settlement_check(button,player_name)){
+            players[iter].buySettlement(button);
+            settlement_output(button);
+            init_settle_road = false;
+        }
+    }else if (button.startsWith("road") && !init_settle_road){
+        qDebug() << "=====================";
+        if (mapper.valid_road_check(button,player_name)){
+            players[iter].buyRoad();
+            players[iter].seeResources();
+            qDebug() << "road button: " << button;
+            road_output(button);
+            init_settle_road = true;
+        }
+        ++iter;
+        if(reverse){
+            iter = iter - 2;
+            if (iter == -1){
+                reverse = false;
+                initial_settle = false;
+            }
+        }
+        if(iter == 4){
+            iter = 3;
+            reverse = true;
+        }
+    }
+}
+
+void catan_map::city_settlement_create(QString button){
+    qDebug() << "*************************";
+    if (players[iter].affordCity()){
+        if (mapper.valid_city_check(button, player_name) && players[iter].affordCity()){
+            qDebug() << "City: valid city implemented for: " << button;
+            qDebug() << "-------------------------";
+            city_output(button);
+            players[iter].buyCity(button);
+        }
+    }
+    else{
+        qDebug() << "City: settlment failed";
+        qDebug() << "----------------------";
+    }
+    if (players[iter].affordSettlement()){
+        if (mapper.valid_settlement_check(button, player_name)){
+            qDebug() << "valid settlement input for: " << button;
+            qDebug() << "-------------------------";
+            settlement_output(button);
+            players[iter].buySettlement(button); //add settlement to player list
+        }
+    }
+    else{
+        qDebug() << "Settlement: settle failed";
+        qDebug() << "-------------------------";
+    }
+}
+
+void catan_map::road_pushed(QString button){
+    qDebug() << "=====================";
+    if (mapper.valid_road_check(button,player_name)){
+        players[iter].buyRoad();
+        qDebug() << "road button: " << button;
+        road_output(button);
+   }
 }
