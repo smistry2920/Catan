@@ -34,7 +34,7 @@ private:
 
     Player players[4];
     int iter;
-
+    int numPlayers;
     Node node;
 
     bool robber;
@@ -46,14 +46,15 @@ private:
     void activate_settlements();
     void activate_roads();
     void activate_other();
-//<<<<<<< HEAD
     void button_output(QString,QString);
     void settlement_output(QString,QString);
     void city_output(QString,QString);
     void road_output(QString,QString);
-//=======
     void activate_nodes();
-//>>>>>>> upstream/master
+
+    void nodeSelectedOnRobber(QString);
+    void rollSelected(QString);
+    void viewHand(QString);
 
 };
 
