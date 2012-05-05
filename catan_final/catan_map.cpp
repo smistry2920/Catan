@@ -60,7 +60,7 @@ void catan_map::signalSorter(const QString & button)
     if (iter == 3){
         player_name = "P4";
     }
-
+    update_players();
     if (!initial_settle){
         qDebug() << "==============";
         qDebug() << "made it here: " << button;
@@ -1389,4 +1389,27 @@ void catan_map::viewHand(QString button){
     vhand = new QMessageBox;
     vhand->setText(players[iter].outputHand());
     vhand->show();
+}
+
+void catan_map::update_players(){
+    // int x = players[i].numberOfResources();
+    QString vict_pts = "Victory Points: ";
+    QString cards = "Cards Held: ";
+    QString cards1 = QString::number(players[0].numberOfResources());
+    ui->cardsHeld1_label->setText((cards + cards1));
+    QString cards2 = QString::number(players[1].numberOfResources());
+    ui->cardsHeld2_label->setText((cards + cards2));
+    QString cards3 = QString::number(players[2].numberOfResources());
+    ui->cardsHeld3_label->setText((cards + cards3));
+    QString cards4 = QString::number(players[3].numberOfResources());
+    ui->cardsHeld4_label->setText((cards + cards4));
+
+    QString vict_pts1 = QString::number(players[0].victoryPoints_);
+    ui->victoryPnts1->setText(vict_pts + vict_pts1);
+    QString vict_pts2 = QString::number(players[1].victoryPoints_);
+    ui->victoryPnts2->setText(vict_pts + vict_pts2);
+    QString vict_pts3 = QString::number(players[2].victoryPoints_);
+    ui->victoryPnts3->setText(vict_pts + vict_pts3);
+    QString vict_pts4 = QString::number(players[3].victoryPoints_);
+    ui->victoryPnts4->setText(vict_pts + vict_pts4);
 }
