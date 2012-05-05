@@ -71,20 +71,17 @@ void catan_map::signalSorter(const QString & button)
         //if robber is active, you must first place the robber!
         if (!robber){
             //road button pushed
-            if(players[iter].affordRoad()){
-                if (button.startsWith("road")){
-                    qDebug() << "=====================";
-                    if (mapper.valid_road_check(button,player_name)){
-                        players[iter].buyRoad();
-                        qDebug() << "road button: " << button;
-                        road_output(button, player_name);
-                    }
-                }
-            }
+            if (button.startsWith("road") && players[iter].affordRoad()){
+                qDebug() << "=====================";
+                if (mapper.valid_road_check(button,player_name)){
+                    players[iter].buyRoad();
+                    qDebug() << "road button: " << button;
+                    road_output(button, player_name);
+               }
+           }
             //view a hand!
             else if (button.startsWith("v")){
                 viewHand(button);
-
             }
 
             //buy a development card
@@ -95,7 +92,6 @@ void catan_map::signalSorter(const QString & button)
             //roll
             else if (button.startsWith("roll")){
                 rollSelected(button);
-
             }
         //UNDER HERE!! all qDebugs are TEST CODE!!
         //////replace city_output ->> P1 and P2 with
@@ -133,7 +129,6 @@ void catan_map::signalSorter(const QString & button)
         if (button.section("|",8,8) == "s"){
             if(mapper.valid_settlement_check(button,player_name)){
                 players[iter].buySettlement(button);
-
                 settlement_output(button,player_name);
 
             }
@@ -141,6 +136,7 @@ void catan_map::signalSorter(const QString & button)
             qDebug() << "=====================";
             if (mapper.valid_road_check(button,player_name)){
                 players[iter].buyRoad();
+                players[iter].seeResources();
                 qDebug() << "road button: " << button;
                 road_output(button, player_name);
             }
@@ -1389,12 +1385,8 @@ void catan_map::rollSelected(QString button){
 }
 void catan_map::viewHand(QString button){
     //players[iter].seeResources();
-    bool ok = true;
-    QString player_hand = button.at(7);
-    int p_viewHand = player_hand.toInt(&ok,10);
-    p_viewHand --;
-    //qDebug() << "view hand: " << button << player_hand<<"***"<<p_viewhand;
-    players[p_viewHand].seeResources();
-    cout<<"****"<<p_viewHand<<endl;
-
+    QMessageBox* vhand;
+    vhand = new QMessageBox;
+    vhand->setText(players[iter].outputHand());
+    vhand->show();
 }

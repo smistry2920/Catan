@@ -11,6 +11,9 @@ using namespace std;
 
 class Player{
 
+    public:
+    QString outputHand();
+
     private:
     string name_;
     int victoryPoints_;

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QtCore>
+#include <QMessageBox>
 #include "map_tracker/map_tracker.h"
 #include "player/Player.h"
 //#include "player/Noder.h"
