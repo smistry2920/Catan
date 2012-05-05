@@ -41,6 +41,7 @@ private:
     bool initial_settle;
     bool reverse;
 
+    void update_players();
     void initial_settle_place();
     void changeNode(QString);
     void activate_settlements();
