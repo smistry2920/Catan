@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'catan_map.ui'
 **
-** Created: Sat May 5 16:16:00 2012
+** Created: Sat May 5 16:35:04 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -647,10 +647,10 @@ public:
         instruction->setGeometry(QRect(40, 610, 601, 17));
         rollButton = new QPushButton(centralWidget);
         rollButton->setObjectName(QString::fromUtf8("rollButton"));
-        rollButton->setGeometry(QRect(890, 604, 97, 27));
+        rollButton->setGeometry(QRect(870, 604, 97, 27));
         roll_outcome = new QLabel(centralWidget);
         roll_outcome->setObjectName(QString::fromUtf8("roll_outcome"));
-        roll_outcome->setGeometry(QRect(790, 610, 91, 17));
+        roll_outcome->setGeometry(QRect(970, 610, 21, 17));
         buyDevButton = new QPushButton(centralWidget);
         buyDevButton->setObjectName(QString::fromUtf8("buyDevButton"));
         buyDevButton->setGeometry(QRect(610, 604, 171, 27));
@@ -1178,7 +1178,7 @@ public:
         vhandButton_01->setText(QApplication::translate("catan_map", "View Hand", 0, QApplication::UnicodeUTF8));
         instruction->setText(QApplication::translate("catan_map", "Instruction: Do what this tells you to do!", 0, QApplication::UnicodeUTF8));
         rollButton->setText(QApplication::translate("catan_map", "Roll Dice", 0, QApplication::UnicodeUTF8));
-        roll_outcome->setText(QApplication::translate("catan_map", "Current Roll:", 0, QApplication::UnicodeUTF8));
+        roll_outcome->setText(QApplication::translate("catan_map", "77", 0, QApplication::UnicodeUTF8));
         buyDevButton->setText(QApplication::translate("catan_map", "Buy Development Card", 0, QApplication::UnicodeUTF8));
         player2_label->setText(QApplication::translate("catan_map", "Player 2", 0, QApplication::UnicodeUTF8));
         color2_label->setText(QApplication::translate("catan_map", "Color: Blue", 0, QApplication::UnicodeUTF8));
