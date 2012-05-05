@@ -33,6 +33,7 @@ catan_map::catan_map(QWidget *parent) :
     robber = false;
     initial_settle = true;
     init_settle_road = true;
+    ui->instruction->setText("P1, place a settlement and a road");
 }
 
 catan_map::~catan_map()
@@ -74,10 +75,14 @@ void catan_map::signalSorter(const QString & button)
             //roll
             else if (button.startsWith("roll")){
                 rollSelected(button);
+                update_players();
             }
             //city/settlement creaton
             else if (button.endsWith("s")){
                 city_settlement_create(button);
+            }
+            else{
+                ui->instruction->setText("I'm afraid you can't do that: check your resources!!");
             }
         }
     }
@@ -1302,12 +1307,13 @@ void catan_map::rollSelected(QString button){
     QString out = QString::number(i);
     ui->roll_outcome->setText(out);
     qDebug() << "roll code: " << button;
-
+    ui->instruction->setText(player_name + " can buy roads/settlements and trade. Next player roll when ready");
     if(i==7){//roll 7 conditions
         for(int k = 0; k<numPlayers; k++)
             players[k].removeCardsOn7();
         //some sort of wait for node click command to then place robber.
             robber = true;
+            ui->instruction->setText(player_name + " has rolled a 7! Choose a node to place the robber at!");
     }
     for(int k = 0; k< numPlayers; k++)
         players[k].gainResources(i,node);
@@ -1366,7 +1372,11 @@ void catan_map::initial_game_start(QString button){
             settlement_output(button);
             init_settle_road = false;
         }
-    }else if (button.startsWith("road") && !init_settle_road){
+        else{
+            ui->instruction->setText("Invalid settlement placement");
+        }
+    }
+    else if (button.startsWith("road") && !init_settle_road){
         qDebug() << "=====================";
         if (mapper.valid_road_check(button,player_name)){
             players[iter].buyRoad();
@@ -1374,6 +1384,9 @@ void catan_map::initial_game_start(QString button){
             qDebug() << "road button: " << button;
             road_output(button);
             init_settle_road = true;
+        }
+        else{
+            ui->instruction->setText("Invalid road placement");
         }
         ++iter;
         if(reverse){
@@ -1388,6 +1401,11 @@ void catan_map::initial_game_start(QString button){
             reverse = true;
         }
     }
+    update_players();
+    ui->instruction->setText(player_name + ", place a settlement and a road");
+    if (!initial_settle){
+        ui->instruction->setText("P1, roll the dice when ready!");
+    }
 }
 
 void catan_map::city_settlement_create(QString button){
@@ -1400,10 +1418,6 @@ void catan_map::city_settlement_create(QString button){
             players[iter].buyCity(button);
         }
     }
-    else{
-        qDebug() << "City: settlment failed";
-        qDebug() << "----------------------";
-    }
     if (players[iter].affordSettlement()){
         if (mapper.valid_settlement_check(button, player_name)){
             qDebug() << "valid settlement input for: " << button;
@@ -1411,10 +1425,6 @@ void catan_map::city_settlement_create(QString button){
             settlement_output(button);
             players[iter].buySettlement(button); //add settlement to player list
         }
-    }
-    else{
-        qDebug() << "Settlement: settle failed";
-        qDebug() << "-------------------------";
     }
 }
 
@@ -1424,5 +1434,8 @@ void catan_map::road_pushed(QString button){
         players[iter].buyRoad();
         qDebug() << "road button: " << button;
         road_output(button);
-   }
+    }
+    else{
+        ui->instruction->setText("Invalid road placemet!");
+    }
 }
