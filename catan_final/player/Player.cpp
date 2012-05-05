@@ -8,18 +8,16 @@
 //constructor
 Player::Player(){
     srand ( time(NULL) );
-    this->name_ = "Jeff";
-
     this->victoryPoints_= 0;
     this->roadLength_   = 0;
     this->armySize_     = 0;
     char color = 'g';
     this->playerColor_  = color;
-    this->yellow_       = 10;
-    this->lightGreen_   = 10;
-    this->darkGreen_    = 10;
-    this->blue_         = 10;
-    this->red_          = 10;
+    this->yellow_       = 2;
+    this->lightGreen_   = 2;
+    this->darkGreen_    = 4;
+    this->blue_         = 0;
+    this->red_          = 4;
 
     this->knight_       = 0;
     this->victoryPointCard_ = 0;
@@ -40,7 +38,6 @@ int Player::roll(){
 
 //This function shows the basic numbers for a given player.
 void Player::checkStats(){
-    cout<<"Player Name: "<<name_<<endl;
     cout<<"Victory Points: "<<victoryPoints_<<endl;
     cout<<"Army Size: "<<armySize_<<endl;
     cout<<"Road Length: "<<roadLength_<<endl;
@@ -413,10 +410,6 @@ void Player::buyDevelopmentCard(){
         knight_++;
 
 
-}
-
-void Player::changeName(string & name){
-    name_ = name;
 }
 
 void Player::changeColor(char &color){
@@ -913,4 +906,23 @@ void Player::playYearOfPlenty(){
     }
 }
 
+void Player::collectOriginalCards(Node onlyNode){
+    list<settlement>::iterator current = pieces.begin();
+
+    //need to know how the city will be attached to a the color;
+
+    for(int i = 2; i<=12; i++){
+        if(onlyNode.findNode(current->top.node) == i){
+            addProperColor(current->top.color, current->city);
+        }
+        if(onlyNode.findNode(current->left.node) == i){
+            addProperColor(current->left.color, current->city);
+        }
+        if(onlyNode.findNode(current->right.node) == i){
+            addProperColor(current->right.color, current->city);
+        }
+
+    }
+
+}
 

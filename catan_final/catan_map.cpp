@@ -33,7 +33,11 @@ catan_map::catan_map(QWidget *parent) :
     robber = false;
     initial_settle = true;
     init_settle_road = true;
+<<<<<<< HEAD
     ui->instruction->setText("P1, place a settlement and a road");
+=======
+    afterSecondSettlementPlacement = 0;
+>>>>>>> upstream/master
 }
 
 catan_map::~catan_map()
@@ -1384,6 +1388,11 @@ void catan_map::initial_game_start(QString button){
             qDebug() << "road button: " << button;
             road_output(button);
             init_settle_road = true;
+            afterSecondSettlementPlacement++;
+            if(afterSecondSettlementPlacement>=5){
+                players[iter].collectOriginalCards(node);
+                cout<<"blehh"<<endl;
+             }
         }
         else{
             ui->instruction->setText("Invalid road placement");
@@ -1401,11 +1410,16 @@ void catan_map::initial_game_start(QString button){
             reverse = true;
         }
     }
+<<<<<<< HEAD
     update_players();
     ui->instruction->setText(player_name + ", place a settlement and a road");
     if (!initial_settle){
         ui->instruction->setText("P1, roll the dice when ready!");
     }
+=======
+
+
+>>>>>>> upstream/master
 }
 
 void catan_map::city_settlement_create(QString button){
