@@ -8,18 +8,16 @@
 //constructor
 Player::Player(){
     srand ( time(NULL) );
-    this->name_ = "Jeff";
-
     this->victoryPoints_= 0;
     this->roadLength_   = 0;
     this->armySize_     = 0;
     char color = 'g';
     this->playerColor_  = color;
-    this->yellow_       = 5;
-    this->lightGreen_   = 5;
-    this->darkGreen_    = 5;
-    this->blue_         = 5;
-    this->red_          = 5;
+    this->yellow_       = 2;
+    this->lightGreen_   = 2;
+    this->darkGreen_    = 4;
+    this->blue_         = 0;
+    this->red_          = 4;
 
     this->knight_       = 0;
     this->victoryPointCard_ = 0;
@@ -40,7 +38,6 @@ int Player::roll(){
 
 //This function shows the basic numbers for a given player.
 void Player::checkStats(){
-    cout<<"Player Name: "<<name_<<endl;
     cout<<"Victory Points: "<<victoryPoints_<<endl;
     cout<<"Army Size: "<<armySize_<<endl;
     cout<<"Road Length: "<<roadLength_<<endl;
@@ -413,10 +410,6 @@ void Player::buyDevelopmentCard(){
         knight_++;
 
 
-}
-
-void Player::changeName(string & name){
-    name_ = name;
 }
 
 void Player::changeColor(char &color){
@@ -913,7 +906,7 @@ void Player::playYearOfPlenty(){
     }
 }
 
-void Player::collectOriginalCards(){
+void Player::collectOriginalCards(Node onlyNode){
     list<settlement>::iterator current = pieces.begin();
 
     //need to know how the city will be attached to a the color;

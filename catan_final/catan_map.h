@@ -42,6 +42,7 @@ private:
     bool initial_settle;
     bool reverse;
     bool init_settle_road;
+    int afterSecondSettlementPlacement;
 
     void initial_game_start(QString);
     void city_settlement_create(QString);

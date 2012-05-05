@@ -33,6 +33,7 @@ catan_map::catan_map(QWidget *parent) :
     robber = false;
     initial_settle = true;
     init_settle_road = true;
+    afterSecondSettlementPlacement = 0;
 }
 
 catan_map::~catan_map()
@@ -1374,6 +1375,11 @@ void catan_map::initial_game_start(QString button){
             qDebug() << "road button: " << button;
             road_output(button);
             init_settle_road = true;
+            afterSecondSettlementPlacement++;
+            if(afterSecondSettlementPlacement>=5){
+                players[iter].collectOriginalCards(node);
+                cout<<"blehh"<<endl;
+             }
         }
         ++iter;
         if(reverse){
@@ -1388,6 +1394,8 @@ void catan_map::initial_game_start(QString button){
             reverse = true;
         }
     }
+
+
 }
 
 void catan_map::city_settlement_create(QString button){

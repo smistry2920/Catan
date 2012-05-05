@@ -18,7 +18,6 @@ class Player{
     int victoryPoints_;
 
     private:
-    string name_;
     //int victoryPoints_;
     int roadLength_;
     int armySize_;
@@ -93,12 +92,12 @@ class Player{
     void checkStats();
     void seeResources();
     void seeDevelopments();
-    void changeName(string&);
     void changeColor(char&);
     void convertResources(); //try to switch out cards
-    void collectOriginalCards();
 
-    void gainResources(int, Node );
+    //getting resources
+    void gainResources(int, Node ); //after original planting of settlements
+    void collectOriginalCards(Node); //during planting of settlements
 
     bool areRoadsBlockingSettlement(int);
     bool isSettlementBlockingRoad(int);
