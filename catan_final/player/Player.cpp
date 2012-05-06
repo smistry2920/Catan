@@ -26,8 +26,8 @@ Player::Player(){
     this->yearOfPlenty_ = 0;
 }
 
-Player::~Player(){
 //destroy the lists
+Player::~Player(){
 }
 
 //public function for rolling dice
@@ -63,9 +63,9 @@ QString Player::outputHand()
        QString hand;
 //       QString wheat, sheep, lumber, stone, brick;
 
-        hand.append("wheat: ");
+        hand.append("Resources");
+        hand.append("\nwheat: ");
         hand.append(QString::number(yellow_));
-        qDebug() << "FUCKING YELLOW" << yellow_;
 
         hand.append("\nsheep: ");
         hand.append(QString::number(lightGreen_));
@@ -78,6 +78,25 @@ QString Player::outputHand()
 
         hand.append("\nbrick: ");
         hand.append(QString::number(red_));
+
+        hand.append("\n\nDevelopment Cards");
+        hand.append("\nKnight: ");
+        hand.append(QString::number(knight_));
+
+        hand.append("\nVictoryPointCard: ");
+        hand.append(QString::number(victoryPointCard_));
+
+        hand.append("\nroadBuilder: ");
+        hand.append(QString::number(roadBuilder_));
+
+        hand.append("\nmonopoly: ");
+        hand.append(QString::number(monopoly_));
+
+        hand.append("\nyearOfPlenty: ");
+        hand.append(QString::number(yearOfPlenty_));
+
+
+
 
 //       wheat.append(QString("%1").arg(yellow_));
 //       sheep.append(QString("%1").arg(lightGreen_));

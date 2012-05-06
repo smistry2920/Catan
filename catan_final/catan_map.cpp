@@ -5,52 +5,47 @@ catan_map::catan_map(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::catan_map)
 {
+    //image were using for the board
     QString image = "map_semi_final.png";
     ui->setupUi(this);
     QPixmap pix = QPixmap(image);
     ui->image_label->setPixmap(pix);
 
+    //way to take in button pushes
     signalMapper = new QSignalMapper(this); //signal map
 
     //connect buttons to signal mapper
 
     activate_settlements();
-
     activate_roads();
-
     activate_other();
-
     activate_nodes();
 
     iter = 0;
     reverse = false;
 
     //activate_nodes();
-
     //final signal mapping connection (calls signalSorter to sort signals!)
     connect(signalMapper, SIGNAL(mapped(const QString &)), this, SLOT(signalSorter(const QString &)));
     numPlayers = 4;
     robber = false;
     initial_settle = true;
     init_settle_road = true;
-<<<<<<< HEAD
     ui->instruction->setText("P1, place a settlement and a road");
-=======
     afterSecondSettlementPlacement = 0;
->>>>>>> upstream/master
 }
 
-catan_map::~catan_map()
+catan_map::~catan_map() //deconstructor
 {
     delete ui;
 }
 
-void catan_map::initial_settle_place(){
+void catan_map::initial_settle_place(){ //Beginning of the game.
 
     ui->instruction->setText("player 1, choose a settlement");
 }
 
-void catan_map::signalSorter(const QString & button)
+void catan_map::signalSorter(const QString & button)    //Know how to handle specific button pushes
 {
     update_players();
     if (!initial_settle){
@@ -60,6 +55,7 @@ void catan_map::signalSorter(const QString & button)
         if (button.startsWith("node") && robber){
             nodeSelectedOnRobber(button);
         }
+
         //if robber is active, you must first place the robber!
         if (!robber){
             //road button pushed
@@ -110,11 +106,13 @@ void catan_map::city_output(QString button){
     button_output(button_out);
 }
 
-void catan_map::road_output(QString road){
+void catan_map::road_output(QString road){      //Location and Display of Purchased Roads
     QString road_out = road.section("|",0,0);
     road_out.remove(0,4);
     qDebug() << road_out;
     QString button_color;
+
+    //display color of the buyer
     if (player_name == "P1"){
         button_color = "background-color: rgb(69, 139, 116)";
     }
@@ -422,7 +420,7 @@ void catan_map::road_output(QString road){
     }
 }
 
-void catan_map::button_output(QString button_out){
+void catan_map::button_output(QString button_out){  //Display of settlements on the map after purchased.
     QString button_text;
     QString button_color;
     if(button_out.endsWith("c")){
@@ -433,6 +431,7 @@ void catan_map::button_output(QString button_out){
     }
     button_out.chop(1);
 
+    //display color of the buyer
     if (player_name == "P1"){
         button_color = "background-color: rgb(69, 139, 116)";
     }
@@ -721,10 +720,12 @@ void catan_map::button_output(QString button_out){
 
 void catan_map::activate_settlements(){
 
-    /////////////////////////////////////////////
-    //START SETTLEMENT BUTTON MAPPING!!
-    ///////////////////
-    //Format is city ID|left Color|left node|right Color|right node|top color|top node|port
+    //////////////////////////////////////
+    //START SETTLEMENT BUTTON MAPPING!! //
+    //////////////////////////////////////////////////////////////////////////////////////////
+    //Format is city ID|left Color|left node|right Color|right node|top color|top node|port //
+    //////////////////////////////////////////////////////////////////////////////////////////
+
     connect(ui->pushSettle_221, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushSettle_221, "221|0|0|d|1|0|0|3|s");
 
@@ -887,17 +888,19 @@ void catan_map::activate_settlements(){
     connect(ui->pushSettle_551, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushSettle_551, "551|d|18|0|0|0|0|0|s");
 
-    //////////////////
-    //END SETTLEMENT BUTTON MAPPING
-    ////////////////////////////////////////////
+    //////////////////////////////////
+    //END SETTLEMENT BUTTON MAPPING //
+    //////////////////////////////////
 }
 
 void catan_map::activate_roads(){
 
-    ////////////////////////////////////////////
-    //START ROAD MAPPING
-    ////////////////
-   //road|top|bottom|
+    ///////////////////////
+    //START ROAD MAPPING //
+    ///////////////////////
+    //road|top|bottom|//
+    ////////////////////
+
     connect(ui->pushRoad_01, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushRoad_01, "road01|223|221");
 
@@ -1114,17 +1117,17 @@ void catan_map::activate_roads(){
     connect(ui->pushRoad_72, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushRoad_72, "road72|551|556");
 
-    ///////////////
-    //END ROAD MAPPING
-    ///////////////////////////////////////////
+    /////////////////////
+    //END ROAD MAPPING //
+    /////////////////////
 
 }
 
 void catan_map::activate_other(){
 
-    ////////////////////////////////////////////
-    //START MISCELLANEOS MAPPING
-    ////////////////
+    ///////////////////////////////
+    //START MISCELLANEOS MAPPING //
+    ///////////////////////////////
 
     connect(ui->vhandButton_01, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->vhandButton_01, "vhand_01");
@@ -1144,13 +1147,17 @@ void catan_map::activate_other(){
     connect(ui->rollButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->rollButton, "roll");
 
-    ///////////////
-    //END MISCELLANEOS MAPPING
-    ////////////////////////////////////////////
+    /////////////////////////////
+    //END MISCELLANEOS MAPPING //
+    /////////////////////////////
 
 }
 
 void catan_map::activate_nodes(){
+
+    ///////////////////////
+    //Start of Map Nodes //
+    ///////////////////////
 
     connect(ui->node_01, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->node_01, "node|1");
@@ -1208,10 +1215,15 @@ void catan_map::activate_nodes(){
 
     connect(ui->node_19, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->node_19, "node|19");
+
+    /////////////////////
+    //End of Map Nodes //
+    /////////////////////
 }
 
 void catan_map::changeNode(QString node_num){
 
+    //Changes nodes to die roll
     QString button_color = "background-color: rgb(69, 139, 116)";
 
     if (node_num == "1"){
@@ -1324,7 +1336,8 @@ void catan_map::rollSelected(QString button){
 
   //  return i;
 }
-void catan_map::viewHand(QString button){
+
+void catan_map::viewHand(QString button){   //Lets you see whats in your hand
     bool ok = true;
     QString player = button.at(7);
     int player_num = player.toInt(&ok,10);
@@ -1410,16 +1423,12 @@ void catan_map::initial_game_start(QString button){
             reverse = true;
         }
     }
-<<<<<<< HEAD
+
     update_players();
     ui->instruction->setText(player_name + ", place a settlement and a road");
     if (!initial_settle){
         ui->instruction->setText("P1, roll the dice when ready!");
     }
-=======
-
-
->>>>>>> upstream/master
 }
 
 void catan_map::city_settlement_create(QString button){
