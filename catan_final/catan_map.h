@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QtCore>
 #include <QMessageBox>
+#include <QVBoxLayout>
 #include "map_tracker/map_tracker.h"
 #include "player/Player.h"
 //#include "player/Noder.h"
@@ -23,6 +24,8 @@ public:
 
 private slots:
     void signalSorter(const QString &); //sorts signals
+    //trade code does not work yet!
+   // void tradeSignalSorter(const QString &); //sorts signals for trading
 
 private:
     ///temporary test code (DELETE WHEN FINISHED!)
@@ -30,6 +33,7 @@ private:
 
     Ui::catan_map *ui;
     QSignalMapper *signalMapper;
+    //QSignalMapper *tradeSignalMapper;
     map_tracker mapper;
 
     Player players[4];
@@ -59,7 +63,13 @@ private:
     void city_output(QString);
     void road_output(QString);
     void activate_nodes();
-    void buyDevCard(QString);
+    void buyDevCard();
+    //trade code currently enjoys a hard crash of the
+    // entire game. I suspect instantiating a layout on
+    // top of another layout causes this crash
+    // (thus the solution is to create ANOTHER CLASS
+    // but I don't currently have the time to do that!
+    //void bank_trade(); // trade code...currently crashing!
 
     void nodeSelectedOnRobber(QString);
     void rollSelected(QString);

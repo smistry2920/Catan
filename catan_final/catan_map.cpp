@@ -34,6 +34,9 @@ catan_map::catan_map(QWidget *parent) :
     ui->instruction->setText("P1, place a settlement and a road");
     afterSecondSettlementPlacement = 0;
     prev_robber = "19";
+    ui->node_19->setAutoFillBackground(true);
+    ui->node_19->setStyleSheet("background-color: rgb(0, 0, 0)");
+
 }
 
 catan_map::~catan_map() //deconstructor
@@ -70,7 +73,7 @@ void catan_map::signalSorter(const QString & button)    //Know how to handle spe
 
             //buy a development card
             else if (button.startsWith("buy") && players[iter].affordDevelopmentCard()){
-                buyDevCard(button);
+                buyDevCard();
             }
 
             //roll
@@ -81,6 +84,10 @@ void catan_map::signalSorter(const QString & button)    //Know how to handle spe
             //city/settlement creaton
             else if (button.endsWith("s")){
                 city_settlement_create(button);
+            }
+            else if(button == "trade"){
+                //bank_trade();
+                qDebug() << "trade code does not work yet!";
             }
             else{
                 ui->instruction->setText("Error: either you don't have enough resources or invalid button press");
@@ -1149,6 +1156,9 @@ void catan_map::activate_other(){
     connect(ui->rollButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->rollButton, "roll");
 
+    connect(ui->tradeButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
+    signalMapper->setMapping(ui->tradeButton, "trade");
+
     /////////////////////////////
     //END MISCELLANEOS MAPPING //
     /////////////////////////////
@@ -1227,7 +1237,7 @@ void catan_map::changeNode(QString node_num){
 
     //Changes nodes to die roll
     QString cur_node = node_num;
-    QString new_button_color = "background-color: rgb(69, 139, 116)";
+    QString new_button_color = "background-color: rgb(0, 0, 0)";
     QString prev_button_color = "background-color: rgb(255, 255, 255)";
     QString cur_button_color = new_button_color;
     for (int i = 0; i<2; ++i){
@@ -1307,8 +1317,10 @@ void catan_map::changeNode(QString node_num){
             ui->node_19->setAutoFillBackground(true);
             ui->node_19->setStyleSheet(cur_button_color);
         }
-        cur_button_color = prev_button_color;
-        cur_node = prev_robber;
+        if (cur_node != prev_robber){
+            cur_button_color = prev_button_color;
+            cur_node = prev_robber;
+        }
     }
     prev_robber = node_num;
 }
@@ -1350,6 +1362,7 @@ void catan_map::rollSelected(QString button){
     QString out = QString::number(i);
     ui->roll_outcome->setText(out);
     qDebug() << "roll code: " << button;
+    update_players();
     ui->instruction->setText(player_name + " can buy roads/settlements and trade. Next player roll when ready");
     if(i==7){//roll 7 conditions
         for(int k = 0; k<numPlayers; k++)
@@ -1489,7 +1502,7 @@ void catan_map::road_pushed(QString button){
     }
 }
 
-void catan_map::buyDevCard(QString button){
+void catan_map::buyDevCard(){
     if(players[iter].affordDevelopmentCard()){
         players[iter].buyDevelopmentCard();
     }
@@ -1498,3 +1511,35 @@ void catan_map::buyDevCard(QString button){
     }
 
 }
+
+/////////////
+//trade code: WILL CRASH AND BURN!! DON'T RUN!
+///////////
+//void catan_map::bank_trade(){
+//    QLayout* layout = new QVBoxLayout;
+//    setLayout(layout); //set the layout
+
+//    QLabel* label = new QLabel;
+//    label->setText("Trade for: ");
+//    layout->addWidget(label);
+
+//    QStringList button_list;
+//    button_list << "Wheat";
+//    button_list << "Brick";
+//    button_list << "Stone";
+//    button_list << "Sheep";
+//    button_list << "Lumber";
+
+//    for (int i = 0; i<5; ++i){
+//        QPushButton* button = new QPushButton(button_list[i]);
+//        layout->addWidget(button);
+//        connect(button, SIGNAL(clicked()), tradeSignalMapper, SLOT(map()));
+//        tradeSignalMapper->setMapping(button, button_list[i]);
+//    }
+//    //this final signal connects all the signals to output their string to the signalSorter slot
+//    connect(tradeSignalMapper, SIGNAL(mapped(const QString &)), this, SLOT(tradeSignalSorter(const QString &)));
+//}
+
+//void catan_map::tradeSignalSorter(const QString & button){
+//    qDebug() << "trade here with: " << button;
+//}
