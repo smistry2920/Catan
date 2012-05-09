@@ -6,7 +6,7 @@ catan_map::catan_map(QWidget *parent) :
     ui(new Ui::catan_map)
 {
     //image were using for the board
-    QString image = "map_semi_final.png";
+    QString image = "images/map_semi_horrribleports_final.png";
     ui->setupUi(this);
     QPixmap pix = QPixmap(image);
     ui->image_label->setPixmap(pix);
