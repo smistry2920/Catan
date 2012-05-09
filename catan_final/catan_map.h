@@ -37,6 +37,7 @@ private:
     int iter;
     int numPlayers;
     Node node;
+    QString prev_robber;
 
     bool robber;
     bool initial_settle;
