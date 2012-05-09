@@ -208,10 +208,11 @@ bool Player::roadOffOwnCity(int top, int bottom){
     return false;
 }
 
+//unused
 /*private function that determines if a road can be placed. Returns -1 if absolutly true, 0 if false. An integer>0 will be returned
 if it finds a match to a the players own road in which case we need to check to see if other players have a city/settlement
 in that corresponding integer location. */
-int Player::checkRoad(){
+/*int Player::checkRoad(){
     int top, bottom;//these are somehow the known values of the road that will be placesd
     
     bool offCity = roadOffOwnCity(top, bottom);
@@ -232,6 +233,7 @@ int Player::checkRoad(){
     return 0;
 
 }
+*/
 
 
 //public function allows player to see if they can purchase a road

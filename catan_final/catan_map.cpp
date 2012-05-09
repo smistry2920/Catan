@@ -33,6 +33,7 @@ catan_map::catan_map(QWidget *parent) :
     init_settle_road = true;
     ui->instruction->setText("P1, place a settlement and a road");
     afterSecondSettlementPlacement = 0;
+    prev_robber = "19";
 }
 
 catan_map::~catan_map() //deconstructor
@@ -82,15 +83,16 @@ void catan_map::signalSorter(const QString & button)    //Know how to handle spe
                 city_settlement_create(button);
             }
             else{
-                ui->instruction->setText("I'm afraid you can't do that: check your resources!!");
+                ui->instruction->setText("Error: either you don't have enough resources or invalid button press");
             }
         }
     }
     //initial game code (allow for 2 cities and 2 roads per player)
     else{
+        qDebug() << "initial game start!";
         initial_game_start(button);
     }
-
+    update_players();
 }
 
 
@@ -1224,66 +1226,91 @@ void catan_map::activate_nodes(){
 void catan_map::changeNode(QString node_num){
 
     //Changes nodes to die roll
-    QString button_color = "background-color: rgb(69, 139, 116)";
-
-    if (node_num == "1"){
-        ui->node_01->setAutoFillBackground(true);
-        ui->node_01->setStyleSheet(button_color);
+    QString cur_node = node_num;
+    QString new_button_color = "background-color: rgb(69, 139, 116)";
+    QString prev_button_color = "background-color: rgb(255, 255, 255)";
+    QString cur_button_color = new_button_color;
+    for (int i = 0; i<2; ++i){
+        if (cur_node == "1"){
+            ui->node_01->setAutoFillBackground(true);
+            ui->node_01->setStyleSheet(cur_button_color);
+        }
+        if (cur_node == "2"){
+            ui->node_02->setAutoFillBackground(true);
+            ui->node_02->setStyleSheet(cur_button_color);
+        }
+        if (cur_node == "3"){
+            ui->node_03->setAutoFillBackground(true);
+            ui->node_03->setStyleSheet(cur_button_color);
+        }
+        if (cur_node == "4"){
+            ui->node_04->setAutoFillBackground(true);
+            ui->node_04->setStyleSheet(cur_button_color);
+        }
+        if (cur_node == "5"){
+            ui->node_05->setAutoFillBackground(true);
+            ui->node_05->setStyleSheet(cur_button_color);
+        }
+        if (cur_node == "6"){
+            ui->node_06->setAutoFillBackground(true);
+            ui->node_06->setStyleSheet(cur_button_color);
+        }
+        if (cur_node == "7"){
+            ui->node_07->setAutoFillBackground(true);
+            ui->node_07->setStyleSheet(cur_button_color);
+        }
+        if (cur_node == "8"){
+            ui->node_08->setAutoFillBackground(true);
+            ui->node_08->setStyleSheet(cur_button_color);
+        }
+        if (cur_node == "9"){
+            ui->node_09->setAutoFillBackground(true);
+            ui->node_09->setStyleSheet(cur_button_color);
+        }
+        if (cur_node == "10"){
+            ui->node_10->setAutoFillBackground(true);
+            ui->node_10->setStyleSheet(cur_button_color);
+        }
+        if (cur_node == "11"){
+            ui->node_11->setAutoFillBackground(true);
+            ui->node_11->setStyleSheet(cur_button_color);
+        }
+        if (cur_node == "12"){
+            ui->node_12->setAutoFillBackground(true);
+            ui->node_12->setStyleSheet(cur_button_color);
+        }
+        if (cur_node == "13"){
+            ui->node_13->setAutoFillBackground(true);
+            ui->node_13->setStyleSheet(cur_button_color);
+        }
+        if (cur_node == "14"){
+            ui->node_14->setAutoFillBackground(true);
+            ui->node_14->setStyleSheet(cur_button_color);
+        }
+        if (cur_node == "15"){
+            ui->node_15->setAutoFillBackground(true);
+            ui->node_15->setStyleSheet(cur_button_color);
+        }
+        if (cur_node == "16"){
+            ui->node_16->setAutoFillBackground(true);
+            ui->node_16->setStyleSheet(cur_button_color);
+        }
+        if (cur_node == "17"){
+            ui->node_17->setAutoFillBackground(true);
+            ui->node_17->setStyleSheet(cur_button_color);
+        }
+        if (cur_node == "18"){
+            ui->node_18->setAutoFillBackground(true);
+            ui->node_18->setStyleSheet(cur_button_color);
+        }
+        if (cur_node == "19"){
+            ui->node_19->setAutoFillBackground(true);
+            ui->node_19->setStyleSheet(cur_button_color);
+        }
+        cur_button_color = prev_button_color;
+        cur_node = prev_robber;
     }
-    if (node_num == "2"){
-        ui->node_02->setText("R");
-    }
-    if (node_num == "3"){
-        ui->node_03->setText("R");;
-    }
-    if (node_num == "4"){
-        ui->node_04->setText("R");
-    }
-    if (node_num == "5"){
-        ui->node_05->setText("R");
-    }
-    if (node_num == "6"){
-        ui->node_06->setText("R");
-    }
-    if (node_num == "7"){
-        ui->node_07->setText("R");
-    }
-    if (node_num == "8"){
-        ui->node_08->setText("R");
-    }
-    if (node_num == "9"){
-        ui->node_09->setText("R");
-    }
-    if (node_num == "10"){
-        ui->node_10->setText("R");
-    }
-    if (node_num == "1"){
-        ui->node_11->setText("R");
-    }
-    if (node_num == "1"){
-        ui->node_12->setText("R");
-    }
-    if (node_num == "1"){
-        ui->node_13->setText("R");
-    }
-    if (node_num == "1"){
-        ui->node_14->setText("R");
-    }
-    if (node_num == "1"){
-        ui->node_15->setText("R");
-    }
-    if (node_num == "1"){
-        ui->node_16->setText("R");
-    }
-    if (node_num == "1"){
-        ui->node_17->setText("R");
-    }
-    if (node_num == "18"){
-        ui->node_18->setText("R");
-    }
-    if (node_num == "19"){
-        ui->node_19->setText("R");
-    }
+    prev_robber = node_num;
 }
 
 void catan_map::nodeSelectedOnRobber(QString button){
@@ -1309,7 +1336,7 @@ void catan_map::nodeSelectedOnRobber(QString button){
     }
 
     node.placeRobber(nodeNumber);
-    //changeNode(temp_holder);
+    changeNode(temp_holder);
     robber = false;
  }
 
@@ -1423,7 +1450,6 @@ void catan_map::initial_game_start(QString button){
             reverse = true;
         }
     }
-
     update_players();
     ui->instruction->setText(player_name + ", place a settlement and a road");
     if (!initial_settle){
