@@ -59,6 +59,7 @@ private:
     void city_output(QString);
     void road_output(QString);
     void activate_nodes();
+    void buyDevCard(QString);
 
     void nodeSelectedOnRobber(QString);
     void rollSelected(QString);

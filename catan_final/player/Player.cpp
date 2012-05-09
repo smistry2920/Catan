@@ -404,7 +404,6 @@ bool Player::affordDevelopmentCard(){
     if(blue_>0 && yellow_>0 && lightGreen_>0)
         return 1;
 
-    cout<<"You do not have the resources to purchase a developmentCard!"<<endl<<endl;
     return 0;
 }
 
