@@ -40,42 +40,63 @@ If you have any problems setting up please email smistry@vt.edu.
 ********************
 
     -No longest road
-    -Robber: Steal from every person at where the robber is        placed. Also, the robber can be placed in the same place as previously placed.
+    -Robber: Steal from every person at where the robber is
+	placed. Also, the robber can be placed in the same 
+	place as previously placed.
 
 
 **************************
 ** Not Yet Implemented: **
 **************************
 
-    -Pop-up window to view player's hand
+    -Better "ports" (ie more photoshop work!)
+
     -Development Card functions
+	-code for dev cards is done but gui for it is not yet made 
+	(a layout on a layout seems to cause immediate crashes)
+
     -Start of Game
-    -Trades
+	-must have 4 players, colors are pre-set as are names
+	-beginning order for house placement is pre-set
+
+    -Trades (code is there but it crashes!)
+	-code for trades is done but gui for it is not yet made 
+	(a layout on a layout seems to cause immediate crashes)
+
+    -No endgame "congratulations" 
 
 ***************************
 ** Problems Encountered: **
 ***************************
 	
 	Problem 1:
-	Hexagons: Trouble with using GUI buttons on each side of the hexagons to 	implement roads and developments.
+	Hexagons: Trouble with using GUI buttons on each side of the hexagons to 	
+	implement roads and developments.
 
 	Solution : 
-	Found a way to manipulate the size and shape of GUI buttons, so that we could 	place roads and developments on all the required sections of the hexagons
+	Found a way to manipulate the size and shape of GUI buttons, so that we could 	
+	place roads and developments on all the required sections of the hexagons
 
 	Problem 2:
-	Characterization of Settlements/Cities on Map: Difficulty on how to take in 		specifics of 	map locations.
+	Characterization of Settlements/Cities on Map: Difficulty on how to take 
+	in specifics of map locations.
 
 	Solution:
-	Used a String of characters to describe each aspect of the node like the 	example above. This way we could use information and check the maps nodes 	easily.
+	Used a String of characters to describe each aspect of the node like the 	
+	example above. This way we could use information and check the maps nodes 	
+	easily.
 
 	e.g 221|0|0|d|1|0|0|3|s
 	Format is city ID|left Color|left node|right Color|right node|top color|top node|port
 	
 	Problem 3:
- 	Map Checking: How to make sure that settlements, cities, and roads can be 	bought and meet the right placement guidelines.
+ 	Map Checking: How to make sure that settlements, cities, and roads can be 	
+	bought and meet the right placement guidelines.
 
 	Solution:
-	Recorded all outputs of purchases of settlements, cities, and roads on lists. 	Checks surrounding areas using the numerical labeling and lists. Also, it makes 	sure that players have enough resources to buy the item of interest. 
+	Recorded all outputs of purchases of settlements, cities, and roads on lists. 	
+	Checks surrounding areas using the numerical labeling and lists. Also, it makes 	
+	sure that players have enough resources to buy the item of interest. 
 	
 	
 	
