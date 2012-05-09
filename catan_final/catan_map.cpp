@@ -1343,7 +1343,7 @@ void catan_map::viewHand(QString button){   //Lets you see whats in your hand
     int player_num = player.toInt(&ok,10);
     QMessageBox* vhand;
     vhand = new QMessageBox;
-    vhand->setText(players[player_num].outputHand());
+    vhand->setText(players[player_num-1].outputHand());
     vhand->show();
 }
 
