@@ -63,6 +63,7 @@ private:
     void city_output(QString);
     void road_output(QString);
     void activate_nodes();
+    void buyDevCard();
     //trade code currently enjoys a hard crash of the
     // entire game. I suspect instantiating a layout on
     // top of another layout causes this crash

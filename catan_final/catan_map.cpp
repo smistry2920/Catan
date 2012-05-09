@@ -73,7 +73,7 @@ void catan_map::signalSorter(const QString & button)    //Know how to handle spe
 
             //buy a development card
             else if (button.startsWith("buy") && players[iter].affordDevelopmentCard()){
-                qDebug() << "buy development card: " << button;
+                buyDevCard();
             }
 
             //roll
@@ -1500,6 +1500,16 @@ void catan_map::road_pushed(QString button){
     else{
         ui->instruction->setText("Invalid road placemet!");
     }
+}
+
+void catan_map::buyDevCard(){
+    if(players[iter].affordDevelopmentCard()){
+        players[iter].buyDevelopmentCard();
+    }
+    else{
+        ui->instruction->setText("You can not afford a development card!");
+    }
+
 }
 
 /////////////
